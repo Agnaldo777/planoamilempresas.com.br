@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabelas Amil Empresarial — Conferência Visual</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: #f5f7fa;
+      color: #1a202c;
+    }
+    h1 {
+      color: #0066B3;
+      border-bottom: 3px solid #00C389;
+      padding-bottom: 12px;
+      margin-top: 0;
+    }
+    .intro {
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      border-left: 4px solid #0066B3;
+    }
+    .estado-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .estado-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .estado-header h2 {
+      margin: 0;
+      color: #0066B3;
+      font-size: 22px;
+    }
+    .estado-header .meta {
+      color: #718096;
+      font-size: 13px;
+    }
+    .estado-header .sigla {
+      display: inline-block;
+      background: #0066B3;
+      color: #fff;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+    .tabela-grupo {
+      margin-bottom: 20px;
+    }
+    .tabela-grupo h3 {
+      font-size: 14px;
+      color: #4a5568;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead {
+      background: #edf2f7;
+    }
+    th, td {
+      padding: 8px 10px;
+      text-align: right;
+      border: 1px solid #e2e8f0;
+    }
+    th:first-child, td:first-child {
+      text-align: left;
+      font-weight: 600;
+      background: #f7fafc;
+    }
+    tbody tr:nth-child(even) {
+      background: #fafbfc;
+    }
+    .plano-label {
+      font-weight: 600;
+      color: #2d3748;
+    }
+    .plano-desc {
+      display: block;
+      font-weight: 400;
+      font-size: 11px;
+      color: #718096;
+      margin-top: 2px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      margin-left: 4px;
+      font-weight: 600;
+    }
+    .b-bronze { background: #FED7AA; color: #7C2D12; }
+    .b-prata { background: #E2E8F0; color: #2D3748; }
+    .b-ouro { background: #FEF3C7; color: #78350F; }
+    .b-platinum { background: #DBEAFE; color: #1E3A8A; }
+    .b-platinum-mais { background: #DDD6FE; color: #5B21B6; }
+    .valor {
+      font-variant-numeric: tabular-nums;
+      color: #2d3748;
+    }
+    .sumario {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .sumario a {
+      display: block;
+      background: #edf2f7;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #0066B3;
+      font-weight: 600;
+      font-size: 13px;
+      text-align: center;
+    }
+    .sumario a:hover {
+      background: #0066B3;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tabelas Amil Empresarial — Conferência Visual</h1>
+
+  <div class="intro">
+    <strong>14 estados cadastrados</strong> · Referência: 24/04/2026 · PME · Exceto MEI<br>
+    Fonte: dados extraídos de <code>data/tabelas-amil.ts</code>. Valores em R$.
+  </div>
+
+  <div class="estado-card">
+    <h2 style="margin-top:0;">Índice</h2>
+    <div class="sumario">
+      <a href="#SP">SP · São Paulo</a>
+      <a href="#RJ">RJ · Rio de Janeiro</a>
+      <a href="#MG">MG · Minas Gerais</a>
+      <a href="#PR">PR · Paraná</a>
+      <a href="#SC">SC · Santa Catarina</a>
+      <a href="#RS">RS · Rio Grande do Sul</a>
+      <a href="#DF">DF · Distrito Federal</a>
+      <a href="#GO">GO · Goiás</a>
+      <a href="#BA">BA · Bahia</a>
+      <a href="#PE">PE · Pernambuco</a>
+      <a href="#CE">CE · Ceará</a>
+      <a href="#MA">MA · Maranhão</a>
+      <a href="#PB">PB · Paraíba</a>
+      <a href="#RN">RN · Rio Grande do Norte</a>
+    </div>
+  </div>
+
+  <div id="app"></div>
+
+  <script>
+    // --- DADOS (espelho do tabelas-amil.ts) ---
+    const FAIXAS = ['00 a 18','19 a 23','24 a 28','29 a 33','34 a 38','39 a 43','44 a 48','49 a 53','54 a 58','59 ou +'];
+
+    function p(...v) { return v; }
+
+    const TABELAS = [
+      { sigla:'SP', estado:'São Paulo', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Bronze QC',         seg:'Bronze',        acom:'QC', abr:'Grupo de Municípios', cop:30, reemb:false, precos: p(111.15,150.94,177.19,177.19,177.19,197.92,273.33,326.36,469.31,665.48) },
+        { nome:'Bronze Mais QC',    seg:'Bronze Mais',   acom:'QC', abr:'Grupo de Municípios', cop:30, reemb:false, precos: p(134.54,182.71,214.48,214.48,214.48,239.57,330.85,395.03,568.05,805.49) },
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(235.92,276.03,336.76,404.11,424.32,466.75,583.44,641.78,802.23,1403.90) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(261.87,306.39,373.80,448.56,470.99,518.09,647.61,712.37,890.46,1558.31) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(295.31,345.51,421.52,505.82,531.11,584.22,730.28,803.31,1004.14,1757.25) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(327.80,383.53,467.91,561.49,589.56,648.52,810.65,891.72,1114.65,1950.64) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(452.14,529.00,645.38,774.46,813.18,894.50,1118.13,1229.94,1537.43,2690.50) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(456.63,534.26,651.80,782.16,821.27,903.40,1129.25,1242.18,1552.73,2717.28) },
+      ]},
+      { sigla:'RJ', estado:'Rio de Janeiro', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Bronze QC',         seg:'Bronze',        acom:'QC', abr:'Grupo de Municípios', cop:30, reemb:false, precos: p(129.67,176.09,206.71,206.71,206.71,230.90,318.87,380.73,547.49,776.34) },
+        { nome:'Bronze Mais QC',    seg:'Bronze Mais',   acom:'QC', abr:'Grupo de Municípios', cop:30, reemb:false, precos: p(179.83,210.40,256.69,308.03,323.43,355.77,444.71,489.18,611.48,1070.09) },
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(208.34,243.76,297.39,356.87,374.71,412.18,515.23,566.75,708.44,1239.77) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(231.26,270.57,330.10,396.12,415.93,457.52,571.90,629.09,786.36,1376.13) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(239.99,280.79,342.56,411.07,431.62,474.78,593.48,652.83,816.04,1428.07) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(266.39,311.68,380.25,456.30,479.12,527.03,658.79,724.67,905.84,1585.22) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(322.31,377.10,460.06,552.07,579.67,637.64,797.05,876.76,1095.95,1917.91) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(325.51,380.85,464.64,557.57,585.45,644.00,805.00,885.50,1106.88,1937.04) },
+      ]},
+      { sigla:'MG', estado:'Minas Gerais', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:40, reemb:false, precos: p(171.20,200.30,244.37,293.24,307.90,338.69,423.36,465.70,582.13,1018.73) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:40, reemb:false, precos: p(190.04,222.35,271.27,325.52,341.80,375.98,469.98,516.98,646.23,1130.90) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:40, reemb:true,  precos: p(218.18,255.27,311.43,373.72,392.41,431.65,539.56,593.52,741.90,1298.33) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(242.17,283.34,345.67,414.80,435.54,479.09,598.86,658.75,823.44,1441.02) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(291.02,340.49,415.40,498.48,523.40,575.74,719.68,791.65,989.56,1731.73) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(293.90,343.86,419.51,503.41,528.58,581.44,726.80,799.48,999.35,1748.86) },
+      ]},
+      { sigla:'PR', estado:'Paraná', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Bronze QC',         seg:'Bronze',        acom:'QC', abr:'Grupo de Municípios', cop:40, reemb:false, precos: p(147.74,200.63,235.52,235.52,235.52,263.08,363.31,433.79,623.79,884.53) },
+        { nome:'Bronze QP',         seg:'Bronze',        acom:'QP', abr:'Grupo de Municípios', cop:40, reemb:false, precos: p(163.99,222.70,261.43,261.43,261.43,292.02,403.28,481.52,692.43,981.87) },
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:40, reemb:false, precos: p(221.76,259.46,316.54,379.85,398.84,438.72,548.40,603.24,754.05,1319.59) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:40, reemb:false, precos: p(246.16,288.01,351.37,421.64,442.72,486.99,608.74,669.61,837.01,1464.77) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:40, reemb:true,  precos: p(252.17,295.04,359.95,431.94,453.54,498.89,623.61,685.97,857.46,1500.56) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(279.91,327.49,399.54,479.45,503.42,553.76,692.20,761.42,951.78,1665.62) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(325.82,381.21,465.08,558.10,586.01,644.61,805.76,886.34,1107.93,1938.88) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(329.05,384.99,469.69,563.63,591.81,650.99,813.74,895.11,1118.89,1958.06) },
+      ]},
+      { sigla:'SC', estado:'Santa Catarina', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:40, reemb:false, precos: p(237.18,277.50,338.55,406.26,426.57,469.23,586.54,645.19,806.49,1411.36) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:40, reemb:false, precos: p(263.27,308.03,375.80,450.96,473.51,520.86,651.08,716.19,895.24,1566.67) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:40, reemb:true,  precos: p(269.71,315.56,384.98,461.98,485.08,533.59,666.99,733.69,917.11,1604.94) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(299.37,350.26,427.32,512.78,538.42,592.26,740.33,814.36,1017.95,1781.41) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(332.47,388.99,474.57,569.48,597.95,657.75,822.19,904.41,1130.51,1978.39) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(335.77,392.85,479.28,575.14,603.90,664.29,830.36,913.40,1141.75,1998.06) },
+      ]},
+      { sigla:'RS', estado:'Rio Grande do Sul', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:40, reemb:false, precos: p(263.74,308.58,376.47,451.76,474.35,521.79,652.24,717.46,896.83,1569.45) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:40, reemb:false, precos: p(292.75,342.52,417.87,501.44,526.51,579.16,723.95,796.35,995.44,1742.02) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:40, reemb:true,  precos: p(299.91,350.89,428.09,513.71,539.40,593.34,741.68,815.85,1019.81,1784.67) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(332.90,389.49,475.18,570.22,598.73,658.60,823.25,905.58,1131.98,1980.97) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(344.10,402.60,491.17,589.40,618.87,680.76,850.95,936.05,1170.06,2047.61) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:40, reemb:true,  precos: p(347.51,406.59,496.04,595.25,625.01,687.51,859.39,945.33,1181.66,2067.91) },
+      ]},
+      { sigla:'DF', estado:'Distrito Federal', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Bronze QC',         seg:'Bronze',        acom:'QC', abr:'Grupo de Municípios', cop:30, reemb:false, precos: p(216.17,293.56,344.61,344.61,344.61,384.93,531.59,634.72,912.73,1294.25) },
+        { nome:'Bronze QP',         seg:'Bronze',        acom:'QP', abr:'Grupo de Municípios', cop:30, reemb:false, precos: p(239.95,325.85,382.52,382.52,382.52,427.27,590.06,704.53,1013.11,1436.59) },
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(289.90,339.18,413.80,496.56,521.39,573.53,716.91,788.60,985.75,1725.06) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(321.80,376.51,459.34,551.21,578.77,636.65,795.81,875.39,1094.24,1914.92) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(323.43,378.41,461.66,553.99,581.69,639.86,799.83,879.81,1099.76,1924.58) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(359.00,420.03,512.44,614.93,645.68,710.25,887.81,976.59,1220.74,2136.30) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(381.07,445.85,543.94,652.73,685.37,753.91,942.39,1036.63,1295.79,2267.63) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(384.85,450.27,549.33,659.20,692.16,761.38,951.73,1046.90,1308.63,2290.10) },
+        { nome:'Platinum Mais QP R1', seg:'Platinum Mais', acom:'QP', abr:'Nacional',          cop:30, reemb:true,  precos: p(473.60,554.11,676.01,811.21,851.77,936.95,1171.19,1288.31,1610.39,2818.18) },
+        { nome:'Platinum Mais QP R2', seg:'Platinum Mais', acom:'QP', abr:'Nacional',          cop:30, reemb:true,  precos: p(478.31,559.62,682.74,819.29,860.25,946.28,1182.85,1301.14,1626.43,2846.25) },
+      ]},
+      { sigla:'GO', estado:'Goiás', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(289.90,339.18,413.80,496.56,521.39,573.53,716.91,788.60,985.75,1725.06) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(321.80,376.51,459.34,551.21,578.77,636.65,795.81,875.39,1094.24,1914.92) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(323.43,378.41,461.66,553.99,581.69,639.86,799.83,879.81,1099.76,1924.58) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(359.00,420.03,512.44,614.93,645.68,710.25,887.81,976.59,1220.74,2136.30) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(381.07,445.85,543.94,652.73,685.37,753.91,942.39,1036.63,1295.79,2267.63) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(384.85,450.27,549.33,659.20,692.16,761.38,951.73,1046.90,1308.63,2290.10) },
+        { nome:'Platinum Mais QP R1', seg:'Platinum Mais', acom:'QP', abr:'Nacional',          cop:30, reemb:true,  precos: p(473.60,554.11,676.01,811.21,851.77,936.95,1171.19,1288.31,1610.39,2818.18) },
+        { nome:'Platinum Mais QP R2', seg:'Platinum Mais', acom:'QP', abr:'Nacional',          cop:30, reemb:true,  precos: p(478.31,559.62,682.74,819.29,860.25,946.28,1182.85,1301.14,1626.43,2846.25) },
+      ]},
+      { sigla:'BA', estado:'Bahia', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(349.85,409.32,499.37,599.24,629.20,692.12,865.15,951.67,1189.59,2081.78) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(388.33,454.35,554.31,665.17,698.43,768.27,960.34,1056.37,1320.46,2310.81) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(385.97,451.58,550.93,661.12,694.18,763.60,954.50,1049.95,1312.44,2296.77) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(428.44,501.27,611.55,733.86,770.55,847.61,1059.51,1165.46,1456.83,2549.45) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(463.03,541.75,660.94,793.13,832.79,916.07,1145.09,1259.60,1574.50,2755.38) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(467.62,547.12,667.49,800.99,841.04,925.14,1156.43,1272.07,1590.09,2782.66) },
+      ]},
+      { sigla:'PE', estado:'Pernambuco', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(312.22,365.30,445.67,534.80,561.54,617.69,772.11,849.32,1061.65,1857.89) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(346.57,405.49,494.70,593.64,623.32,685.65,857.06,942.77,1178.46,2062.31) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(399.26,467.13,569.90,683.88,718.07,789.88,987.35,1086.09,1357.61,2375.82) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(443.18,518.52,632.59,759.11,797.07,876.78,1095.98,1205.58,1506.98,2637.22) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(503.38,588.95,718.52,862.22,905.33,995.86,1244.83,1369.31,1711.64,2995.37) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(508.36,594.78,725.63,870.76,914.30,1005.73,1257.16,1382.88,1728.60,3025.05) },
+      ]},
+      { sigla:'CE', estado:'Ceará', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(213.37,249.64,304.56,365.47,383.74,422.11,527.64,580.40,725.50,1269.63) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(236.85,277.11,338.07,405.68,425.96,468.56,585.70,644.27,805.34,1409.35) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(286.61,335.33,409.10,490.92,515.47,567.02,708.78,779.66,974.58,1705.52) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(318.14,372.22,454.11,544.93,572.18,629.40,786.75,865.43,1081.79,1893.13) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(380.55,445.24,543.19,651.83,684.42,752.86,941.08,1035.19,1293.99,2264.48) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(384.33,449.67,548.60,658.32,691.24,760.36,950.45,1045.50,1306.88,2287.04) },
+      ]},
+      { sigla:'MA', estado:'Maranhão', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(402.33,470.73,574.29,689.15,723.61,795.97,994.96,1094.46,1368.08,2394.14) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(446.58,522.50,637.45,764.94,803.19,883.51,1104.39,1214.83,1518.54,2657.45) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(443.87,519.33,633.58,760.30,798.32,878.15,1097.69,1207.46,1509.33,2641.33) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(492.71,576.47,703.29,843.95,886.15,974.77,1218.46,1340.31,1675.39,2931.93) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(532.48,623.00,760.06,912.07,957.67,1053.44,1316.80,1448.48,1810.60,3168.55) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(537.76,629.18,767.60,921.12,967.18,1063.90,1329.88,1462.87,1828.59,3200.03) },
+      ]},
+      { sigla:'PB', estado:'Paraíba', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(240.05,280.86,342.65,411.18,431.74,474.91,593.64,653.00,816.25,1428.44) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(266.45,311.75,380.34,456.41,479.23,527.15,658.94,724.83,906.04,1585.57) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(291.80,341.41,416.52,499.82,524.81,577.29,721.61,793.77,992.21,1736.37) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(323.91,378.97,462.34,554.81,582.55,640.81,801.01,881.11,1101.39,1927.43) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(336.16,393.31,479.84,575.81,604.60,665.06,831.33,914.46,1143.08,2000.39) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(339.50,397.22,484.61,581.53,610.61,671.67,839.59,923.55,1154.44,2020.27) },
+      ]},
+      { sigla:'RN', estado:'Rio Grande do Norte', atualizadoEm:'2026-04-24', planos:[
+        { nome:'Prata QC',          seg:'Prata',         acom:'QC', abr:'Nacional',            cop:30, reemb:false, precos: p(240.05,280.86,342.65,411.18,431.74,474.91,593.64,653.00,816.25,1428.44) },
+        { nome:'Prata QP',          seg:'Prata',         acom:'QP', abr:'Nacional',            cop:30, reemb:false, precos: p(266.45,311.75,380.34,456.41,479.23,527.15,658.94,724.83,906.04,1585.57) },
+        { nome:'Ouro QC',           seg:'Ouro',          acom:'QC', abr:'Nacional',            cop:30, reemb:true,  precos: p(291.80,341.41,416.52,499.82,524.81,577.29,721.61,793.77,992.21,1736.37) },
+        { nome:'Ouro QP',           seg:'Ouro',          acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(323.91,378.97,462.34,554.81,582.55,640.81,801.01,881.11,1101.39,1927.43) },
+        { nome:'Platinum QP R1',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(336.16,393.31,479.84,575.81,604.60,665.06,831.33,914.46,1143.08,2000.39) },
+        { nome:'Platinum QP R2',    seg:'Platinum',      acom:'QP', abr:'Nacional',            cop:30, reemb:true,  precos: p(339.50,397.22,484.61,581.53,610.61,671.67,839.59,923.55,1154.44,2020.27) },
+      ]},
+    ];
+
+    // --- RENDERIZAÇÃO ---
+    const fmt = v => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    const badgeClass = seg => ({
+      'Bronze':'b-bronze','Bronze Mais':'b-bronze','Prata':'b-prata',
+      'Ouro':'b-ouro','Platinum':'b-platinum','Platinum Mais':'b-platinum-mais'
+    }[seg] || 'b-prata');
+
+    function agruparPlanos(planos) {
+      const grupos = {};
+      planos.forEach(p => {
+        const key = p.seg.replace('Mais','').trim();
+        if (!grupos[key]) grupos[key] = [];
+        grupos[key].push(p);
+      });
+      return grupos;
+    }
+
+    function renderTabela(planos) {
+      const header = `<thead><tr><th>Faixa</th>${planos.map(p =>
+        `<th><span class="plano-label">${p.nome}</span>
+         <span class="plano-desc">${p.abr} · ${p.cop}% copart${p.reemb ? ' · reembolso' : ''}
+         <span class="badge ${badgeClass(p.seg)}">${p.seg}</span></span></th>`
+      ).join('')}</tr></thead>`;
+
+      const rows = FAIXAS.map((faixa, i) =>
+        `<tr><td>${faixa}</td>${planos.map(p =>
+          `<td class="valor">R$ ${fmt(p.precos[i])}</td>`
+        ).join('')}</tr>`
+      ).join('');
+
+      return `<table>${header}<tbody>${rows}</tbody></table>`;
+    }
+
+    function renderEstado(t) {
+      const grupos = agruparPlanos(t.planos);
+      const gruposHTML = Object.entries(grupos).map(([nome, planos]) =>
+        `<div class="tabela-grupo">
+          <h3>${nome}</h3>
+          ${renderTabela(planos)}
+        </div>`
+      ).join('');
+
+      return `<div id="${t.sigla}" class="estado-card">
+        <div class="estado-header">
+          <h2><span class="sigla">${t.sigla}</span>${t.estado}</h2>
+          <div class="meta">${t.planos.length} planos · atualizado em ${t.atualizadoEm}</div>
+        </div>
+        ${gruposHTML}
+      </div>`;
+    }
+
+    document.getElementById('app').innerHTML = TABELAS.map(renderEstado).join('');
+  </script>
+</body>
+</html>

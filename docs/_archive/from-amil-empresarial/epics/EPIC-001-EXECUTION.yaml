@@ -1,0 +1,590 @@
+# EPIC-001: Site Amil Empresarial — Dominação SEO
+# Referência: PRD-001-amil-empresarial-site.md
+# Autor: Morgan (PM) — 2026-03-17
+
+epic:
+  id: EPIC-001
+  title: "Site Amil Planos Empresariais — Dominação SEO 1000+ Páginas"
+  prd: docs/prd/PRD-001-amil-empresarial-site.md
+  status: planned
+  created: 2026-03-17
+  target_completion: 2026-12-31
+
+  # Execução em 4 Waves (parallelizable onde possível)
+  # Wave = grupo de stories que podem ser executadas em paralelo
+  # Gate = checkpoint de qualidade antes da próxima wave
+
+  waves:
+    # ============================================================
+    # WAVE 1: FUNDAÇÃO TÉCNICA (Semanas 1-2)
+    # Objetivo: Infraestrutura, stack, design system, Schema base
+    # ============================================================
+    - id: wave-1
+      name: "Fundação Técnica"
+      target: "Semanas 1-2"
+      gate: "Projeto rodando local com PageSpeed 95+, Schema validado"
+      stories:
+        - id: "1.1"
+          title: "Setup do Projeto Next.js 15 + Configuração Base"
+          agent: "@architect + @dev"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Criar projeto Next.js 15 com App Router, configurar:
+            - TypeScript strict mode
+            - Tailwind CSS com design tokens
+            - ESLint + Prettier
+            - Estrutura de pastas (app/, components/, lib/, content/)
+            - next.config.js otimizado (images, headers, redirects)
+            - package.json com scripts
+          acceptance_criteria:
+            - "Next.js 15 App Router rodando com TypeScript"
+            - "Tailwind CSS configurado com purge"
+            - "ESLint + Prettier sem erros"
+            - "Estrutura de pastas conforme arquitetura do PRD"
+            - "Build sem warnings"
+
+        - id: "1.2"
+          title: "Setup Sanity CMS + Schemas de Conteúdo"
+          agent: "@data-engineer + @dev"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Configurar Sanity CMS headless com schemas:
+            - Plano (nome, slug, tipo, cobertura, features, preço base)
+            - Cidade (nome, slug, estado, UF, hospitais, tem_espaco_saude)
+            - FaixaPreco (plano_ref, faixa_etaria, preco, vigencia)
+            - BlogPost (titulo, slug, categoria, conteudo, meta_title, meta_description, schema_faq)
+            - FAQ (pergunta, resposta, categoria, plano_ref)
+            - Lead (nome, whatsapp, tipo_empresa, qtd_vidas, cidade, utm)
+          acceptance_criteria:
+            - "Sanity Studio acessível e funcional"
+            - "6 schemas criados e validados"
+            - "GROQ queries funcionais para cada schema"
+            - "Preview mode configurado"
+            - "Webhook de revalidação Next.js funcionando"
+
+        - id: "1.3"
+          title: "Design System + Componentes Base"
+          agent: "@ux + @dev"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Criar design system com componentes reutilizáveis:
+            - Paleta de cores (Azul Amil #0066CC, Verde CTA #00C853, etc.)
+            - Tipografia (Inter, 2 weights)
+            - PlanCard, PriceTable, QuoteForm (multi-step 4 campos)
+            - FAQAccordion, ComparisonTable, LocalHero
+            - BlogCard, BreadcrumbNav, StatsCounter, TestimonialCard
+            - Header responsivo + Footer com NAP
+            - Layout base (sidebar sticky com CTA)
+          acceptance_criteria:
+            - "10 componentes criados e documentados"
+            - "Responsivos (mobile-first)"
+            - "Acessíveis (WCAG 2.1 AA)"
+            - "Design consistente com paleta Amil"
+            - "QuoteForm multi-step funcional com 4 campos"
+
+        - id: "1.4"
+          title: "Schema Markup Engine (@graph)"
+          agent: "@dev"
+          priority: MUST
+          points: 5
+          status: planned
+          description: |
+            Criar engine de Schema markup reutilizável:
+            - Componente SchemaGraph que gera @graph por página
+            - Schema Organization (global)
+            - Schema WebSite + SearchAction (home)
+            - Schema BreadcrumbList (todas exceto home)
+            - Schema FAQPage (páginas de plano, FAQ, blog)
+            - Schema Product/Service (páginas de plano, preços)
+            - Schema LocalBusiness (páginas locais)
+            - Validação automática via Google Rich Results Test
+          acceptance_criteria:
+            - "Componente SchemaGraph aceita config por página"
+            - "5 tipos de Schema implementados"
+            - "JSON-LD válido em todas as páginas de teste"
+            - "Validação passa no Google Rich Results Test"
+
+        - id: "1.5"
+          title: "SEO Engine: Meta Tags + Sitemap + robots.txt"
+          agent: "@dev"
+          priority: MUST
+          points: 5
+          status: planned
+          description: |
+            Implementar SEO técnico completo:
+            - generateMetadata() em cada page com template otimizado
+            - Title: {Keyword} {Ano} | {CTA} — {Brand} (max 60 chars)
+            - Description: {Benefício}. {Detalhe}. {CTA}. (max 160 chars)
+            - Open Graph tags para compartilhamento social
+            - Canonical URLs
+            - Sitemap XML dinâmico (sitemap-index com sub-sitemaps)
+            - robots.txt
+            - Breadcrumbs visuais + Schema
+          acceptance_criteria:
+            - "Meta tags únicas por página (não duplicadas)"
+            - "Sitemap XML com sub-sitemaps por silo"
+            - "robots.txt bloqueando /api/ e /admin/"
+            - "Canonical URLs em todas as páginas"
+            - "Open Graph tags presentes"
+            - "Breadcrumbs renderizando corretamente"
+
+    # ============================================================
+    # WAVE 1 GATE: Validação de Fundação
+    # ============================================================
+    # Checkpoint: @qa valida PageSpeed, Schema, build, acessibilidade
+    # Critério: PageSpeed 95+, Schema válido, zero erros de build
+
+    # ============================================================
+    # WAVE 2: CONTEÚDO FUNDACIONAL (Semanas 3-4)
+    # Objetivo: 50 páginas core — planos, comparativos, FAQ, preços
+    # ============================================================
+    - id: wave-2
+      name: "Conteúdo Fundacional"
+      target: "Semanas 3-4"
+      depends_on: wave-1
+      gate: "50 páginas publicadas, Schema validado em todas, PageSpeed 95+"
+      stories:
+        - id: "2.1"
+          title: "Home Page + Página de Cotação Online"
+          agent: "@dev"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Criar páginas principais:
+            - Home: Hero com CTA, cards de planos, stats Amil, diferenciais, blog preview, form
+            - /cotacao-online/: Formulário multi-step full-page
+            - /sobre-nos/: Institucional
+            - /contato/: Formulário + mapa + telefones regionais
+          acceptance_criteria:
+            - "Home com todas as seções do PRD"
+            - "Formulário multi-step 4 steps funcional"
+            - "Leads chegando ao Sanity (ou email)"
+            - "Schema Organization + WebSite na home"
+            - "PageSpeed 95+ mobile"
+
+        - id: "2.2"
+          title: "8 Páginas de Plano (Produto)"
+          agent: "@dev"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Criar página dedicada para cada plano:
+            1. Amil Fácil S60
+            2. Amil Fácil S80
+            3. Amil S380
+            4. Amil S450
+            5. Amil S580
+            6. Amil S750
+            7. Amil One S2500
+            8. Amil One S6500 Black
+
+            Cada página: 1500+ palavras, tabela de preços, rede credenciada,
+            diferenciais, para quem é indicado, FAQ 5-8 perguntas, CTA.
+          acceptance_criteria:
+            - "8 páginas publicadas com 1500+ palavras cada"
+            - "Schema Product + FAQPage em cada uma"
+            - "Tabela de preços por faixa etária"
+            - "FAQ com 5-8 perguntas únicas por plano"
+            - "Links internos para comparativos e cotação"
+            - "Meta title e description únicos"
+
+        - id: "2.3"
+          title: "8 Páginas de Tipo de Contratação"
+          agent: "@dev"
+          priority: MUST
+          points: 5
+          status: planned
+          description: |
+            Criar páginas por segmento:
+            1. /empresarial/ (hub)
+            2. /empresarial/mei/
+            3. /empresarial/pme-2-a-29-vidas/
+            4. /empresarial/pme-30-a-99-vidas/
+            5. /empresarial/grandes-empresas-100-vidas/
+            6. /individual/
+            7. /familiar/
+            8. /adesao/
+          acceptance_criteria:
+            - "8 páginas publicadas com conteúdo único"
+            - "Schema BreadcrumbList em todas"
+            - "Links internos para planos específicos"
+            - "CTA de cotação em cada página"
+
+        - id: "2.4"
+          title: "21 Páginas de Comparativos"
+          agent: "@dev"
+          priority: SHOULD
+          points: 8
+          status: planned
+          description: |
+            Criar páginas de comparação:
+            Internas: S380 vs S450, S450 vs S750, S60 vs S80, S750 vs One,
+                     S380 vs S750, S60 vs S380, S80 vs S450, One S2500 vs S6500
+            Externas: Amil vs Unimed, Amil vs SulAmérica, Amil vs Bradesco Saúde,
+                     Amil vs Hapvida, Amil vs Porto Seguro, Amil vs NotreDame,
+                     Amil vs Allianz, Amil vs Cassi
+            Cada uma: tabela lado a lado, veredicto, FAQ com Schema.
+          acceptance_criteria:
+            - "21 páginas publicadas com tabela comparativa"
+            - "Schema FAQPage em cada uma"
+            - "Conteúdo único (não duplicado entre páginas inversas)"
+            - "Links internos para páginas de plano"
+
+        - id: "2.5"
+          title: "15 Páginas de Tabela de Preços"
+          agent: "@dev"
+          priority: MUST
+          points: 5
+          status: planned
+          description: |
+            Criar páginas de preço:
+            - Hub /tabela-de-precos/
+            - 1 por plano (8 páginas)
+            - /tabela-de-precos/por-faixa-etaria/
+            - /tabela-de-precos/amil-dental/
+            - Tabelas filtráveis (faixa etária, nº vidas, região)
+            - Schema Product com AggregateOffer
+          acceptance_criteria:
+            - "15 páginas com tabelas de preço 2026"
+            - "Filtros funcionais (client-side)"
+            - "Schema Product com AggregateOffer"
+            - "Dados atualizáveis via CMS"
+
+        - id: "2.6"
+          title: "15 Primeiras Páginas FAQ + Hub"
+          agent: "@dev"
+          priority: MUST
+          points: 5
+          status: planned
+          description: |
+            Criar:
+            - Hub /perguntas-frequentes/ com lista de todas FAQs
+            - 15 páginas FAQ individuais (long-tail keywords):
+              carência, coparticipação, reembolso, cirurgia bariátrica,
+              MEI, portabilidade, segunda via boleto, telemedicina,
+              rede credenciada, acomodação, área de cobertura,
+              dependentes, inclusão de beneficiário, cancelamento, carência zero
+          acceptance_criteria:
+            - "16 páginas (1 hub + 15 individuais)"
+            - "Schema FAQPage em cada página individual"
+            - "800+ palavras por FAQ"
+            - "Links internos para planos relacionados"
+
+    # ============================================================
+    # WAVE 2 GATE: QA + Deploy
+    # ============================================================
+    # @qa: Validar 50 páginas, Schema, PageSpeed, mobile, acessibilidade
+    # @devops: Deploy Vercel + domínio + SSL + Search Console + GA4
+
+    # ============================================================
+    # WAVE 3: EXPANSÃO LOCAL (Semanas 5-12)
+    # Objetivo: 500+ páginas locais — estados + cidades
+    # ============================================================
+    - id: wave-3
+      name: "Expansão Local + Blog"
+      target: "Semanas 5-12"
+      depends_on: wave-2
+      gate: "400+ páginas indexadas, tráfego orgânico iniciado"
+      stories:
+        - id: "3.1"
+          title: "Template Dinâmico de Página Local + Dados"
+          agent: "@dev + @data-engineer"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Criar sistema de geração de páginas locais:
+            - Template Next.js com generateStaticParams()
+            - Schema Sanity para Cidade (nome, estado, hospitais, espaco_saude)
+            - Banco de dados com 500+ cidades e hospitais reais
+            - Seções: intro local, hospitais credenciados, Espaço Saúde,
+              planos disponíveis, preços regionais, FAQ local, mapa, CTA
+            - Schema LocalBusiness + FAQPage automático
+          acceptance_criteria:
+            - "Template gera página única por cidade"
+            - "Dados reais de hospitais por cidade"
+            - "Schema LocalBusiness com endereço correto"
+            - "Build estático funcional para 500+ rotas"
+            - "Tempo de build < 5 minutos"
+
+        - id: "3.2"
+          title: "27 Páginas de Estado (Hubs Regionais)"
+          agent: "@dev"
+          priority: MUST
+          points: 5
+          status: planned
+          description: |
+            Criar hub para cada estado + DF:
+            - /plano-amil-sao-paulo/ (hub com links para cidades)
+            - /plano-amil-rio-de-janeiro/
+            - /plano-amil-minas-gerais/
+            - ... (todos os 26 estados + DF)
+            Cada hub: intro regional, cidades atendidas, planos disponíveis,
+            rede credenciada estadual, FAQ regional.
+          acceptance_criteria:
+            - "27 páginas de estado publicadas"
+            - "Links para cidades filhas"
+            - "Conteúdo único por estado"
+            - "Schema BreadcrumbList + FAQPage"
+
+        - id: "3.3"
+          title: "100 Páginas de Cidades Grandes"
+          agent: "@dev"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Criar páginas para as 100 maiores cidades do Brasil
+            onde a Amil atua. Conteúdo gerado via template com
+            dados reais por cidade do CMS.
+          acceptance_criteria:
+            - "100 páginas de cidade publicadas"
+            - "Hospitais reais listados por cidade"
+            - "Mapa embed do Google Maps"
+            - "Schema LocalBusiness correto"
+
+        - id: "3.4"
+          title: "200 Páginas de Cidades Médias"
+          agent: "@dev"
+          priority: SHOULD
+          points: 8
+          status: planned
+          description: |
+            Expandir para cidades médias e regiões metropolitanas.
+            Foco em cidades com presença Amil confirmada.
+          acceptance_criteria:
+            - "200 páginas adicionais publicadas"
+            - "Dados reais verificados"
+            - "Sem conteúdo duplicado entre cidades"
+
+        - id: "3.5"
+          title: "Rede Credenciada — 5 Páginas + Busca"
+          agent: "@dev"
+          priority: SHOULD
+          points: 5
+          status: planned
+          description: |
+            Criar seção de rede credenciada:
+            - /rede-credenciada/ (hub)
+            - /rede-credenciada/hospitais/
+            - /rede-credenciada/laboratorios/
+            - /rede-credenciada/clinicas/
+            - /rede-credenciada/amil-espaco-saude/
+            - Busca por cidade/estado (client-side)
+          acceptance_criteria:
+            - "5 páginas publicadas"
+            - "Busca funcional por região"
+            - "Dados reais de hospitais/labs"
+
+        - id: "3.6"
+          title: "Blog — Primeiros 64 Posts (8/semana)"
+          agent: "@dev + Redator"
+          priority: MUST
+          points: 13
+          status: planned
+          description: |
+            Criar seção de blog e publicar primeiros 64 posts:
+            - /blog/ (hub com categorias)
+            - Categorias: guias, notícias, comparativos, dicas-saude,
+              legislação-ans, benefícios-corporativos, long-tail-faq
+            - 2000+ palavras por post
+            - FAQ ao final com Schema
+            - CTA inline após 1/3 do artigo
+            - Mínimo 3 links internos por post
+            - Imagens otimizadas com alt text
+          acceptance_criteria:
+            - "64 posts publicados em 8 semanas"
+            - "2000+ palavras por post"
+            - "Schema FAQPage em cada post"
+            - "Meta title e description únicos"
+            - "3+ links internos por post"
+            - "Paginação funcional no hub"
+
+    # ============================================================
+    # WAVE 3 GATE: Validação de Escala
+    # ============================================================
+    # @qa: Validar 400+ páginas (sampling), performance, duplicação
+    # Critério: Tráfego orgânico > 2000 visitas/mês
+
+    # ============================================================
+    # WAVE 4: ESCALA + OTIMIZAÇÃO (Meses 4-12)
+    # Objetivo: 1000+ páginas, link building, otimização contínua
+    # ============================================================
+    - id: wave-4
+      name: "Escala Final + Otimização"
+      target: "Meses 4-12"
+      depends_on: wave-3
+      gate: "1000+ páginas, Top 5 keywords principais, 10K+ tráfego/mês"
+      stories:
+        - id: "4.1"
+          title: "200 Páginas de Cidades Menores"
+          agent: "@dev"
+          priority: COULD
+          points: 8
+          status: planned
+          description: |
+            Expandir para cidades menores com presença Amil.
+            Verificar dados de rede credenciada antes de criar.
+          acceptance_criteria:
+            - "200 páginas adicionais publicadas"
+            - "Total de páginas locais: 500+"
+            - "Sem páginas com dados incorretos"
+
+        - id: "4.2"
+          title: "50 Páginas de Procedimentos (Amil Cobre X?)"
+          agent: "@dev + Redator"
+          priority: SHOULD
+          points: 8
+          status: planned
+          description: |
+            Criar páginas long-tail para procedimentos:
+            - /faq/amil-cobre-cirurgia-bariatrica/
+            - /faq/amil-cobre-fertilizacao/
+            - /faq/amil-cobre-aparelho-ortodontico/
+            - /faq/amil-cobre-fisioterapia/
+            - ... (50 procedimentos mais buscados)
+            800+ palavras cada, Schema FAQPage.
+          acceptance_criteria:
+            - "50 páginas de procedimentos publicadas"
+            - "Schema FAQPage em todas"
+            - "Informação verificada pela tabela ANS"
+
+        - id: "4.3"
+          title: "Blog — Escala para 300+ Posts (8/semana contínuo)"
+          agent: "@dev + Redator"
+          priority: MUST
+          points: 13
+          status: planned
+          description: |
+            Continuar produção de blog:
+            - 240 posts adicionais (meses 4-12)
+            - Manter ritmo de 8 posts/semana
+            - Diversificar categorias conforme performance
+            - Atualizar posts antigos com dados novos
+          acceptance_criteria:
+            - "300+ posts totais publicados"
+            - "Tráfego de blog > 5000 visitas/mês"
+            - "10+ posts rankando no Top 10"
+
+        - id: "4.4"
+          title: "SEO Off-Page — Link Building"
+          agent: "@analyst + @devops"
+          priority: MUST
+          points: 8
+          status: planned
+          description: |
+            Executar estratégia de link building:
+            - Mês 1-2: Google Business Profile + 10 diretórios
+            - Mês 2-4: 8 guest posts/mês em blogs de RH/contabilidade
+            - Mês 3-6: 5 parcerias com escritórios de contabilidade
+            - Mês 4-8: 3 publicações/mês em portais de saúde/negócios
+            - Mês 6-12: Infográficos + estudos de caso
+          acceptance_criteria:
+            - "Google Business Profile 100% otimizado"
+            - "NAP consistente em 10+ diretórios"
+            - "20+ backlinks de domínios com DA > 30"
+            - "3+ backlinks de portais de alta autoridade"
+
+        - id: "4.5"
+          title: "Integrações Pós-MVP — CRM + Heatmaps + Email"
+          agent: "@dev"
+          priority: COULD
+          points: 5
+          status: planned
+          description: |
+            Integrar ferramentas de otimização:
+            - HubSpot ou Pipedrive (CRM para leads)
+            - Hotjar ou Microsoft Clarity (heatmaps)
+            - Mailchimp ou Brevo (email marketing)
+            - Semrush ou Ahrefs (monitoramento SEO)
+          acceptance_criteria:
+            - "CRM recebendo leads automaticamente"
+            - "Heatmaps ativos nas 5 páginas mais visitadas"
+            - "Sequência de email automática para leads"
+
+        - id: "4.6"
+          title: "Otimização Contínua — A/B Tests + Content Updates"
+          agent: "@qa + @dev"
+          priority: SHOULD
+          points: 5
+          status: planned
+          description: |
+            Ciclo contínuo de otimização:
+            - A/B test no formulário (textos, cores, steps)
+            - A/B test nos CTAs (posição, texto, cor)
+            - Atualizar tabelas de preço (trimestral)
+            - Refresh de posts antigos com dados novos
+            - Monitorar e corrigir erros do Search Console
+            - Analisar keywords do Search Console e criar conteúdo
+          acceptance_criteria:
+            - "3+ A/B tests executados"
+            - "Taxa de conversão > 5%"
+            - "Zero erros críticos no Search Console"
+            - "Preços atualizados trimestralmente"
+
+  # ============================================================
+  # RESUMO DO EPIC
+  # ============================================================
+  summary:
+    total_stories: 20
+    total_points: 139
+    waves: 4
+
+    stories_by_priority:
+      MUST: 14
+      SHOULD: 4
+      COULD: 2
+
+    stories_by_agent:
+      "@dev": 16
+      "@architect": 1
+      "@ux": 1
+      "@data-engineer": 2
+      "@qa": 2
+      "@devops": 2
+      "@analyst": 1
+      "Redator": 3
+
+    timeline:
+      wave_1: "Semanas 1-2 (Fundação)"
+      wave_2: "Semanas 3-4 (50 páginas core)"
+      wave_3: "Semanas 5-12 (400+ páginas)"
+      wave_4: "Meses 4-12 (1000+ páginas + otimização)"
+
+    milestones:
+      - date: "Semana 4"
+        milestone: "MVP: 50 páginas + deploy + Search Console"
+      - date: "Semana 12"
+        milestone: "400+ páginas + blog ativo + tráfego inicial"
+      - date: "Mês 6"
+        milestone: "500+ páginas + Top 5 keywords + 10K visitas/mês"
+      - date: "Mês 12"
+        milestone: "1000+ páginas + Top 3 keywords + 50K visitas/mês"
+
+    kpis:
+      month_3:
+        pages_indexed: 100
+        organic_traffic: 2000
+        keywords_top_10: 50
+        conversion_rate: "3%"
+        leads_per_month: 100
+      month_6:
+        pages_indexed: 500
+        organic_traffic: 10000
+        keywords_top_10: 200
+        conversion_rate: "5%"
+        leads_per_month: 500
+      month_12:
+        pages_indexed: 1000
+        organic_traffic: 50000
+        keywords_top_10: 500
+        conversion_rate: "7%"
+        leads_per_month: 2000

@@ -1,0 +1,177 @@
+{
+  "planos": [
+    {
+      "nome": "Amil Fácil S80",
+      "slug": "amil-facil-s80",
+      "linha": "amil-facil",
+      "tipo": "empresarial",
+      "cobertura": "regional",
+      "coparticipacao": true,
+      "reembolso": false,
+      "telemedicina": true,
+      "features": [
+        "Cobertura em 111 cidades (5 estados)",
+        "Coparticipação total ou parcial",
+        "Cobertura nacional de emergência (12 meses)",
+        "Telemedicina 24h",
+        "Cartão virtual no app",
+        "Descontos em farmácias até 40%"
+      ],
+      "hospitais_destaque": ["Hospital São Luiz", "Hospital Vitória", "Hospital Santa Cruz"],
+      "preco_base": 101.84,
+      "meta_title": "Amil Fácil S80 Empresarial 2026 | Preço e Cobertura",
+      "meta_description": "Plano Amil Fácil S80: cobertura em 111 cidades, 5 estados. Coparticipação, telemedicina 24h. A partir de R$ 101,84. Simule grátis."
+    },
+    {
+      "nome": "Amil S450",
+      "slug": "amil-s450",
+      "linha": "amil",
+      "tipo": "empresarial",
+      "cobertura": "nacional",
+      "coparticipacao": true,
+      "reembolso": true,
+      "telemedicina": true,
+      "features": [
+        "Cobertura nacional",
+        "Rede credenciada com hospitais renomados",
+        "Reembolso disponível",
+        "Telemedicina 24h",
+        "Descontos em farmácias",
+        "Transplantes adicionais cobertos"
+      ],
+      "hospitais_destaque": ["Hospital Beneficência Portuguesa (SP)", "Hospital Vitória (RJ)", "Hospital Moinhos de Vento (RS)"],
+      "preco_base": 184.21,
+      "meta_title": "Amil S450 Empresarial 2026 | Cobertura Nacional — Preços",
+      "meta_description": "Amil S450 Empresarial: cobertura nacional, hospitais renomados, reembolso. A partir de R$ 184,21. Compare e simule grátis em 30s."
+    },
+    {
+      "nome": "Amil One S2500",
+      "slug": "amil-one-s2500",
+      "linha": "amil-one",
+      "tipo": "empresarial",
+      "cobertura": "nacional",
+      "coparticipacao": false,
+      "reembolso": true,
+      "telemedicina": true,
+      "features": [
+        "Rede credenciada exclusiva premium",
+        "Telemedicina 24h com médicos Einstein",
+        "2 níveis de reembolso (3 dias úteis)",
+        "Cobertura de vacinas (cidades selecionadas)",
+        "Coleta domiciliar",
+        "Assistência viagem internacional US$ 300K",
+        "Cirurgia refrativa ilimitada"
+      ],
+      "hospitais_destaque": ["Hospital Albert Einstein", "Hospital Sírio-Libanês", "Hospital Copa D'Or"],
+      "preco_base": 591.63,
+      "meta_title": "Amil One S2500 Empresarial 2026 | Plano Premium",
+      "meta_description": "Amil One S2500: rede exclusiva Einstein e Sírio-Libanês, reembolso em 3 dias, assistência viagem US$300K. A partir de R$ 591,63."
+    }
+  ],
+  "cidades": [
+    {
+      "nome": "São Paulo",
+      "slug": "sao-paulo",
+      "estado": "São Paulo",
+      "uf": "SP",
+      "populacao": 12396372,
+      "tem_espaco_saude": true,
+      "espaco_saude_endereco": "Av. Paulista, 2300 - Bela Vista",
+      "telefone_regional": "(11) 4200-7866",
+      "hospitais_amil": [
+        { "nome": "Hospital Vitória", "endereco": "R. Dr. Alceu de Campos Rodrigues, 95 - Itaim Bibi", "tipo": "hospital" },
+        { "nome": "Hospital São Luiz - Morumbi", "endereco": "R. Dr. Alceu de Campos Rodrigues, 143 - Itaim Bibi", "tipo": "hospital" },
+        { "nome": "Fleury Faria Lima", "endereco": "Av. Brig. Faria Lima, 2759 - Jardim Paulistano", "tipo": "laboratorio" }
+      ],
+      "meta_title": "Plano Amil Empresarial em São Paulo | Cotação 2026",
+      "meta_description": "Plano Amil Empresarial em SP: hospitais Vitória, São Luiz, Albert Einstein. Espaço Saúde Paulista. Simule grátis."
+    },
+    {
+      "nome": "Rio de Janeiro",
+      "slug": "rio-de-janeiro",
+      "estado": "Rio de Janeiro",
+      "uf": "RJ",
+      "populacao": 6775561,
+      "tem_espaco_saude": true,
+      "espaco_saude_endereco": "R. da Assembleia, 100 - Centro",
+      "telefone_regional": "(21) 2042-2690",
+      "hospitais_amil": [
+        { "nome": "Hospital Copa D'Or", "endereco": "R. Figueiredo de Magalhães, 875 - Copacabana", "tipo": "hospital" },
+        { "nome": "Hospital Vitória - Barra", "endereco": "Av. Armando Lombardi, 400 - Barra", "tipo": "hospital" },
+        { "nome": "Labs a+ Botafogo", "endereco": "R. Real Grandeza, 139 - Botafogo", "tipo": "laboratorio" }
+      ],
+      "meta_title": "Plano Amil Empresarial no Rio de Janeiro | Cotação 2026",
+      "meta_description": "Amil Empresarial RJ: hospitais Copa D'Or, Vitória Barra. Espaço Saúde Centro. Cotação grátis em 30s."
+    },
+    {
+      "nome": "Belo Horizonte",
+      "slug": "belo-horizonte",
+      "estado": "Minas Gerais",
+      "uf": "MG",
+      "populacao": 2530701,
+      "tem_espaco_saude": true,
+      "espaco_saude_endereco": "Av. Afonso Pena, 4000 - Mangabeiras",
+      "telefone_regional": "(31) 2342-0743",
+      "hospitais_amil": [
+        { "nome": "Hospital Mater Dei", "endereco": "R. Gonçalves Dias, 2700 - Santo Agostinho", "tipo": "hospital" },
+        { "nome": "Hospital Biocor", "endereco": "R. da Paisagem, 240 - Nova Lima", "tipo": "hospital" }
+      ],
+      "meta_title": "Plano Amil Empresarial em BH | Cotação 2026",
+      "meta_description": "Amil Empresarial BH: hospitais Mater Dei, Biocor. Espaço Saúde Mangabeiras. Compare planos e simule grátis."
+    },
+    {
+      "nome": "Curitiba",
+      "slug": "curitiba",
+      "estado": "Paraná",
+      "uf": "PR",
+      "populacao": 1963726,
+      "tem_espaco_saude": true,
+      "espaco_saude_endereco": "Av. Sete de Setembro, 5000 - Batel",
+      "telefone_regional": "(41) 3542-1590",
+      "hospitais_amil": [
+        { "nome": "Hospital Marcelino Champagnat", "endereco": "Av. Pres. Affonso Camargo, 1399 - Cristo Rei", "tipo": "hospital" }
+      ],
+      "meta_title": "Plano Amil Empresarial em Curitiba | Cotação 2026",
+      "meta_description": "Amil Empresarial Curitiba: Hospital Champagnat, Espaço Saúde Batel. Cotação para empresas do PR."
+    },
+    {
+      "nome": "Campinas",
+      "slug": "campinas",
+      "estado": "São Paulo",
+      "uf": "SP",
+      "populacao": 1223237,
+      "tem_espaco_saude": false,
+      "telefone_regional": "(19) 2042-2040",
+      "hospitais_amil": [
+        { "nome": "Hospital Vera Cruz", "endereco": "Av. Andrade Neves, 402 - Centro", "tipo": "hospital" },
+        { "nome": "Fleury Campinas", "endereco": "R. Dr. Quirino, 1519 - Centro", "tipo": "laboratorio" }
+      ],
+      "meta_title": "Plano Amil Empresarial em Campinas | Cotação 2026",
+      "meta_description": "Amil Empresarial Campinas: Hospital Vera Cruz, Fleury. Planos a partir de R$ 101,84. Simule grátis."
+    }
+  ],
+  "faqs": [
+    { "pergunta": "Qual o valor do plano Amil Empresarial?", "categoria": "empresarial", "slug": "valor-plano-amil-empresarial" },
+    { "pergunta": "O plano Amil Empresarial aceita MEI?", "categoria": "empresarial", "slug": "amil-empresarial-aceita-mei" },
+    { "pergunta": "O plano Amil Empresarial tem carência?", "categoria": "empresarial", "slug": "amil-empresarial-tem-carencia" },
+    { "pergunta": "Qual a diferença entre Amil S380 e S450?", "categoria": "geral", "slug": "diferenca-amil-s380-s450" },
+    { "pergunta": "O que é coparticipação no plano Amil?", "categoria": "geral", "slug": "coparticipacao-plano-amil" },
+    { "pergunta": "Como funciona o reembolso da Amil?", "categoria": "geral", "slug": "reembolso-amil-como-funciona" },
+    { "pergunta": "A Amil cobre cirurgia bariátrica?", "categoria": "procedimentos", "slug": "amil-cobre-cirurgia-bariatrica" },
+    { "pergunta": "Como usar a telemedicina Amil?", "categoria": "geral", "slug": "telemedicina-amil-como-usar" },
+    { "pergunta": "O plano Amil Dental cobre implante?", "categoria": "dental", "slug": "amil-dental-cobre-implante" },
+    { "pergunta": "Como fazer portabilidade para a Amil?", "categoria": "geral", "slug": "portabilidade-para-amil" }
+  ],
+  "faixasPreco": [
+    { "plano": "amil-facil-s80", "faixa_etaria": "00-18", "preco": 101.84 },
+    { "plano": "amil-facil-s80", "faixa_etaria": "19-23", "preco": 127.30 },
+    { "plano": "amil-facil-s80", "faixa_etaria": "29-33", "preco": 165.52 },
+    { "plano": "amil-s450", "faixa_etaria": "00-18", "preco": 184.21 },
+    { "plano": "amil-s450", "faixa_etaria": "19-23", "preco": 230.26 },
+    { "plano": "amil-s450", "faixa_etaria": "29-33", "preco": 299.34 },
+    { "plano": "amil-s450", "faixa_etaria": "59+", "preco": 1120.50 },
+    { "plano": "amil-one-s2500", "faixa_etaria": "00-18", "preco": 591.63 },
+    { "plano": "amil-one-s2500", "faixa_etaria": "29-33", "preco": 769.12 },
+    { "plano": "amil-one-s2500", "faixa_etaria": "59+", "preco": 2890.50 }
+  ]
+}
