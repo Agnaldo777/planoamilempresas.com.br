@@ -26,13 +26,13 @@ export default function PortalEmpresaPage() {
             Gerencie seu plano empresarial: inclusão/exclusão de vidas, 2ª via de boleto, relatórios.
           </p>
 
-          <div className="mt-8 rounded-xl border-2 border-amil-blue bg-amil-blue-light p-8 text-center">
-            <p className="text-lg font-semibold text-amil-blue-dark">Acessar Portal Amil Empresa</p>
+          <div className="mt-8 rounded-xl border-2 border-slate-900 bg-slate-50 p-8 text-center">
+            <p className="text-lg font-semibold text-slate-900">Acessar Portal Amil Empresa</p>
             <a
               href="https://www.amil.com.br"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-block rounded-lg bg-amil-blue px-8 py-3 font-semibold text-white hover:bg-amil-blue-dark"
+              className="mt-4 inline-block rounded-lg bg-teal-600 px-8 py-3 font-semibold text-white hover:bg-teal-500"
             >
               Ir para o Portal →
             </a>

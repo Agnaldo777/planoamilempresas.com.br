@@ -33,7 +33,7 @@ export function BreadcrumbNav({ items }: BreadcrumbNavProps) {
               {index === allItems.length - 1 ? (
                 <span className="text-gray-900">{item.label}</span>
               ) : (
-                <Link href={item.href} className="hover:text-amil-blue">
+                <Link href={item.href} className="hover:text-sky-600">
                   {item.label}
                 </Link>
               )}

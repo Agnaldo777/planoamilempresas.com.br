@@ -1,0 +1,17 @@
+{
+  "$schema": "Story 5.7 — Anti-Cookie-Cutter (NFR25). Versionado em git; mudanças requerem PR com aprovação @po.",
+  "jaccard": {
+    "cookieCutter": 0.7,
+    "warning": 0.6,
+    "individualPairFail": 0.85,
+    "ngram": 3
+  },
+  "samplingSizes": {
+    "cityPages": 20,
+    "subRedes": 5,
+    "blogCategories": 8
+  },
+  "minWordCount": 600,
+  "minContextualTokensPerPage": 8,
+  "auditTimeoutSeconds": 60
+}

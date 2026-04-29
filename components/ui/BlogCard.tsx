@@ -9,12 +9,12 @@ interface BlogCardProps {
 }
 
 const categoriaColors: Record<string, string> = {
-  guias: 'bg-amil-blue',
+  guias: 'bg-slate-900',
   noticias: 'bg-urgency',
-  comparativos: 'bg-amil-blue-dark',
-  'dicas-saude': 'bg-cta-green',
+  comparativos: 'bg-slate-800',
+  'dicas-saude': 'bg-teal-600',
   'legislacao-ans': 'bg-gray-700',
-  'beneficios-corporativos': 'bg-amil-blue',
+  'beneficios-corporativos': 'bg-slate-900',
   faq: 'bg-gray-500',
 };
 
@@ -40,11 +40,11 @@ export function BlogCard({ titulo, slug, categoria, excerpt, publishedAt }: Blog
           </span>
           <span className="text-xs text-gray-400">{date}</span>
         </div>
-        <h3 className="mt-3 line-clamp-2 text-base font-bold text-gray-900 group-hover:text-amil-blue">
+        <h3 className="mt-3 line-clamp-2 text-base font-bold text-gray-900 group-hover:text-sky-600">
           {titulo}
         </h3>
         <p className="mt-2 line-clamp-3 flex-1 text-sm text-gray-500">{excerpt}</p>
-        <span className="mt-4 text-sm font-medium text-amil-blue group-hover:underline">
+        <span className="mt-4 text-sm font-medium text-sky-600 group-hover:underline">
           Ler mais →
         </span>
       </div>

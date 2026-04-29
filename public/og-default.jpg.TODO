@@ -1,0 +1,11 @@
+PLACEHOLDER — Story 3.25 AC2
+
+Substituir este arquivo por uma imagem real `og-default.jpg` (1200×630px,
+JPEG ≤300KB) com:
+- Logo BeneficioRH
+- Slogan "Corretora Amil Autorizada SUSEP 201054484"
+- Background paleta slate-900 / teal-600 (Opção A)
+
+Asset será gerado pelo @ux-design-expert (Uma) em story de design v1.
+Até lá, OG fallback aponta para `/og-default.jpg` que retorna 404 —
+crawlers Facebook/Twitter usam a imagem da página em fallback nativo.

@@ -10,7 +10,7 @@ interface LocalHeroProps {
 
 export function LocalHero({ cidade, estado, totalHospitais, temEspacoSaude }: LocalHeroProps) {
   return (
-    <section className="bg-amil-blue px-4 py-16 text-white">
+    <section className="bg-slate-900 px-4 py-16 text-white">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-center gap-3">
           {totalHospitais > 0 && (
@@ -28,7 +28,7 @@ export function LocalHero({ cidade, estado, totalHospitais, temEspacoSaude }: Lo
         <h1 className="mt-6 text-3xl font-bold md:text-4xl lg:text-5xl">
           Plano de Saúde Amil Empresarial em {cidade}
         </h1>
-        <p className="mt-3 text-lg text-amil-blue-light">
+        <p className="mt-3 text-lg text-slate-200">
           Cotação 2026 — Melhores planos para empresas em {cidade}, {estado}
         </p>
 

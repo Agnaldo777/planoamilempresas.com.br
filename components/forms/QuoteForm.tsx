@@ -78,13 +78,13 @@ export function QuoteForm() {
           <div key={label} className="flex items-center gap-2">
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${
-                i <= step ? 'bg-amil-blue text-white' : 'bg-gray-200 text-gray-500'
+                i <= step ? 'bg-slate-900 text-white' : 'bg-gray-200 text-gray-500'
               }`}
             >
               {i + 1}
             </div>
             {i < steps.length - 1 && (
-              <div className={`h-0.5 w-6 ${i < step ? 'bg-amil-blue' : 'bg-gray-200'}`} />
+              <div className={`h-0.5 w-6 ${i < step ? 'bg-slate-900' : 'bg-gray-200'}`} />
             )}
           </div>
         ))}
@@ -107,11 +107,11 @@ export function QuoteForm() {
                   }}
                   className={`flex flex-col items-center rounded-xl border-2 p-4 transition-all ${
                     tipoValue === opt.value
-                      ? 'border-amil-blue bg-amil-blue-light'
-                      : 'border-gray-200 hover:border-amil-blue/50'
+                      ? 'border-slate-900 bg-slate-50'
+                      : 'border-gray-200 hover:border-slate-700/50'
                   }`}
                 >
-                  <Icon className="h-8 w-8 text-amil-blue" />
+                  <Icon className="h-8 w-8 text-slate-700" />
                   <span className="mt-2 font-semibold text-gray-900">{opt.label}</span>
                   <span className="text-xs text-gray-500">{opt.desc}</span>
                 </button>
@@ -139,8 +139,8 @@ export function QuoteForm() {
                 }}
                 className={`w-full rounded-xl border-2 px-4 py-3 text-left font-medium transition-all ${
                   vidasValue === opt
-                    ? 'border-amil-blue bg-amil-blue-light'
-                    : 'border-gray-200 hover:border-amil-blue/50'
+                    ? 'border-slate-900 bg-slate-50'
+                    : 'border-gray-200 hover:border-slate-700/50'
                 }`}
               >
                 {opt} {opt === '100+' ? 'vidas' : 'pessoas'}
@@ -157,7 +157,7 @@ export function QuoteForm() {
           <input
             {...register('cidade')}
             placeholder="Digite sua cidade"
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-amil-blue"
+            className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-teal-600"
           />
           {errors.cidade && (
             <p className="mt-2 text-sm text-urgency">{errors.cidade.message}</p>
@@ -165,7 +165,7 @@ export function QuoteForm() {
           <button
             type="button"
             onClick={nextStep}
-            className="mt-4 w-full rounded-xl bg-amil-blue px-4 py-3 font-semibold text-white transition-colors hover:bg-amil-blue-dark"
+            className="mt-4 w-full rounded-xl bg-teal-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-teal-500"
           >
             Próximo →
           </button>
@@ -181,7 +181,7 @@ export function QuoteForm() {
               <input
                 {...register('nome')}
                 placeholder="Seu nome"
-                className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-amil-blue"
+                className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-teal-600"
               />
               {errors.nome && <p className="mt-1 text-sm text-urgency">{errors.nome.message}</p>}
             </div>
@@ -189,7 +189,7 @@ export function QuoteForm() {
               <input
                 {...register('whatsapp')}
                 placeholder="(11) 99999-9999"
-                className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-amil-blue"
+                className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-teal-600"
               />
               {errors.whatsapp && (
                 <p className="mt-1 text-sm text-urgency">{errors.whatsapp.message}</p>
@@ -210,7 +210,7 @@ export function QuoteForm() {
         <button
           type="button"
           onClick={() => setStep(step - 1)}
-          className="mt-4 w-full text-center text-sm text-gray-500 hover:text-amil-blue"
+          className="mt-4 w-full text-center text-sm text-gray-500 hover:text-sky-600"
         >
           ← Voltar
         </button>
@@ -219,7 +219,7 @@ export function QuoteForm() {
         <button
           type="button"
           onClick={() => setStep(step - 1)}
-          className="mt-3 w-full text-center text-sm text-gray-500 hover:text-amil-blue"
+          className="mt-3 w-full text-center text-sm text-gray-500 hover:text-sky-600"
         >
           ← Voltar
         </button>

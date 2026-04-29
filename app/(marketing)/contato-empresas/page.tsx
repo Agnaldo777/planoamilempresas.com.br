@@ -43,12 +43,12 @@ export default function ContatoEmpresasPage() {
               <a
                 key={item.cidade}
                 href={`tel:${item.tel.replace(/\D/g, '')}`}
-                className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-amil-blue hover:bg-amil-blue-light"
+                className="flex items-center gap-3 rounded-lg border border-gray-200 p-4 transition-colors hover:border-slate-900 hover:bg-slate-50"
               >
-                <Phone className="h-5 w-5 text-amil-blue" />
+                <Phone className="h-5 w-5 text-teal-600" />
                 <div>
                   <p className="text-sm font-semibold text-gray-900">{item.cidade}</p>
-                  <p className="text-sm text-amil-blue">{item.tel}</p>
+                  <p className="text-sm text-sky-600">{item.tel}</p>
                 </div>
               </a>
             ))}

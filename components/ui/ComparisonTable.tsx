@@ -33,12 +33,12 @@ export function ComparisonTable({ planoA, planoB, features, veredicto }: Compari
           <tr className="border-b-2 border-gray-200">
             <th className="px-4 py-3 text-left text-gray-500">Característica</th>
             <th className="px-4 py-3 text-center">
-              <span className="font-bold text-amil-blue">{planoA.nome}</span>
+              <span className="font-bold text-slate-900">{planoA.nome}</span>
               <br />
               <span className="text-xs text-gray-500">{formatCurrency(planoA.preco)}/mês</span>
             </th>
             <th className="px-4 py-3 text-center">
-              <span className="font-bold text-amil-blue-dark">{planoB.nome}</span>
+              <span className="font-bold text-slate-900">{planoB.nome}</span>
               <br />
               <span className="text-xs text-gray-500">{formatCurrency(planoB.preco)}/mês</span>
             </th>
@@ -59,8 +59,8 @@ export function ComparisonTable({ planoA, planoB, features, veredicto }: Compari
         </tbody>
       </table>
       {veredicto && (
-        <div className="mt-4 rounded-lg bg-amil-blue-light p-4">
-          <p className="text-sm font-semibold text-amil-blue-dark">Veredicto: {veredicto}</p>
+        <div className="mt-4 rounded-lg bg-slate-50 p-4">
+          <p className="text-sm font-semibold text-slate-900">Veredicto: {veredicto}</p>
         </div>
       )}
     </div>

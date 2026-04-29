@@ -1,0 +1,67 @@
+name: search-index-budget
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/rede-credenciada/**'
+      - 'scripts/build-minisearch-index.mjs'
+      - 'components/search/**'
+      - 'lib/schema/search-action.ts'
+      - 'lib/schema/website.ts'
+  workflow_dispatch:
+
+concurrency:
+  group: search-index-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  budget-guard:
+    name: budget-guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build MiniSearch index (Story 7.2)
+        run: node scripts/build-minisearch-index.mjs
+
+      - name: Search-index unit tests
+        run: |
+          node --test scripts/__tests__/build-minisearch-index.test.mjs
+          node --test components/search/__tests__/NetworkSearch.test.mjs
+
+      - name: SearchAction schema test
+        run: node --test lib/schema/__tests__/search-action.test.mjs
+
+      - name: Bundle size guard (gzip)
+        run: |
+          set -e
+          MASTER=$(stat -c%s public/search-index/master.json)
+          MASTER_GZ=$(gzip -c public/search-index/master.json | wc -c)
+          echo "master.json raw=${MASTER}B gzip=${MASTER_GZ}B"
+          if [ "$MASTER_GZ" -gt 102400 ]; then
+            echo "FAIL: master.json gzip > 100KB"
+            exit 1
+          fi
+          for f in public/search-index/*.json; do
+            BASE=$(basename "$f")
+            if [ "$BASE" = "master.json" ]; then continue; fi
+            SHARD_GZ=$(gzip -c "$f" | wc -c)
+            echo "$BASE gzip=${SHARD_GZ}B"
+            if [ "$SHARD_GZ" -gt 512000 ]; then
+              echo "FAIL: $BASE gzip > 500KB"
+              exit 1
+            fi
+          done
+          echo "OK — todos os shards gzip ≤ 500KB"

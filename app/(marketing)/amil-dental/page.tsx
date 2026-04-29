@@ -20,12 +20,12 @@ export default function AmilDentalPage() {
       />
       <BreadcrumbNav items={[{ label: 'Amil Dental', href: '/amil-dental' }]} />
 
-      <section className="bg-amil-blue px-4 py-16 text-white">
+      <section className="bg-slate-900 px-4 py-16 text-white">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-3xl font-bold md:text-4xl">
             Amil Dental 2026 — Plano Odontológico
           </h1>
-          <p className="mt-4 text-lg text-amil-blue-light">
+          <p className="mt-4 text-lg text-slate-200">
             Cobertura completa para sua empresa: consultas, ortodontia, implantes e mais.
           </p>
           <Link
@@ -45,7 +45,7 @@ export default function AmilDentalPage() {
             { href: '/amil-dental/precos', title: 'Tabela de Preços', desc: 'Valores atualizados 2026' },
           ].map((item) => (
             <Link key={item.href} href={item.href} className="rounded-lg border border-gray-200 p-6 hover:shadow-md">
-              <h2 className="text-lg font-bold text-amil-blue">{item.title}</h2>
+              <h2 className="text-lg font-bold text-slate-900">{item.title}</h2>
               <p className="mt-2 text-sm text-gray-500">{item.desc}</p>
             </Link>
           ))}

@@ -30,6 +30,24 @@ import { validateRedeSlugsCoverage } from '@/lib/operadoras/amil/slugs';
 import datasetRaw from '@/data/operadoras/amil/rede-credenciada.json';
 
 // ──────────────────────────────────────────────────────────────────────
+// Re-exports — facade canônico (Story 7.1 v2 migração)
+// Consumers (app/, components/, scripts/) devem importar APENAS deste loader.
+// Tipos vivem em `@/types/rede-credenciada-amil`; expostos aqui para conveniência.
+// ──────────────────────────────────────────────────────────────────────
+
+export type {
+  DatasetRedeAmil,
+  EstatisticasRede,
+  EstatisticasUFAmil,
+  MunicipioRedeAmil,
+  PrestadorAmil,
+  PrestadorAmilRaw,
+  RedeAmilNome,
+  TipoAtendimentoInferido,
+};
+export { REDES_AMIL_ATIVAS };
+
+// ──────────────────────────────────────────────────────────────────────
 // Constantes derivadas
 // ──────────────────────────────────────────────────────────────────────
 
@@ -303,6 +321,7 @@ function buildCache(): LoaderCache {
   );
 
   const estatisticas: EstatisticasRede = {
+    geradoEm: dataset.geradoEm,
     totalPrestadores: prestadores.length,
     totalUFs: byUf.size,
     totalMunicipios: municipios.length,

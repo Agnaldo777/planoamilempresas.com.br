@@ -12,9 +12,9 @@ interface PlanCardProps {
 }
 
 const linhaConfig = {
-  'amil-facil': { label: 'Amil Fácil', bg: 'bg-cta-green', border: 'hover:border-cta-green' },
-  amil: { label: 'Amil Saúde', bg: 'bg-amil-blue', border: 'hover:border-amil-blue' },
-  'amil-one': { label: 'Amil One', bg: 'bg-amil-blue-dark', border: 'hover:border-amil-blue-dark' },
+  'amil-facil': { label: 'Amil Fácil', bg: 'bg-teal-600', border: 'hover:border-teal-600' },
+  amil: { label: 'Amil Saúde', bg: 'bg-slate-900', border: 'hover:border-slate-900' },
+  'amil-one': { label: 'Amil One', bg: 'bg-slate-800', border: 'hover:border-slate-800' },
 };
 
 export function PlanCard({ nome, slug, linha, cobertura, precoBase, features }: PlanCardProps) {
@@ -49,7 +49,7 @@ export function PlanCard({ nome, slug, linha, cobertura, precoBase, features }: 
         ))}
       </ul>
 
-      <div className="mt-6 rounded-lg bg-amil-blue px-4 py-3 text-center text-sm font-semibold text-white transition-colors group-hover:bg-amil-blue-dark">
+      <div className="mt-6 rounded-lg bg-teal-600 px-4 py-3 text-center text-sm font-semibold text-white transition-colors group-hover:bg-teal-500">
         Simular plano →
       </div>
     </Link>
