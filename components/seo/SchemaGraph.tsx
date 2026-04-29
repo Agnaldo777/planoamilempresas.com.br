@@ -5,6 +5,7 @@ import {
   type FAQSchemaItem,
   type ProductSchemaData,
   type LocalBusinessData,
+  type ArticleSchemaInput,
 } from '@/lib/schema/build-graph';
 
 // Legacy single-type support (used by BreadcrumbNav and FAQAccordion)
@@ -22,6 +23,8 @@ interface GraphSchemaProps {
   faq?: FAQSchemaItem[];
   product?: ProductSchemaData;
   localBusiness?: LocalBusinessData;
+  /** Story 6.9 — Article schema com author + reviewedBy (NFR22). */
+  article?: ArticleSchemaInput;
 }
 
 function buildLegacySchema(type: LegacySchemaType, data: Record<string, unknown>) {
@@ -66,6 +69,7 @@ export function SchemaGraph(props: LegacySchemaGraphProps | GraphSchemaProps) {
       faq: props.faq,
       product: props.product,
       localBusiness: props.localBusiness,
+      article: props.article,
     });
   } else {
     // Legacy single-type mode

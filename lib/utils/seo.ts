@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { buildOpenGraphMetadata } from '@/components/seo/OpenGraph';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://seusite.com.br';
 
@@ -47,33 +48,29 @@ const descTemplates: Record<PageSEOType, (p: SEOParams) => string> = {
     `${p.pergunta} Confira a resposta completa sobre planos Amil, cobertura e condições. Atualizado 2026.`,
   preco: (p) =>
     `Tabela de preços ${p.planoNome || 'Amil'} 2026 por faixa etária. Valores atualizados para empresarial, MEI e individual. Compare agora.`,
-  page: (p) => p.description || 'Amil Saúde — Corretora Autorizada.',
+  page: (p) => p.description || 'BeneficioRH — Corretora autorizada SUSEP 201054484. Plano de Saúde Amil 2026: cotação online, comparativos e tabela de preços.',
 };
 
 export function generatePageMetadata(params: SEOParams): Metadata {
   const title = params.title || titleTemplates[params.type](params);
   const description = params.description || descTemplates[params.type](params);
 
+  // Story 3.25 — delega geração de OG/Twitter ao helper centralizado
+  // (single source of truth, NFR11 alignment).
+  const og = buildOpenGraphMetadata({
+    title,
+    description,
+    image: params.image,
+    type: params.type === 'blog' ? 'article' : 'website',
+    url: `${BASE_URL}${params.canonical}`,
+  });
+
   return {
     title,
     description,
     alternates: { canonical: params.canonical },
-    openGraph: {
-      title,
-      description,
-      url: `${BASE_URL}${params.canonical}`,
-      type: params.type === 'blog' ? 'article' : 'website',
-      locale: 'pt_BR',
-      siteName: 'Amil Saúde — Corretora Autorizada',
-      ...(params.image && {
-        images: [{ url: params.image, width: 1200, height: 630, alt: title }],
-      }),
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
+    openGraph: og.openGraph,
+    twitter: og.twitter,
     ...(params.noIndex && {
       robots: { index: false, follow: false },
     }),
