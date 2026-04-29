@@ -1,11 +1,11 @@
 # planoamilempresas.com.br — Fullstack Architecture Document
 
-**Documento:** Fullstack Architecture v1.1
-**Projeto:** planoamilempresas.com.br
+**Documento:** Fullstack Architecture v1.3
+**Projeto:** planoamilempresas.com.br (Fase 1 do ecossistema satélites Amil)
 **Autor:** Aria (Architect — Visionary ♐) — Synkra AIOS
-**Data:** 2026-04-16 (v1.0) → **2026-04-26 (v1.1)**
-**Stack confirmada:** Next.js 14 App Router + Vercel + Upstash Redis + **Sanity v3** (CMS) + **Clint** (CRM)
-**Status:** **v1.1 — APPROVED PARA REVALIDAÇÃO @po** (incorpora 7 mudanças do architect-checklist Story 1.0)
+**Data:** 2026-04-16 (v1.0) → 2026-04-26 (v1.1/v1.2) → **2026-04-28 (v1.3)**
+**Stack confirmada:** Next.js 16 App Router + React 19 + Tailwind 4 + Vercel + Upstash Redis + **Sanity v3** (CMS) + **Clint** (CRM) + **Cloudflare DNS** (ADR-008 unifica para Fase 1 e Fase 2)
+**Status:** **v1.3 — APPROVED PARA REVALIDAÇÃO @po** (incorpora ADR-008 stack unificada, ADR-009 hub-and-spoke, FR50-54/NFR21-26 do PRD v1.3.1, paleta Opção A)
 
 ---
 
@@ -26,6 +26,7 @@ O documento é direto consequência do **pivot arquitetural v1.2** (documentado 
 - **Descartado:** 100% do conteúdo Bradesco (Story 1.1 faz strip completo)
 - **Decisão preservada:** stack Next.js 14, App Router, Vercel, Upstash, Radix UI, Tailwind, Vitest (confirmadas)
 - **Decisões já tomadas (Story 1.0, 2026-04-24):** CMS = **Sanity v3** (ADR-001 Accepted), CRM = **Clint** (ADR-002 atualizado), DNS strategy (ADR-004), Programmatic SEO Depth (ADR-005 v1.1)
+- **Decisões já tomadas (v1.3, 2026-04-28):** Stack unificada Next.js para Fase 1 + Fase 2 — **ADR-008 Accepted** (Astro+Bun descartado); Ecossistema hub-and-spoke BeneficioRH com 7 regras de linkagem + 5 pilares anti-PBN — **ADR-009 Accepted**; Paleta visual Opção A (slate-900 brand + teal-600 CTA, anti-azul Amil) — `docs/design/visual-benchmark-and-design-system.md` v1.0
 - **Decisões pendentes:** spike técnico Clint API (Story 1.0c — bloqueia 4.3), validação atuarial fórmula calculadora (ADR-003 — bloqueia 6.3)
 
 ### Change Log
@@ -34,6 +35,8 @@ O documento é direto consequência do **pivot arquitetural v1.2** (documentado 
 |------|---------|-------------|--------|
 | 2026-04-16 | 1.0 | Draft inicial — fullstack architecture consolidada pós-pivot Next.js | Aria (Architect) |
 | 2026-04-26 | 1.1 | Pós architect-checklist (Orion 2026-04-24): 7 mudanças incorporando realidade do produto descoberta na Story 1.0 — nomenclatura produtos Bronze→Platinum Mais com QC/QP/coparticipação%, NetworkProvider real (10 redes Power BI + tipo inferido), ClintAdapter, ADR-001 Accepted Sanity, ADR-005 NOVO Programmatic SEO Depth Strategy, seção Build Performance NOVA | Aria (Architect) |
+| 2026-04-26 | 1.2 | SCP v1.2.3: dataset SSOT formalizado em ADR-007 (hub canon, satélite mirror), recalibração build performance ~10.500 URLs SSG, storage decisions explícitas | Aria (Architect) |
+| 2026-04-28 | 1.3 | **Stack unificada Next.js para Fase 1 + Fase 2 (ADR-008 — Astro descartado)**, **ecossistema hub-and-spoke formalizado (ADR-009 — 7 regras de linkagem + 5 pilares anti-PBN)**, novos requisitos PRD v1.3.1 incorporados (FR50 title com `currentYear`, FR51 AggregateOffer per-estado, FR52 `<table>` HTML semântico, FR53 OpenGraph reusável, FR54 schema Organization=BeneficioRH, NFR21 schema coverage 100%, NFR22 Author YMYL, NFR23 revisão humana, NFR24 compliance cross-domain, NFR25 anti-cookie-cutter ≥30%, NFR26 CI sitemap×routing), paleta visual Opção A (slate-900 + teal-600, anti-azul Amil), seções novas Ecosystem Architecture e Phase 2 Architecture | Aria (Architect) |
 
 ---
 
@@ -41,7 +44,7 @@ O documento é direto consequência do **pivot arquitetural v1.2** (documentado 
 
 ### Technical Summary
 
-O sistema adota **JAMstack serverless** via **Next.js 14 App Router** com predominância de **Static Site Generation (SSG)** para páginas de conteúdo (pillar, cornerstones, 600+ landings programáticas), **Incremental Static Regeneration (ISR)** para tabelas de preço atualizáveis mensalmente, e **React Server Components (RSC) + Client Islands** para interatividade pontual (formulário, calculadora, busca de rede). O backend é composto por **Next.js API Routes com Edge Runtime** para proxy de serviços externos (BrasilAPI, CRM, PDF generation) e integra **Upstash Redis** serverless para rate limiting, cache de CNPJ e queue de fallback para CRM indisponível. A infraestrutura é **Vercel** nativo (edge network global 280+ PoPs, preview deploys automáticos, env vars por ambiente), com **Cloudflare DNS** opcional para camada adicional de DDoS protection. Esta arquitetura alcança os objetivos do PRD de **Lighthouse ≥92**, **Core Web Vitals "Good" em 95% das páginas**, **time-to-market acelerado** (via fork) e **E-E-A-T + compliance LGPD/ANS/SUSEP** implementados desde o dia 1.
+O sistema adota **JAMstack serverless** via **Next.js 16 App Router + React 19 + Tailwind 4** com predominância de **Static Site Generation (SSG agressivo via `generateStaticParams`)** para páginas de conteúdo (pillar, cornerstones, ~10.500 URLs programáticas), **Incremental Static Regeneration (ISR)** para tabelas de preço atualizáveis mensalmente, e **React Server Components (RSC) + Client Islands** para interatividade pontual (formulário, calculadora, busca de rede). O backend é composto por **Next.js API Routes com Edge Runtime** para proxy de serviços externos (BrasilAPI, CRM, PDF generation) e integra **Upstash Redis** serverless para rate limiting, cache de CNPJ e queue de fallback para CRM indisponível. A infraestrutura é **Vercel** nativo (edge network global 280+ PoPs, preview deploys automáticos, env vars por ambiente), com **Cloudflare DNS** em frente para cache edge agressivo + DDoS protection (mitigação de performance #2 do ADR-008, alinhada com ADR-004). Esta arquitetura alcança os objetivos do PRD de **Lighthouse ≥92**, **Core Web Vitals "Good" em 95% das páginas**, **time-to-market acelerado** (via fork) e **E-E-A-T + compliance LGPD/ANS/SUSEP** implementados desde o dia 1. **A mesma stack se aplica à Fase 2 (`planosaudeamil.com.br`) por força do ADR-008**, garantindo reuso ~80% de componentes UI, Sanity schemas e dataset SSOT (ADR-007).
 
 ### Platform and Infrastructure Choice
 
@@ -173,19 +176,25 @@ graph TB
 
 - **LGPD-Compliant by Design:** Consent gate bloqueia analytics/marketing antes de opt-in; retention policies codificadas; DPO endpoint para solicitação/exclusão — _Rationale:_ LGPD é regulatório obrigatório; incluir na arquitetura evita retrofit doloroso.
 
+- **Hub-and-Spoke Ecosystem (ADR-009):** Site participa de portfólio BeneficioRH com hub master `planodesaudepj.com.br` (multi-operadora) e satélites por operadora (este projeto, `bradescosaudeempresas.com.br`, futura Fase 2 `planosaudeamil.com.br`). Linkagem segue 7 regras formais (footer global → hub, schema `parentOrganization`, satélites de operadoras diferentes não se linkam, etc.) — _Rationale:_ Concentra autoridade no hub, evita classificação como PBN, mantém especialização por operadora. Detalhes em `docs/ecosystem-link-strategy.md` v1.0 e seção "Ecosystem Architecture" abaixo.
+
+- **Anti-Cookie-Cutter Content (NFR25):** Páginas programáticas exigem ≥30% de variação contextual entre instâncias (FAQs específicas por CNAE/cidade, parágrafos com hooks regionais, dados próprios por estado) — _Rationale:_ Helpful Content System penaliza thin/duplicate; combinação com schema rico (FR51 AggregateOffer per-estado, FR52 `<table>` HTML) sustenta E-E-A-T em vertical YMYL.
+
 ---
 
 ## Tech Stack
 
 **DEFINITIVA — todas as versões são source of truth para desenvolvimento:**
 
+> **Atualização v1.3 (ADR-008):** stack unificada para Fase 1 (`planoamilempresas.com.br` — PJ) E Fase 2 (`planosaudeamil.com.br` — PJ + PF + adesão + dental). **Astro+Bun descartado** para os 2 satélites Amil. Detalhes em `docs/decisions/adr-008-stack-unificada-nextjs-satelites-amil.md` (estende ADR-000). Reabertura da avaliação Astro só ocorre se: tráfego Fase 2 >500k pv/mês sustentado por 3 meses, concorrentes diretos migrarem para Next.js, ou surgir terceiro satélite de escopo distinto (blog estático puro sem CMS dinâmico).
+
 | Categoria | Tecnologia | Versão | Purpose | Rationale |
 |-----------|------------|--------|---------|-----------|
 | **Runtime** | Node.js | 20.x LTS | Server runtime | LTS, compat ampla, performance |
-| **Framework** | Next.js | 14.2.29+ | Fullstack framework | App Router, RSC, herdado do clone |
-| **Library UI** | React | 18.3+ | UI library | Server/client components |
+| **Framework** | Next.js | 16.x (App Router) | Fullstack framework | ADR-008: unificada Fase 1 + Fase 2; preserva Sanity Visual Editing nativo |
+| **Library UI** | React | 19.x | UI library | Server/client components, RSC default |
 | **Language** | TypeScript | 5.x strict | Type safety | Elimina classes de bugs, DX |
-| **Styling** | Tailwind CSS | 3.4+ | Utility-first CSS | Herdado do clone, rapidez, consistency |
+| **Styling** | Tailwind CSS | 4.x | Utility-first CSS | Tree-shaking, paleta v1.3 (Opção A) |
 | **UI Primitives** | Radix UI | 1.x | Accessible primitives | WCAG AA nativo, herdado do clone |
 | **Icons** | Lucide React | 0.475+ | Icon library | Herdado do clone, tree-shakeable |
 | **Forms** | React Hook Form | 7.54+ | Form state | Herdado do clone, performance |
@@ -248,6 +257,103 @@ export type CoparticipacaoPct = 30 | 40    // 30% ou 40% conforme tabela estadua
 
 > **Source-of-truth dos types:** `data/tabelas-amil.ts` (export `Segmentacao`, `Acomodacao`, `Abrangencia`, `PlanoAmil`, `FaixaEtaria`).
 > **4 produtos premium "sob consulta"** (sem tabela pública, lead premium): `Black`, `Amil One S2500 QP`, `Amil One S6500 Black QP`, `Amil S580 QP` — ver Mudança no `NetworkProvider` abaixo.
+
+---
+
+## Ecosystem Architecture (NOVO v1.3 — ADR-009)
+
+> Esta seção formaliza o papel arquitetural deste projeto dentro do **portfólio BeneficioRH** (Agnaldo Silva — SUSEP 201054484 — CNPJ 14.764.085/0001-99). Detalhes operacionais completos em `docs/ecosystem-link-strategy.md` v1.0; decisão arquitetural canônica em `docs/decisions/adr-009-estrategia-ecossistema-hub-spoke.md` (Accepted, co-signed pelo stakeholder em 2026-04-28).
+
+### Topologia do portfólio
+
+| Papel | Domínio | Status | Stack | Observação |
+|---|---|---|---|---|
+| **Hub master** | `planodesaudepj.com.br` | PRD v1.0, 131 páginas | Next.js + Vercel | Multi-operadora (10 ops); recebe outreach |
+| **Satélite Bradesco** | `bradescosaudeempresas.com.br` | No ar | Next.js + Vercel + Cloudflare | PJ exclusivo |
+| **Satélite Amil Fase 1** | `planoamilempresas.com.br` | ~80% pronto (este projeto) | Next.js 16 + React 19 + Tailwind 4 + Sanity v3 + Vercel + Cloudflare | PJ exclusivo |
+| **Satélite Amil Fase 2** | `planosaudeamil.com.br` | Planejado (ADR-008) | Idem (fork da Fase 1) | PJ + PF + adesão + dental |
+
+### As 7 regras de linkagem (ADR-009)
+
+1. **Hub recebe backlinks externos** — outreach, parcerias, guest posts e citações em mídia direcionados ao hub. Satélites não são alvo de campanha de link building (recebem links orgânicos genuínos quando ranqueiam).
+2. **Hub linka satélites via páginas de operadora** — `/operadoras/[op]/` no hub aponta para o satélite correspondente, anchor text natural variado, `dofollow`.
+3. **Satélites linkam de volta ao hub via footer global** — link único cross-domain de saída no satélite ("Comparar com outras operadoras → planodesaudepj.com.br"), `dofollow`. Implementado em `src/components/layouts/FooterGlobal.tsx` (compartilhado com Bradesco/Fase 2 — ver "Footer global package" abaixo).
+4. **Cross-domain canonical entre satélites de mesma operadora** — quando há sobreposição Fase 2 amplo × Fase 1 PJ em `/empresarial/`, Fase 2 aponta `<link rel="canonical">` para a Fase 1 (mais especializada). Revisão obrigatória em PR; CI lint valida que canonical externo só aponta para domínio do portfólio (whitelist).
+5. **Satélites de operadoras diferentes NÃO se linkam** — `bradescosaudeempresas.com.br` ↔ `planoamilempresas.com.br` é proibido. Tráfego cross-operadora passa pelo hub. Mantém topologia hub-and-spoke pura (anti-PBN).
+6. **Schema.org Organization com `parentOrganization`** — JSON-LD declara `parentOrganization: { name: "BeneficioRH", url: "https://www.planodesaudepj.com.br" }` em todos os satélites. Sinaliza ao Google portfólio corporativo legítimo. Implementação em `src/components/schema/OrganizationSchema.tsx` (alinhado com FR54 do PRD v1.3.1: schema raiz é BeneficioRH; Amil aparece apenas em `category` e `Product.brand`).
+7. **Footer global obrigatório** — todos os sites do portfólio renderizam footer com CNPJ, SUSEP, lista pública dos sites do portfólio (transparência anti-PBN) e disclaimer de corretor.
+
+### 5 pilares anti-PBN
+
+| Pilar | Implementação |
+|---|---|
+| Conteúdo único genuíno | NFR25 — variação contextual ≥30% entre instâncias programáticas; zero copy-paste cross-site |
+| Anchor texts naturais | Variação obrigatória; nunca exato-match repetido em bulk; checklist em PR template |
+| Backlinks externos genuínos | Outreach concentrado no hub; satélites podem captar links orgânicos próprios |
+| Hosting/IPs distribuídos | Cloudflare DNS + Vercel edge — IPs distribuídos por design |
+| Transparência | Footer global lista todos os sites do portfólio publicamente |
+
+### Footer global package (operacional)
+
+- Empacotamento (monorepo `@benef/footer-global` ou submódulo git) deferido para Story de implementação pós-ADR-009.
+- Auditoria mensal de duplicate content cross-domain pela @qa (Quinn) — Screaming Frog list mode + comparação manual em páginas-chave.
+- CI lint regra simples: `<link rel="canonical">` para domínio externo só permitido se domínio estiver em whitelist de portfólio (`planodesaudepj.com.br`, `bradescosaudeempresas.com.br`, `planoamilempresas.com.br`, `planosaudeamil.com.br`).
+
+### Gating
+
+- Story de implementação das regras 3, 4 e 7 neste projeto fica gated pelo ADR-009 Accepted (já satisfeito em 2026-04-28).
+- Regras 6 e schema `parentOrganization` já implementadas/em implementação via FR54.
+
+---
+
+## Phase 2 Architecture (NOVO v1.3 — ADR-008)
+
+> Esta seção sumariza a arquitetura prevista para `planosaudeamil.com.br` (Fase 2 — escopo amplo PJ + PF + adesão + dental). Não constitui PRD; o PRD master da Fase 2 será derivado quando kickoff for autorizado. Decisão de stack canônica em `docs/decisions/adr-008-stack-unificada-nextjs-satelites-amil.md` (Accepted 2026-04-28).
+
+### Modelo de fork
+
+Fase 2 inicia como **fork direto da Fase 1** (este repositório). Decisão de monorepo deferida ao kickoff:
+
+```
+satelites-amil/                    # estrutura potencial pós-fork
+  apps/
+    planoamilempresas/             # Fase 1 (PJ)
+    planosaudeamil/                # Fase 2 (amplo)
+  packages/
+    ui/                            # componentes compartilhados (Layer 1+2)
+    data/                          # loaders dataset rede credenciada (mirror ADR-007)
+    sanity-schemas/                # schemas Sanity v3 reutilizáveis
+    footer-global/                 # @benef/footer-global (ADR-009 regra 7)
+```
+
+Fork direto é aceitável até divergência de UI/conteúdo justificar consolidação em monorepo.
+
+### Mitigações de performance (ADR-008 — compensar gap vs Astro)
+
+1. **SSG agressivo via `generateStaticParams`** em todas as city pages, prestador pages e rede pages.
+2. **Cloudflare em frente ao Vercel** — cache edge agressivo + DNS já no portfólio (alinhado ADR-004).
+3. **Critical CSS inline** + `next/font` self-hosted.
+4. **Dynamic imports** para componentes interativos abaixo do fold (calculadora, formulários CRM).
+5. **React Server Components por default** — client components apenas onde há interatividade real.
+
+### Reuso esperado da Fase 1
+
+- ✅ ~80% dos componentes UI (calculadora PJ, blocks Sanity, schemas, layout, formulários CRM)
+- ✅ Sanity Studio com Visual Editing nativo (preservado pela escolha Next.js)
+- ✅ Dataset rede credenciada via mirror ADR-007 (hub canon → ambos satélites Amil consomem)
+- ✅ Footer global package compartilhado (ADR-009 regra 7)
+
+### Cross-domain canonical Fase 2 ↔ Fase 1
+
+Quando Fase 2 expor `/empresarial/[uf]/[cidade]` com conteúdo equivalente à Fase 1 `/[uf]/[cidade]`, a Fase 2 aponta canonical para a Fase 1 (mais especializada em PJ). Casos específicos definidos por revisão obrigatória em PR + CI lint de whitelist.
+
+### Gatilhos de reconsideração (ADR-008)
+
+Reabrir avaliação Astro **apenas** se:
+
+1. Tráfego Fase 2 ultrapassar ~500k pv/mês sustentado por 3 meses **e** custo Vercel se tornar bloqueante; ou
+2. Concorrentes diretos migrarem para Next.js, eliminando o diferencial técnico declarado; ou
+3. Surgir terceiro satélite com escopo distinto (ex: blog estático puro, sem CMS dinâmico, sem formulários).
 
 ---
 
@@ -675,17 +781,26 @@ Arquitetura de componentes organizada em 4 camadas:
 - `<CNPJInput onValidate={...} />` — input especializado com debounce + edge call
 - `<ArticleToc sections={...} />` — TOC sticky sidebar
 
-### Layer 3: Schema.org Components (SEO)
+### Layer 3: Schema.org Components (SEO) — **atualizado v1.3 (FR50-54, NFR21-22)**
 
-- `<OrganizationSchema />` — global layout
-- `<LocalBusinessSchema />` — global layout
+- `<OrganizationSchema />` — global layout. **FR54:** raiz declara `BeneficioRH` como Organization (CNPJ 14.764.085/0001-99, SUSEP 201054484); marca Amil aparece apenas em `Product.brand` e `category`, nunca como Organization raiz. Inclui `parentOrganization` apontando para hub `planodesaudepj.com.br` (ADR-009 regra 6).
+- `<LocalBusinessSchema />` — global layout (corretora BeneficioRH, não Amil)
 - `<ArticleSchema article={...} />` — cornerstones
 - `<FAQPageSchema faqs={...} />` — blocos FAQ
 - `<HealthInsurancePlanSchema plan={...} />` — landing de produto
 - `<BreadcrumbListSchema trail={...} />` — todas páginas internas
-- `<PersonSchema person={...} />` — página Sobre
-- `<ProductSchema / OfferSchema />` — tabela preços
+- `<PersonSchema person={...} />` — página Sobre. **NFR22 (YMYL):** Author schema obrigatório em todo conteúdo de saúde, com `susepNumber`, `bio`, `sameAs` (LinkedIn) e `worksFor` (BeneficioRH).
+- `<ProductSchema />` + `<AggregateOfferSchema />` — tabela de preços. **FR51:** AggregateOffer **per-estado** (não só nacional) — cada UF coberta gera bloco Product + AggregateOffer com `priceRange` baseado nas faixas etárias daquele estado.
 - `<WebApplicationSchema />` — calculadora
+- `<OpenGraphMeta />` — **FR53 (NOVO):** componente reusável de OpenGraph + Twitter Card com fallback automático para imagem default da página/categoria quando `ogImage` não estiver configurado no CMS. Importado em `RootLayout` + override por route group.
+
+**NFR21 — Schema coverage 100%:** toda página servida deve emitir ao menos um schema apropriado ao seu tipo. CI lint valida (Story 7.x) que cada rota tem ao menos um componente de Layer 3 montado, falha o build se ausente.
+
+### Padrões de conteúdo SEO (NOVO v1.3 — FR50, FR52, NFR25)
+
+- **FR50 — Title pattern com ano renovável:** templates de `metaTitle` consomem variável `currentYear` exposta pelo Sanity (`siteSettings.currentYear`) e/ou helper TS `getCurrentYear()` no build. Atualização anual = mudança em 1 lugar; SSG re-gera todas as páginas. Não usar `new Date().getFullYear()` em runtime client (causa hydration mismatch).
+- **FR52 — `<table>` HTML semântico:** tabelas de preço, comparativos e listas estruturadas usam `<table>` nativo (não `<div>` grids), com `<caption>`, `<thead>`, `<tbody>`, `<th scope>`. Alvo Featured Snippet (Google extrai tabelas semânticas para rich results e AI Overview).
+- **NFR25 — Variação contextual ≥30%:** páginas programáticas exigem ≥30% de conteúdo único por instância (FAQ específica por CNAE/cidade, parágrafos com hooks regionais, AggregateOffer com dados próprios da UF). CI test (Story 5.7) computa Jaccard similarity entre páginas do mesmo template; >70% similar = build fail.
 
 ### Layer 4: Layouts (templates completos)
 
@@ -1408,6 +1523,16 @@ Estratégia de **deploy por phase** se build time exceder 45min:
 | **Dependency Audit** | `npm audit` em CI; Dependabot/Renovate para updates automáticos |
 | **Content Security** | Copyscape gate antes de publicação; LGPD consent antes de analytics marketing |
 
+### Compliance (NOVO v1.3 — NFR22, NFR23, NFR24)
+
+| NFR | Requisito | Implementação |
+|---|---|---|
+| **NFR22 — Author schema YMYL** | Todo conteúdo de saúde renderiza Author schema com `susepNumber`, `bio`, `worksFor` BeneficioRH, `sameAs` LinkedIn | `<PersonSchema />` obrigatório em cornerstones, pillars e landings com componente médico. CI test valida presença em qualquer página com `category` ∈ {`pricing`, `product`, `guide`, `compliance`}. |
+| **NFR23 — Revisão humana obrigatória** | Conteúdo de saúde só publica após aprovação humana (broker + legal) | Sanity workflow `status: 'in-review-broker' → 'in-review-legal' → 'published'`. Gate: webhook bloqueia publicação automática (`auto-publish: false`); `publishedAt` só é definido quando `status === 'published'` via revisão Studio manual. |
+| **NFR24 — Compliance cross-domain** | Footer global em todos os sites do portfólio com CNPJ + SUSEP + ANS por operadora + lista de domínios irmãos | Implementação em `src/components/layouts/FooterGlobal.tsx`. Conteúdo regulado padronizado em `<Disclaimer />` (Layer 2). Links cross-domain para satélites irmãos seguem ADR-009 regra 7 (transparência anti-PBN). |
+
+> **NFR23 — Auto-publish bloqueado por design.** Mesmo com webhook Sanity → Vercel Revalidate, a transição `draft → published` exige clique manual no Studio por usuário com role `editor` ou `admin`. Não há agendamento automático de publicação para conteúdo YMYL no MVP.
+
 ### CSP Policy (em `next.config.mjs`)
 
 ```typescript
@@ -1516,11 +1641,14 @@ const cspHeader = `
 ### SEO Tests
 
 **CI automatizado:**
-- Schema validation via Google Rich Results Test API
+- Schema validation via Google Rich Results Test API (NFR21 schema coverage 100% — fail se rota não emitir nenhum schema)
 - Meta tags validation (title ≤60, description ≤160)
 - Sitemap.xml validation via W3C validator
-- Canonical tag presence check
-- OG image presence check
+- Canonical tag presence check (cross-domain whitelist — ADR-009 regra 4: canonical externo só permitido para domínios do portfólio BeneficioRH)
+- OG image presence check (FR53 — fallback automático aceitável)
+- **NFR26 — CI valida sitemap × routing (NOVO v1.3):** test compara o conjunto de URLs em `app/sitemap.ts` (output `/sitemap.xml`) com o conjunto de rotas físicas geradas por `generateStaticParams` no build. Discrepância (URL no sitemap sem rota correspondente, ou rota gerada que não consta no sitemap) **bloqueia merge**. Implementação em `tests/seo/sitemap-routing.test.ts` (Story 7.x).
+- **NFR25 — Anti-cookie-cutter (NOVO v1.3):** test computa Jaccard similarity entre páginas do mesmo template programático; >70% similar = build fail (Story 5.7 — auditoria Wave 1+2).
+- **FR50 — Title `currentYear` consistency check:** test valida que todos os `metaTitle` que contêm padrão `\b\d{4}\b` consomem `currentYear` do Sanity (não literal hardcoded).
 
 ### Performance Tests
 
@@ -1577,6 +1705,21 @@ const cspHeader = `
 - **Component variants:** `class-variance-authority` (cva) — já incluso no clone
 - **Dark mode:** não necessário MVP (decidir Phase 2)
 - **Responsive:** mobile-first, breakpoints padrão Tailwind (sm/md/lg/xl/2xl)
+
+### Visual Identity (NOVO v1.3 — paleta Opção A — migração total)
+
+> Decisão de design tokens consolidada em 2026-04-28 (Opção A — migração total). Detalhes em `docs/design/visual-benchmark-and-design-system.md` v1.0. Princípio anti-azul-Amil: a paleta evita os azuis oficiais Amil (`#0066B3`, `#0066CC`) para reforçar identidade BeneficioRH e diferenciar dos concorrentes diretos (`amilplanos.com.br`, etc.).
+
+| Token | Tailwind | Hex | Uso |
+|---|---|---|---|
+| **Brand** | `slate-900` | `#0F172A` | Cabeçalhos, textos primários, fundos hero, navbar |
+| **CTA primário** | `teal-600` | `#0D9488` | Botões de conversão, links de ação primária |
+| **Selo "Atualizado"** | `amber-700` | `#B45309` | Badges de freshness (NFR fresh signal), highlights de "atualizado em" |
+| **Links inline** | `sky-600` | `#0284C7` | Links de texto inline (não-CTA), navegação secundária |
+
+- Configuração canônica em `tailwind.config.ts` via `theme.extend.colors.brand`, `cta`, `selo`, `link` (não usar valores hex inline em componentes).
+- Migração de qualquer azul-Amil herdado do clone Bradesco para os tokens acima é parte do strip da Story 1.1 / Stories visuais 6.x.
+- Componentes Layer 1 (UI primitives Radix + cva) consomem tokens via classes utilitárias `bg-brand`, `text-cta`, `bg-selo`, `text-link`.
 
 ### Comments & Docs
 
@@ -1883,6 +2026,60 @@ CustoTotal36m = Σ (Custo_y) para y ∈ {1, 2, 3}
   - Mínimo 600 palavras por página programática (Wave 1+2 audited via Story 5.7)
 - ⚠️ **Canibalização requer monitoramento contínuo** — Story 5.8 implementa GSC Cluster Report para detectar páginas competindo na mesma query
 
+### ADR-006: URL-as-Trademark Policy
+
+**Status:** Accepted
+**Decision:** uso de marca da operadora em URL (slug `plano-amil-*`, `amil-empresarial`) é permitido sob disclaimer de corretor + ANS publicação obrigatórios. Política aplica a todos os satélites do portfólio BeneficioRH.
+**Estendido por:** ADR-009 (regras de linkagem inter-domínios).
+**Referência:** `docs/decisions/adr-006-url-as-trademark-policy.md` + `docs/decisions/legal-precedents-corretoras-amil.md`.
+
+### ADR-007: Dataset SSOT (Rede Credenciada)
+
+**Status:** Accepted (SCP v1.2.3)
+**Decision:** hub `planodesaudepj.com.br` é fonte canônica do dataset rede credenciada Amil (scraping Power BI). Satélites Amil (Fase 1 deste projeto + Fase 2) consomem mirror automatizado via pipeline em `scripts/import-rede-amil.mjs`.
+**Referência:** `docs/decisions/adr-007-dataset-ssot.md`.
+
+### ADR-008: Stack unificada Next.js para satélites Amil — **NOVO v1.3**
+
+**Status:** **Accepted (2026-04-28)** — co-signed pelo stakeholder
+**Estende:** ADR-000 (Next.js sobre Astro — Fase 1)
+**Decision:** os 2 satélites Amil (Fase 1 `planoamilempresas.com.br` e Fase 2 `planosaudeamil.com.br`) adotam stack unificada **Next.js 16 + React 19 + Tailwind 4 + Sanity v3 + Vercel + Cloudflare DNS**. **Astro+Bun descartado.**
+
+**Contexto:** análise comparativa em 2026-04-28 (`docs/research/competitors/`) levantou 3 pontos críticos contra Astro+Bun para Fase 2: custo de cronograma +6-8 semanas (reescrita ~14 componentes React maduros), perda do Visual Editing nativo do Sanity v3 (só first-class no Next.js), e velocidade marginal invisível ao público-alvo (PJ desktop banda larga / PF mobile 4G urbano — gap LCP 400-700ms imperceptível). Em vertical YMYL, schema.org rico + E-E-A-T + conteúdo único pesam mais que CWV marginal.
+
+**Mitigações de performance (compensar gap vs Astro):** ver seção "Phase 2 Architecture" acima.
+
+**Reconsideração:** reabrir avaliação Astro apenas se (1) tráfego Fase 2 >500k pv/mês sustentado por 3 meses + custo Vercel bloqueante, (2) concorrentes diretos migrarem para Next.js, ou (3) surgir terceiro satélite com escopo estático puro.
+
+**Consequences:**
+- ✅ Reuso ~80% componentes UI da Fase 1 na Fase 2
+- ✅ Sanity Studio com Visual Editing nativo preservado
+- ✅ Cronograma Fase 2 ~6-8 semanas mais curto vs rebuild Astro greenfield
+- ✅ Manutenção unificada (1 stack, 1 time, 1 PRD master + sub-PRD por fase)
+- ⚠️ LCP 400-700ms pior que Astro puro — mitigado por SSG agressivo + Cloudflare cache + RSC default
+- ⚠️ Custo Vercel pode crescer não-linear se Fase 2 ultrapassar ~500k pv/mês
+
+**Referência:** `docs/decisions/adr-008-stack-unificada-nextjs-satelites-amil.md`.
+
+### ADR-009: Estratégia de ecossistema hub-and-spoke (BeneficioRH) — **NOVO v1.3**
+
+**Status:** **Accepted (2026-04-28)** — co-signed pelo stakeholder
+**Estende:** ADR-006 (URL-as-Trademark Policy) — adiciona regras de linkagem inter-domínios
+**Decision:** adoção formal do modelo hub-and-spoke conforme `docs/ecosystem-link-strategy.md` v1.0, com 7 regras explícitas e 5 pilares anti-PBN (resumidos na seção "Ecosystem Architecture" acima).
+
+**Topologia:**
+- Hub master: `planodesaudepj.com.br` (multi-operadora, 131 páginas, recebe outreach)
+- Satélites: `bradescosaudeempresas.com.br` (no ar), `planoamilempresas.com.br` (este projeto, ~80%), `planosaudeamil.com.br` (Fase 2 planejada)
+
+**Riscos endereçados:**
+1. Classificação como PBN (Private Blog Network) pelo Google — mitigada por 5 pilares (conteúdo único, anchor variation, outreach concentrado no hub, IPs distribuídos via Cloudflare/Vercel edge, transparência via footer global)
+2. Tensão autoridade vs especialização — hub concentra backlinks externos, satélites ranqueiam long-tail por operadora
+3. Canibalização Fase 1 PJ × Fase 2 amplo — resolvida por cross-domain canonical (regra 4)
+
+**Gating:** Story de implementação de regras 3, 4 e 7 neste projeto e kickoff da Fase 2 ficaram gated por este ADR Accepted (já satisfeito 2026-04-28).
+
+**Referência:** `docs/decisions/adr-009-estrategia-ecossistema-hub-spoke.md` + `docs/ecosystem-link-strategy.md` v1.0.
+
 ---
 
 ## Checklist Results Report
@@ -1927,11 +2124,11 @@ CustoTotal36m = Σ (Custo_y) para y ∈ {1, 2, 3}
 
 ---
 
-**Status do documento:** **v1.1 — APPROVED PARA REVALIDAÇÃO @po**
+**Status do documento:** **v1.3 — APPROVED PARA REVALIDAÇÃO @po**
 **Owner:** Aria (Architect) ♐
 **Próximos owners (paralelo):**
-- Pax (@po) — **re-validação v1.1** (incorpora 7 mudanças pós architect-checklist Story 1.0)
-- Uma (@ux-design-expert) — `front-end-spec.md` (paralelo)
+- Pax (@po) — **re-validação v1.3** (incorpora ADR-008, ADR-009, FR50-54/NFR21-26, paleta Opção A)
+- Uma (@ux-design-expert) — atualização de `front-end-spec.md` para refletir paleta Opção A (escopo separado deste documento)
 - Aria (@architect) — **Spike Story 1.0c** (Clint API documentation antes de Story 4.3)
 
 **Mudanças v1.0 → v1.1 (resumo):**
@@ -1942,5 +2139,18 @@ CustoTotal36m = Σ (Custo_y) para y ∈ {1, 2, 3}
 5. ✅ ADR-001 fechado como **Accepted: Sanity v3**
 6. ✅ ADR-005 NOVO: Programmatic SEO Depth Strategy (~5.000-6.500 URLs com regras anti-canibalização)
 7. ✅ Seção NOVA "Build Performance" (estratégia SSG em escala + chunking + ISR + tier Hobby/Pro)
+
+**Mudanças v1.1/v1.2 → v1.3 (resumo):**
+1. ✅ **ADR-008 Accepted (NOVO)** — stack unificada Next.js para Fase 1 + Fase 2; Astro+Bun descartado
+2. ✅ **ADR-009 Accepted (NOVO)** — ecossistema hub-and-spoke BeneficioRH com 7 regras de linkagem + 5 pilares anti-PBN
+3. ✅ Tech Stack atualizada: Next.js 16 + React 19 + Tailwind 4 (com nota de aplicabilidade às 2 fases)
+4. ✅ Seção NOVA "Ecosystem Architecture" — formaliza papel do projeto no portfólio + 7 regras
+5. ✅ Seção NOVA "Phase 2 Architecture" — fork da Fase 1 + mitigações de performance + cross-domain canonical
+6. ✅ Schema components atualizados (FR50-54, NFR21-22): OpenGraph reusável, AggregateOffer per-estado, Organization=BeneficioRH com `parentOrganization`, Author YMYL obrigatório, schema coverage 100%
+7. ✅ Padrões de conteúdo SEO: FR50 (`currentYear` Sanity), FR52 (`<table>` semântico), NFR25 (anti-cookie-cutter ≥30%)
+8. ✅ Compliance subseção: NFR22 (Author YMYL), NFR23 (revisão humana obrigatória), NFR24 (cross-domain)
+9. ✅ NFR26 (CI valida sitemap × routing) adicionado em SEO Tests + cross-domain canonical whitelist
+10. ✅ Visual Identity (NOVA) — paleta Opção A (slate-900 + teal-600 + amber-700 + sky-600), anti-azul Amil
+11. ✅ ADR-006, ADR-007, ADR-008, ADR-009 sumarizados no índice de ADRs
 
 — Aria, arquitetando o futuro 🏗️
