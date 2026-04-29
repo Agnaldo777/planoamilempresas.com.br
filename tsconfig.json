@@ -23,6 +23,15 @@
       }
     ],
     "paths": {
+      "@/types/*": [
+        "./src/types/*"
+      ],
+      "@/lib/operadoras/*": [
+        "./src/lib/operadoras/*"
+      ],
+      "@/data/operadoras/*": [
+        "./src/data/operadoras/*"
+      ],
       "@/*": [
         "./*"
       ]

@@ -1,4 +1,16 @@
 /**
+ * @deprecated Substituído por `src/lib/operadoras/amil/rede-credenciada-loader.ts`
+ * (Story 7.1 AC6). Tipos centralizados em `src/types/rede-credenciada-amil.ts` e
+ * slug map em `src/lib/operadoras/amil/slugs.ts` (AC2-bis amendment O-1).
+ *
+ * Este arquivo permanece como SHIM de compatibilidade até Story 7.2 (hub
+ * `<NetworkSearch />`) marcar para remoção definitiva — qualquer import novo
+ * DEVE usar os paths canônicos `@/lib/operadoras/amil/*` e `@/types/*`.
+ *
+ * Migration:
+ *   - import { getAllPrestadores } from 'data/rede-credenciada/rede-amil'
+ *   + import { getAllPrestadores } from '@/lib/operadoras/amil/rede-credenciada-loader'
+ *
  * Rede Credenciada Amil — Plano de Saúde Empresarial
  *
  * Versão: REAL (schema oficial v2 do dataset Power BI — 2026-04-26)
