@@ -32,6 +32,18 @@
       "@/data/operadoras/*": [
         "./src/data/operadoras/*"
       ],
+      "@/components/network/*": [
+        "./src/components/network/*"
+      ],
+      "@/components/schema/*": [
+        "./src/components/schema/*"
+      ],
+      "@/content/*": [
+        "./src/content/*"
+      ],
+      "@/config/seo": [
+        "./src/config/seo.ts"
+      ],
       "@/*": [
         "./*"
       ]
