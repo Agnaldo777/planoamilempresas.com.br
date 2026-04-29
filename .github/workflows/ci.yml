@@ -1,0 +1,166 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  setup:
+    name: Setup & install
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.npm-cache.outputs.cache-hit }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Cache node_modules
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+  lint:
+    name: lint
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install (cache miss fallback)
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+      - name: Run ESLint (next lint)
+        run: npx next lint
+
+  typecheck:
+    name: typecheck
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install (cache miss fallback)
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+      - name: TypeScript strict check
+        run: npx tsc --noEmit
+
+  test:
+    name: test
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install (cache miss fallback)
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+      # TODO: npm i -D vitest @vitest/ui jsdom @testing-library/react @testing-library/jest-dom
+      # Vitest ainda não está em package.json (Story 1.x QA setup); skip gracioso enquanto não existe.
+      - name: Run Vitest (if configured)
+        run: |
+          if [ -f vitest.config.ts ] || [ -f vitest.config.mjs ] || [ -f vitest.config.js ]; then
+            npx vitest run --reporter=verbose
+          else
+            echo "::notice title=Vitest not configured::No vitest.config.* found — skipping unit tests. Adicionar config em Story QA setup."
+          fi
+
+  build:
+    name: build
+    needs: [lint, typecheck]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install (cache miss fallback)
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+      - name: Cache .next/cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('app/**', 'lib/**', 'components/**') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Next.js build
+        run: npx next build
+        env:
+          # Placeholders mínimos para build não-falhar sem secrets reais
+          NEXT_PUBLIC_SITE_URL: https://planoamilempresas.com.br
+          NEXT_PUBLIC_WHATSAPP_NUMBER: '5511926510515'
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder' }}
+          NEXT_PUBLIC_SANITY_DATASET: production

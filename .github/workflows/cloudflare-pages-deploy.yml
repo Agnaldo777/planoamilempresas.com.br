@@ -1,0 +1,68 @@
+name: cloudflare-deploy
+
+# ADR-011: deploy via @opennextjs/cloudflare (Cloudflare Workers, não Pages —
+# next-on-pages é incompatível com Next.js 16). Nome do workflow mantido como
+# 'cloudflare-pages-deploy.yml' para alinhar com brief inicial; substituir por
+# 'cloudflare-deploy.yml' em PR de housekeeping futuro.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: cf-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  deploy:
+    name: Build & deploy (Cloudflare Workers)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+      - name: Build search index (prebuild — Story 7.2)
+        run: npm run build:search-index
+
+      - name: Build with OpenNext Cloudflare adapter
+        run: npx opennextjs-cloudflare build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://planoamilempresas.com.br
+          NEXT_PUBLIC_WHATSAPP_NUMBER: '5511926510515'
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder' }}
+          NEXT_PUBLIC_SANITY_DATASET: production
+
+      - name: Deploy to Cloudflare Workers (production)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --env production
+          packageManager: npm
+
+      - name: Deploy preview (PR)
+        if: github.event_name == 'pull_request'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload --env preview
+          packageManager: npm
