@@ -15,7 +15,10 @@
     "build:minisearch": "node scripts/build-minisearch-index.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -35,6 +38,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.2",
+    "@lhci/cli": "^0.15.1",
     "@next/bundle-analyzer": "^16.2.4",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.2.1",
