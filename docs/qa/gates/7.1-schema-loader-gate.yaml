@@ -1,0 +1,196 @@
+# Quality Gate Decision — Story 7.1
+# Schema + Loader Reescrito — Foundation Epic 7
+
+story_id: "7.1"
+story_title: "Schema + Loader Reescrito — Foundation Epic 7"
+story_path: "docs/stories/7.1.schema-loader-reescrito.story.md"
+
+review:
+  date: "2026-04-28"
+  reviewer: "Quinn (@qa)"
+  reviewer_role: "Test Architect & Quality Advisor"
+  branch: "feat/story-7.1-schema-loader"
+  commits_reviewed:
+    - "927bd33 docs(stories): apply PO amendments O-1 + M-03 and validate Story 7.1"
+    - "f6844c2 feat(rede): add typed loader, slug map, and 14 helpers [Story 7.1]"
+  base_branch: "main"
+
+decision: PASS
+decision_rationale: |
+  All 13 acceptance criteria fulfilled with strong quality bar:
+  - 81 tests passed in 3 files (deterministic, re-runnable)
+  - Coverage exceeds gates: loader 97.9% (≥80% required) / slugs.ts 100% (≥85%) / types 100% (≥85%)
+  - Build/lint/typecheck/tests all green in independent re-runs
+  - NFR8 verified: zero "Bradesco" literals in src/ (grep)
+  - Imports absolutos exclusively (zero relative imports in src/)
+  - ADR-006 slug rules integrity validated via cross-file snapshot test
+  - Defensive boot guards implemented (loadDataset throws on shape drift)
+  - Cache strategy (8 readonly Map indexes) gives O(1) lookup for downstream stories
+  - JSDoc comprehensive with cross-story references
+
+  Two MEDIUM observations registered as tech debt (non-blocking):
+  - MED-1: line 237 (continue on prestador without bairro) is dead code with current
+    dataset (0/9325 verified); fixture-based test recommended for defensive coverage
+  - MED-2: buildCache iterates prestadores 5× with redundant key generation;
+    refactor opportunity for DRY (Story 7.2 can absorb)
+
+  Four LOW observations (optional improvements) — see story QA Results section.
+
+  No CRITICAL or HIGH issues. Story is production-ready and ready for PR.
+
+ac_traceability:
+  total_acs: 13
+  acs_passed: 13
+  acs_failed: 0
+  details:
+    - id: "AC1"
+      description: "src/types/rede-credenciada-amil.ts with interfaces + type guards"
+      status: PASS
+      evidence: "src/types/__tests__/rede-credenciada-amil.test.ts — 17 tests (8 isDatasetRedeAmil + 6 isPrestadorAmilRaw + 3 REDES_AMIL_ATIVAS)"
+    - id: "AC2"
+      description: "13+ helpers in rede-credenciada-loader.ts"
+      status: PASS
+      evidence: "14 helpers delivered (1 above SCP minimum); all tested in __tests__/rede-credenciada-loader.test.ts"
+    - id: "AC2-bis"
+      description: "src/lib/operadoras/amil/slugs.ts with REDE_SLUGS (amendment O-1)"
+      status: PASS
+      evidence: "slugs.ts + 18 tests including snapshot cross-file with docs/decisions/adr-006-url-as-trademark-policy.md"
+    - id: "AC3"
+      description: "inferTipoAtendimento(nome) with regex 9 categories"
+      status: PASS
+      evidence: "9 categorias + priority order tested (Maternidade > Hospital, Pronto-Socorro > Hospital)"
+    - id: "AC4"
+      description: "In-memory cache with 8 keys"
+      status: PASS
+      evidence: "LoaderCache interface declares 8 readonly maps; buildCache constructs all on first call; __resetCacheForTests for test isolation"
+    - id: "AC5"
+      description: "slugify deterministic + idempotent"
+      status: PASS
+      evidence: "6 canonical cases + idempotência test (slugify(slugify(x)) === slugify(x))"
+    - id: "AC6"
+      description: "Deprecate data/rede-credenciada/rede-amil.ts"
+      status: PASS
+      evidence: "Header @deprecated added with migration path; functional shim preserved for 2 legacy consumers (refactor in Story 7.4/7.5)"
+    - id: "AC7"
+      description: "Vitest unit tests with coverage ≥80%"
+      status: PASS
+      evidence: "81 tests passed; coverage validated against dataset commitado (totalPrestadores===9325, totalUFs===26, AMIL S750 QP===4959)"
+    - id: "AC8"
+      description: "Imports absolutos @/types/* @/lib/operadoras/* @/data/operadoras/*"
+      status: PASS
+      evidence: "grep ../ in src/ returns 0 occurrences"
+    - id: "AC9"
+      description: "pnpm build (Next.js) passa sem erro TypeScript strict"
+      status: PASS
+      evidence: "npm run build green with all SSG routes prerendering"
+    - id: "AC10"
+      description: "Lint passa em strict (eslint --max-warnings=0)"
+      status: PASS
+      evidence: "npx eslint src/ — 0 warnings, 0 errors"
+    - id: "AC11"
+      description: "NFR8 — zero literal Bradesco em código novo"
+      status: PASS
+      evidence: "grep [Bb]radesco src/ — 0 occurrences"
+    - id: "AC12"
+      description: "CI gates: tests + build + lint + coverage bipartite"
+      status: PASS
+      evidence: |
+        - tests: 81/81 passed
+        - build: verde
+        - lint: 0 warnings/errors
+        - coverage: loader 97.9% (≥80%) / slugs.ts 100% (≥85%) / types 100% (≥85%)
+
+issues:
+  critical: []
+  high: []
+  medium:
+    - id: MED-1
+      title: "Línea 237 (continue em prestador sem bairro) é dead code com dataset atual"
+      description: |
+        Dataset 2026-04-26 tem 0/9325 prestadores sem bairro (verified via node script).
+        Branch defensive `if (prestador.bairro.length === 0) continue;` no buildCache
+        nunca executa em produção. Coverage bypassa.
+      recommendation: |
+        Adicionar test com vi.mock('@/data/operadoras/amil/rede-credenciada.json')
+        injetando fixture com prestador sem bairro. Cobre a branch + protege contra
+        regressão se Story 7.10 (pipeline mensal) introduzir prestador incompleto.
+      severity_action: "Tech debt — pode ser absorvido em Story 7.2 ou ficar em backlog"
+      blocks_merge: false
+    - id: MED-2
+      title: "buildCache itera prestadores 5× com keys redundantes"
+      description: |
+        municipiosMap e byMunicipioSlug processam mesma key (`ufSlug|cidadeSlug`)
+        mas em loops separados. byUf/byBairroSlug/byPrestadorSlug iteram prestadores
+        adicionalmente.
+      recommendation: |
+        Refatorar para fold único iteration. Ganho marginal em build SSG (~10ms)
+        mas DRY enforced. Story 7.2 ou 7.4 podem refatorar quando consumirem.
+      severity_action: "Tech debt — performance optimization opportunity"
+      blocks_merge: false
+  low:
+    - id: LOW-1
+      title: "Sort estabilidade não testada explicitamente em getMunicipios()"
+      recommendation: "Adicionar test que valida ordem de municípios com mesmo totalPrestadores em chamadas múltiplas"
+      blocks_merge: false
+    - id: LOW-2
+      title: "__resetCacheForTests exposto em prod"
+      recommendation: "Considerar separação em src/test/helpers.ts ou guard via process.env.NODE_ENV"
+      blocks_merge: false
+    - id: LOW-3
+      title: "getEstatisticasByUF('SP') test não valida count exato vs dataset"
+      recommendation: "Adicionar assertion expect(...totalPrestadores).toBe(SP_COUNT_REAL) para reforçar dataset invariant"
+      blocks_merge: false
+    - id: LOW-4
+      title: "byPrestadorSlug collision rara não tem fixture defensive"
+      recommendation: "Adicionar console.warn ou dedup quando 2 prestadores colidem em codigo+nome+bairro slug"
+      blocks_merge: false
+
+nfr_assessment:
+  nfr1_performance:
+    status: NA
+    rationale: "Story 7.1 entrega tipos + loader. NFR1 (LCP/INP/CLS) aplica a páginas — Stories 7.2+."
+  nfr2_bundle_size:
+    status: NA
+    rationale: "Loader é build-time only; bundle gate aplica a Story 7.2 (NetworkSearch ≤30KB)."
+  nfr8_no_bradesco_literal:
+    status: PASS
+    evidence: "grep [Bb]radesco src/ → 0 occurrences"
+  nfr9_wcag_aa:
+    status: NA
+    rationale: "Story 7.1 não tem componentes UI."
+  nfr14_typescript_strict_no_any:
+    status: PASS
+    evidence: "tsc --noEmit em strict mode passa; type guards usam unknown + assertions"
+  nfr16_dr_runbook:
+    status: NA
+    rationale: "Loader is read-only consumer; DR/RTO covered in Story 7.10 (pipeline)."
+
+risks:
+  identified: []
+  mitigations: |
+    Foundation story bloqueia 8 stories downstream (7.2-7.10). PASS aqui = unblock
+    cascading. ADR-006 §"Slug rules" snapshot cross-file mitiga risk de drift entre
+    documentação legal e código.
+
+testability_assessment:
+  controllability: "Excellent — __resetCacheForTests permite isolamento; tests determinísticos"
+  observability: "Good — JSDoc com cross-refs facilita debugging; mensagens de erro descritivas"
+  debuggability: "Good — type guards falham fast no boot com mensagem orientada (ADR-007 SSOT)"
+
+approval:
+  pre_pr_actions:
+    - "MERGE permitido após handoff @github-devops para push + PR"
+    - "CodeRabbit pre-PR review opcional (WSL): wsl bash -c '~/.local/bin/coderabbit --prompt-only -t committed --base main'"
+  post_merge_followup:
+    - "MED-1 e MED-2 registrar em backlog técnico ou absorver em Story 7.2"
+    - "LOW-1 a LOW-4 backlog opcional — não impactam Stories 7.2-7.10"
+
+next_handoff:
+  agent: "@github-devops (Gage)"
+  action: "git push origin feat/story-7.1-schema-loader && gh pr create"
+  rationale: "Story Ready for Review + QA gate PASS. Sem fix request — pronta para PR."
+
+# Audit trail
+created_at: "2026-04-28"
+created_by: "Quinn (@qa) — Synkra AIOS"
+file_format: "AIOS QA Gate v1"
