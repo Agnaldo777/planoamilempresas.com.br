@@ -5,12 +5,14 @@
   "description": "Site SEO Plano Amil Empresarial — corretor autorizado SUSEP 201054484 (BeneficioRH)",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/build-minisearch-index.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,css,md}\"",
     "audit:rede": "node scripts/audit-network-coverage.mjs",
+    "build:minisearch": "node scripts/build-minisearch-index.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
