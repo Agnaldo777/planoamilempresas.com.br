@@ -17,7 +17,7 @@ export function StatsCounter({ stats }: StatsCounterProps) {
         const Icon = stat.icon;
         return (
           <div key={stat.label} className="text-center">
-            <Icon className="mx-auto h-8 w-8 text-amil-blue" />
+            <Icon className="mx-auto h-8 w-8 text-slate-700" />
             <p className="mt-3 text-3xl font-bold text-gray-900 md:text-4xl">{stat.value}</p>
             <p className="mt-1 text-sm text-gray-500">{stat.label}</p>
           </div>

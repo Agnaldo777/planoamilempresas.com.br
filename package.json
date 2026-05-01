@@ -5,7 +5,13 @@
   "description": "Site SEO Plano Amil Empresarial — corretor autorizado SUSEP 201054484 (BeneficioRH)",
   "scripts": {
     "dev": "next dev",
+    "build:search-index": "node scripts/build-minisearch-index.mjs",
+    "prebuild": "node scripts/build-minisearch-index.mjs",
     "build": "next build",
+    "build:cf": "opennextjs-cloudflare build",
+    "preview:cf": "opennextjs-cloudflare build && wrangler dev",
+    "deploy:cf": "opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -20,6 +26,7 @@
     "@sanity/image-url": "^2.0.3",
     "@sanity/vision": "^5.17.1",
     "lucide-react": "^0.577.0",
+    "minisearch": "^7.2.0",
     "next": "^16.1.7",
     "next-sanity": "^12.1.2",
     "react": "^19.2.4",
@@ -29,6 +36,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.19.4",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
@@ -40,6 +48,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.5",
+    "wrangler": "^4.86.0"
   }
 }

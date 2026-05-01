@@ -1,10 +1,21 @@
 @import "tailwindcss";
 
+/*
+ * Design Tokens — Paleta Opção A (canonical)
+ * Fonte de verdade: docs/design/visual-benchmark-and-design-system.md v1.0
+ * Compliance: ADR-006 (anti-trademark Amil) + FR54 (Schema Organization)
+ *
+ * Migração: 2026-04-29 — removidos tokens legacy `--color-amil-blue*`
+ * (azul UnitedHealth/Amil oficial #0066B3/#0066CC) substituídos pela
+ * paleta neutra editorial slate/teal/amber/sky.
+ */
 @theme {
-  --color-amil-blue: #0066CC;
-  --color-amil-blue-dark: #1A237E;
-  --color-amil-blue-light: #E3F2FD;
-  --color-cta-green: #00C853;
+  --color-brand-primary: #0F172A;     /* slate-900 — identidade BeneficioRH */
+  --color-cta: #0D9488;               /* teal-600 — botões/CTAs primários */
+  --color-accent: #B45309;            /* amber-700 — destaques/avisos */
+  --color-link: #0284C7;              /* sky-600 — links/refs */
+
+  --color-cta-green: #00C853;         /* CTA verde-claro (legacy compat — manter) */
   --color-cta-green-hover: #00B248;
   --color-whatsapp: #25D366;
   --color-urgency: #D32F2F;

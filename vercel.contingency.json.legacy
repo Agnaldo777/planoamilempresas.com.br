@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "_comment_DORMANT": "DORMANT — ativar copiando para vercel.json em caso de notificação Amil. Story 1.2a (Mitigação 4 da Story 1.0 Bloco 2). Procedimento de rollback em <1h em docs/devops/domain-contingency-plan.md. Status 301 explícito em todos os redirects para preservar SEO equity ao migrar de /plano-amil/* para /plano-empresarial/* no domínio-ponte planosaudeempresas.com.br.",
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "installCommand": "npm ci",
+  "outputDirectory": ".next",
+  "regions": ["gru1"],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/plano-amil", "destination": "/plano-empresarial", "statusCode": 301 },
+    { "source": "/plano-amil/", "destination": "/plano-empresarial", "statusCode": 301 },
+    { "source": "/empresarial", "destination": "/plano-empresarial", "statusCode": 301 },
+    { "source": "/empresarial/:path*", "destination": "/plano-empresarial/:path*", "statusCode": 301 },
+    { "source": "/planos", "destination": "/tabela-planos", "statusCode": 301 },
+    { "source": "/planos/:path*", "destination": "/tabela-planos/:path*", "statusCode": 301 },
+    { "source": "/tabela-de-precos", "destination": "/tabela-planos/precos", "statusCode": 301 },
+    { "source": "/tabela-de-precos/:path*", "destination": "/tabela-planos/precos/:path*", "statusCode": 301 },
+    { "source": "/cotacao-online", "destination": "/cotacao", "statusCode": 301 },
+    { "source": "/cotacao-online/:path*", "destination": "/cotacao/:path*", "statusCode": 301 },
+    { "source": "/rede-credenciada", "destination": "/rede-prestadores", "statusCode": 301 },
+    { "source": "/rede-credenciada/:path*", "destination": "/rede-prestadores/:path*", "statusCode": 301 },
+    { "source": "/rede", "destination": "/rede-prestadores", "statusCode": 301 },
+    { "source": "/rede/:uf", "destination": "/rede-prestadores/:uf", "statusCode": 301 },
+    { "source": "/rede/:uf/:municipio", "destination": "/rede-prestadores/:uf/:municipio", "statusCode": 301 },
+    { "source": "/rede/:uf/:municipio/:slug*", "destination": "/rede-prestadores/:uf/:municipio/:slug*", "statusCode": 301 },
+    { "source": "/amil-dental", "destination": "/dental-empresarial", "statusCode": 301 },
+    { "source": "/amil-dental/:path*", "destination": "/dental-empresarial/:path*", "statusCode": 301 },
+    { "source": "/amil-espaco-saude-:unidade", "destination": "/espaco-saude/:unidade", "statusCode": 301 },
+    { "source": "/perguntas-frequentes", "destination": "/faq", "statusCode": 301 },
+    { "source": "/perguntas-frequentes/:path*", "destination": "/faq/:path*", "statusCode": 301 },
+    { "source": "/contato", "destination": "/fale-conosco", "statusCode": 301 },
+    { "source": "/contato/:path*", "destination": "/fale-conosco/:path*", "statusCode": 301 },
+    { "source": "/contato-empresas", "destination": "/fale-conosco-empresas", "statusCode": 301 },
+    { "source": "/contato-empresas/:path*", "destination": "/fale-conosco-empresas/:path*", "statusCode": 301 },
+    { "source": "/portal-empresa", "destination": "/area-do-cliente", "statusCode": 301 },
+    { "source": "/portal-empresa/:path*", "destination": "/area-do-cliente/:path*", "statusCode": 301 },
+    { "source": "/sobre-nos", "destination": "/sobre", "statusCode": 301 },
+    { "source": "/sobre-nos/:path*", "destination": "/sobre/:path*", "statusCode": 301 },
+    { "source": "/blog", "destination": "/conteudo", "statusCode": 301 },
+    { "source": "/blog/:slug*", "destination": "/conteudo/:slug*", "statusCode": 301 },
+    { "source": "/autores/:slug", "destination": "/conteudo/autores/:slug", "statusCode": 301 },
+    { "source": "/comparativos", "destination": "/comparar-planos", "statusCode": 301 },
+    { "source": "/comparativos/:path*", "destination": "/comparar-planos/:path*", "statusCode": 301 },
+    { "source": "/plano-amil-:estado", "destination": "/plano-empresarial-:estado", "statusCode": 301 },
+    { "source": "/plano-amil-:estado/:path*", "destination": "/plano-empresarial-:estado/:path*", "statusCode": 301 },
+    { "source": "/cnae/:codigo", "destination": "/segmento/:codigo", "statusCode": 301 },
+    { "source": "/cnae/:codigo/:cidade", "destination": "/segmento/:codigo/:cidade", "statusCode": 301 },
+    { "source": "/porte/:porte", "destination": "/tamanho-empresa/:porte", "statusCode": 301 },
+    { "source": "/porte/:porte/:cidade", "destination": "/tamanho-empresa/:porte/:cidade", "statusCode": 301 },
+    { "source": "/cidade/:slug", "destination": "/cidades/:slug", "statusCode": 301 },
+    { "source": "/cidade/:slug/:cnae", "destination": "/cidades/:slug/:cnae", "statusCode": 301 },
+    { "source": "/preco-amil/:plano", "destination": "/preco/:plano", "statusCode": 301 },
+    { "source": "/cobertura-amil", "destination": "/cobertura", "statusCode": 301 },
+    { "source": "/cobertura-amil/:path*", "destination": "/cobertura/:path*", "statusCode": 301 },
+    { "source": "/coparticipacao", "destination": "/modalidades/coparticipacao", "statusCode": 301 },
+    { "source": "/sem-coparticipacao", "destination": "/modalidades/sem-coparticipacao", "statusCode": 301 },
+    { "source": "/amil-one", "destination": "/produtos/premium", "statusCode": 301 },
+    { "source": "/amil-s380", "destination": "/produtos/intermediario-1", "statusCode": 301 },
+    { "source": "/amil-s450", "destination": "/produtos/intermediario-2", "statusCode": 301 },
+    { "source": "/amil-s750", "destination": "/produtos/master", "statusCode": 301 },
+    { "source": "/dominio-ponte", "destination": "/", "statusCode": 301 }
+  ],
+  "rewrites": [],
+  "cleanUrls": true,
+  "trailingSlash": false
+}

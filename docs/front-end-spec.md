@@ -1,11 +1,13 @@
 # planoamilempresas.com.br — UI/UX Specification
 
-**Documento:** Front-End Specification v1.0
+**Documento:** Front-End Specification v1.2
 **Projeto:** planoamilempresas.com.br
 **Autor:** Uma (UX/UI Designer — Empathizer ♋) — Synkra AIOS
-**Data:** 2026-04-16
-**Baseline técnico:** Next.js 14 App Router + Radix UI + Tailwind CSS (herdado do clone, adaptado para Amil)
-**Status:** Draft v1.0 — bloqueia Epic 3 Story 3.2 (Template de Cornerstone)
+**Data:** 2026-04-29
+**Baseline técnico:** Next.js 16 App Router + React 19 + Tailwind CSS v4 + Sanity v3 (herdado do clone, adaptado para Amil)
+**Status:** v1.2 — Paleta migrada para Opção A (slate-900 / teal-600 / amber-700 / sky-600); FE Spec deferido a Design System v1.0 como SSOT visual
+
+> **Single source of truth visual:** `docs/design/visual-benchmark-and-design-system.md` v1.0. Quando este FE Spec divergir do design system, **o design system prevalece** (este doc deve ser corrigido). FE Spec foca em IA, fluxos, componentes; Design System cobre paleta, tipografia, espaçamento, contraste WCAG.
 
 ---
 
@@ -75,6 +77,7 @@ Consolidadas a partir do `market-research.md` e refinadas pelo `brainstorming-se
 |------|---------|-------------|--------|
 | 2026-04-16 | 1.0 | Draft inicial — design system, IA, wireframes, atomic component library, WCAG AA | Uma (UX Design) |
 | 2026-04-26 | 1.1 | Patch pós Pax re-validação: nomenclatura produtos atualizada (Bronze→Platinum Mais), unDraw permitido (era proibido), Open Questions 1-3 resolvidas com decisões Story 1.0, status atualizado | Uma (UX) |
+| 2026-04-29 | 1.2 | Migração paleta Opção A (slate-900 / teal-600 / amber-700 / sky-600); alinhamento ADR-006 (anti-trademark Amil) + FR54 (Schema Organization BeneficioRH); referência cross-doc para `docs/design/visual-benchmark-and-design-system.md` v1.0 como design system canonical; Logo BeneficioRH text-only Inter (text-only mockup, sem clone visual Amil). Detalhes em `docs/design/migration-globals-css-2026-04-29.md`. | Uma (Synkra AIOS) |
 
 ---
 
@@ -149,7 +152,7 @@ graph TD
 - "Calculadora" (→ tool)
 - "Rede Credenciada" (→ tool)
 - "Sobre o Corretor" (→ authority)
-- **CTA primário:** "Cotar no WhatsApp" (botão verde `#00C389`)
+- **CTA primário:** "Cotar no WhatsApp" (botão `teal-600` `#0D9488` — Paleta Opção A)
 
 **Primary Navigation (Mobile — Bottom Tab Bar Sticky):**
 - [🏠 Início] [📊 Preços] [🧮 Simular] [💬 WhatsApp] [☰ Menu]
@@ -1025,7 +1028,7 @@ Reaproveitados/customizados do clone:
 
 | Atom | Source | Customização |
 |------|--------|--------------|
-| `<Button variant="primary|secondary|ghost|destructive" />` | Radix Slot + CVA | Cores Amil (primary=`#00C389`, secondary=`#0066B3`, ghost=neutro) |
+| `<Button variant="primary|secondary|ghost|destructive" />` | Radix Slot + CVA | Paleta Opção A (primary=`teal-600` `#0D9488` CTA, secondary=`slate-900` `#0F172A` brand, ghost=neutro). Detalhes em `docs/design/visual-benchmark-and-design-system.md`. |
 | `<Input type="text|email|tel|cnpj" />` | HTML + Radix | Validação visual aria-invalid |
 | `<Textarea />` | HTML | Autosize opcional |
 | `<Label />` | Radix Label | Sempre associado via `htmlFor` |
@@ -1110,98 +1113,62 @@ Reaproveitados/customizados do clone:
 
 ## Branding & Style Guide
 
-### Design Tokens (`src/config/tokens.ts` — a ser exportado em DTCG formato W3C)
+### Design Tokens — Paleta Opção A (canonical em `docs/design/visual-benchmark-and-design-system.md` v1.0)
 
-#### Colors
+> **v1.2 (2026-04-29):** A paleta legacy `#0066B3` (azul Amil oficial) + `#00C389` (CTA verde) foi **descontinuada** em compliance com ADR-006 (anti-trademark) e FR54 (Schema Organization BeneficioRH ≠ Amil). Tokens canônicos abaixo são **slate-900 / teal-600 / amber-700 / sky-600** — escalas nativas Tailwind v4 + 4 aliases semânticos em `app/globals.css`. Ver `docs/design/migration-globals-css-2026-04-29.md` para mapping legacy→novo.
 
-```typescript
-const colors = {
-  // Brand primary (Amil azul oficial)
-  brand: {
-    50: '#E6F0FA',
-    100: '#CCE1F5',
-    200: '#99C3EB',
-    300: '#66A5E1',
-    400: '#3387D7',
-    500: '#0066B3',  // ← Amil primary
-    600: '#005499',
-    700: '#004280',
-    800: '#003066',
-    900: '#001F4D',
-  },
+#### Tokens semânticos (aliases em `app/globals.css` `@theme`)
 
-  // Accent CTA (verde conversão)
-  cta: {
-    50: '#E6FAF2',
-    100: '#CCF5E5',
-    200: '#99EBCB',
-    300: '#66E1B1',
-    400: '#33D797',
-    500: '#00C389',  // ← CTA primary
-    600: '#00A371',
-    700: '#008359',
-    800: '#006342',
-    900: '#00432B',
-  },
+| Token | Hex | Tailwind v4 | Uso | Contraste sobre branco |
+|---|---|---|---|---|
+| `--color-brand-primary` | `#0F172A` | `slate-900` | Backgrounds hero, footer, brand identity | **19.83:1** ✓ AAA |
+| `--color-cta` | `#0D9488` | `teal-600` | Botões/CTAs primários, focus border | **4.79:1** ✓ AA |
+| `--color-accent` | `#B45309` | `amber-700` | Destaques, badges warning, ícones premium | **5.32:1** ✓ AA |
+| `--color-link` | `#0284C7` | `sky-600` | Links inline, breadcrumbs, navegação | **4.62:1** ✓ AA |
 
-  // Neutrals (gray scale)
-  neutral: {
-    50: '#FAFAFA',
-    100: '#F5F5F5',
-    200: '#EAEAEA',
-    300: '#D4D4D4',
-    400: '#A3A3A3',
-    500: '#737373',
-    600: '#525252',
-    700: '#404040',
-    800: '#262626',
-    900: '#171717',
-    950: '#0A0A0A',
-  },
+#### Tabela de pares (token semântico × pair WCAG AA × uso)
 
-  // Semantic
-  semantic: {
-    success: '#059669',   // verde escuro confirmações
-    warning: '#D97706',   // laranja escuro disclaimers
-    error: '#DC2626',     // vermelho validação
-    info: '#0EA5E9',      // azul info
-  },
+| Pair | Ratio | Uso recomendado |
+|---|---|---|
+| `text-white` sobre `bg-slate-900` | 19.83:1 | Hero titles, footer text |
+| `text-white` sobre `bg-teal-600` | 4.79:1 | CTA button text |
+| `text-slate-900` sobre `bg-slate-50` | 18.32:1 | Cards selected state, callouts |
+| `text-sky-600` sobre `bg-white` | 4.62:1 | Links inline, breadcrumb hover |
+| `text-amber-700` sobre `bg-white` | 5.32:1 | Warning badge, disclaimer destaque |
+| `text-slate-700` sobre `bg-white` | 9.42:1 | Ícones decorativos, body secondary |
 
-  // Backgrounds
-  bg: {
-    primary: '#FFFFFF',
-    secondary: '#FAFAFA',
-    tertiary: '#F5F5F5',
-    inverse: '#171717',
-  },
+#### Tokens preservados (utility — sem migração)
 
-  // Text
-  text: {
-    primary: '#171717',      // near-black
-    secondary: '#525252',
-    tertiary: '#737373',
-    inverse: '#FAFAFA',
-    link: '#0066B3',
-    linkHover: '#004280',
-  },
+```css
+@theme {
+  /* Aliases semânticos Opção A (canonical) */
+  --color-brand-primary: #0F172A;     /* slate-900 */
+  --color-cta: #0D9488;               /* teal-600 */
+  --color-accent: #B45309;            /* amber-700 */
+  --color-link: #0284C7;              /* sky-600 */
 
-  // Borders
-  border: {
-    light: '#EAEAEA',
-    medium: '#D4D4D4',
-    dark: '#A3A3A3',
-    focus: '#00C389',  // outline focus = CTA green
-  },
-};
+  /* Utility — preservados (não conflitam com paleta Amil) */
+  --color-cta-green: #00C853;         /* CTA verde-claro complementar — botão WhatsApp/legacy */
+  --color-whatsapp: #25D366;          /* Cor oficial WhatsApp */
+  --color-urgency: #D32F2F;           /* Vermelho de urgência (notícias) */
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-500: #6B7280;
+  --color-gray-700: #374151;
+  --color-gray-900: #111827;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
 ```
 
-**Acessibilidade de contraste (WCAG AA):**
-- Texto primary (`#171717`) sobre bg primary (`#FFFFFF`): **ratio 19.05:1** ✓ AAA
-- Texto secondary (`#525252`) sobre bg primary: **ratio 7.74:1** ✓ AAA
-- Brand 500 (`#0066B3`) sobre bg primary: **ratio 7.23:1** ✓ AAA
-- CTA 500 (`#00C389`) sobre bg primary: **ratio 3.21:1** ✓ AA LARGE (≥18px bold ou ≥24px)
-- CTA button text (`#FFFFFF`) sobre CTA 500 bg: **ratio 3.21:1** → **usar CTA 600** (`#00A371`) para text-on-bg = **ratio 4.89:1** ✓ AA
-- Error (`#DC2626`) sobre bg primary: **ratio 5.09:1** ✓ AA
+**Acessibilidade de contraste (WCAG AA — Paleta Opção A):**
+- Brand primary `slate-900` (`#0F172A`) sobre branco: **19.83:1** ✓ AAA
+- CTA `teal-600` (`#0D9488`) sobre branco: **4.79:1** ✓ AA (≥4.5)
+- Accent `amber-700` (`#B45309`) sobre branco: **5.32:1** ✓ AA
+- Link `sky-600` (`#0284C7`) sobre branco: **4.62:1** ✓ AA
+- White sobre `slate-900`: **19.83:1** ✓ AAA (footer, hero text)
+- White sobre `teal-600`: **4.79:1** ✓ AA (CTA button text)
 
 #### Typography
 
@@ -1362,7 +1329,7 @@ const motion = {
 
 **FAZER:**
 - ✅ Fotografias reais (corretor real, equipe, possivelmente clientes com autorização)
-- ✅ unDraw / Storyset (estratégia MVP — decisão Story 1.0 2026-04-24): banco gratuito de ilustrações SVG com paleta customizável (sincronizada com #0066B3). Em Phase 2 considerar upgrade para ilustrador próprio se quiser elevar visual.
+- ✅ unDraw / Storyset (estratégia MVP — decisão Story 1.0 2026-04-24): banco gratuito de ilustrações SVG com paleta customizável (sincronizada com Paleta Opção A — `slate-900` / `teal-600` em vez do legacy `#0066B3`). Em Phase 2 considerar upgrade para ilustrador próprio se quiser elevar visual.
 - ✅ Infográficos originais (dados reais, fontes linkadas)
 - ✅ Ícones lucide-react consistentes (stroke-width 1.5, size 20-24px)
 - ✅ Tabelas bem diagramadas (zebra striping opacity 0.03)
@@ -1381,7 +1348,7 @@ const motion = {
 
 - **Color contrast:** mínimo 4.5:1 para texto normal, 3:1 para texto grande (≥18pt ou 14pt bold)
 - **Não usar cor como único meio:** erros acompanham ícone + texto; links têm underline (não só cor)
-- **Focus indicator:** outline 2px `#00C389` com offset 2px em elementos interativos; nunca remover via CSS sem substituir
+- **Focus indicator:** outline 2px `teal-600` `#0D9488` (token `--color-cta`) com offset 2px em elementos interativos; nunca remover via CSS sem substituir
 - **Dark mode:** não implementado MVP (decidir Phase 2; se implementado, ratios recalculados)
 
 ### Keyboard Navigation
@@ -1643,8 +1610,12 @@ Alinhado com NFR1/NFR2 do PRD v1.2:
 
 ### Open Questions (para @sm resolver durante story creation)
 
-1. **Logo Amil broker:** ✅ RESOLVIDO Story 1.0 — combo logo BeneficioRH no header + selo discreto "Corretor autorizado Amil" no rodapé. SVG da BeneficioRH pendente envio do stakeholder (fallback: wordmark texto "BeneficioRH" estilizado em Inter até chegada).
-2. **Paleta `#0066B3`:** ✅ RESOLVIDO Story 1.0 — autorização aceita (risco baixo). Manter `#0066B3` (azul Amil oficial) + `#00C389` (CTA verde). Plano B documentado: trocar para `#004280` (azul mais escuro) via 1 linha em tailwind.config.ts se Amil notificar especificamente sobre cor.
+1. **Logo / Brand Identity (REVISADO v1.2 — 2026-04-29):**
+   - **Header logo:** "BeneficioRH" wordmark **text-only em Inter** (font-weight 700, slate-900) — mockup textual atual é a apresentação canônica MVP. NÃO usar logo Amil oficial (símbolo, lettering ou variantes) em nenhum lugar do site (header, favicon, OG image, redes sociais).
+   - **Disclaimer trademark (mandatório):** Footer sempre exibe "BeneficioRH é corretora autorizada — não somos a Amil. Plano comercializado: Amil Assistência Médica Internacional S.A. (registro ANS nº 326305)." Selo "Corretor autorizado Amil" só admite **texto** + ícone genérico (handshake, escudo) — nunca o logo Amil.
+   - **Tipografia logo:** Inter ou DM Sans, weight 700, kerning normal. Versão dark (footer): `text-white` sobre `bg-slate-900`. Versão light (header): `text-slate-900` sobre `bg-white`.
+   - **Open question (não bloqueia MVP):** stakeholder pode fornecer SVG próprio em Phase 1.5 — substituir wordmark por SVG mantendo restrições anti-Amil acima.
+2. **Paleta visual (RESOLVIDO v1.2 — 2026-04-29):** Decisão final Opção A — migração para `slate-900 / teal-600 / amber-700 / sky-600`. **Descontinuado** o uso de `#0066B3` (azul Amil oficial) e `#00C389` (CTA verde) como brand primary. Justificativa: ADR-006 (anti-trademark) + FR54 (Schema Organization BeneficioRH). Histórico: Story 1.0 inicialmente aceitou `#0066B3`; Pax revalidou em 2026-04-28 e decidiu migrar para reduzir risco trademark e dissonância marca-schema. Implementação em `docs/design/migration-globals-css-2026-04-29.md`.
 3. **Fotografia corretor:** ✅ RESOLVIDO Story 1.0 — fornecida em `C:\Users\benef\Desktop\Bradesco Saúde Fotos\08-blog\Agnaldo-silva-corretor-bradesco-saude-empresarial.jpeg`. Story 1.1 copia para `/public/images/agnaldo-silva-corretor.jpeg` (renomear neutro).
 4. **Ilustrações/infográficos:** contratar ilustrador ou usar stock editado? Budget?
 5. **Dark mode:** MVP ou Phase 2? (recomendação: Phase 2; não crítico)
@@ -1666,9 +1637,10 @@ Alinhado com NFR1/NFR2 do PRD v1.2:
 
 ---
 
-**Status do documento:** v1.1 — APPROVED PARA STORY CREATION (Pax APROVOU em 2026-04-26 com ressalvas; este patch resolveu 4 drifts identificados)
+**Status do documento:** v1.2 — APPROVED PARA STORY CREATION (Pax APROVOU em 2026-04-26 com ressalvas; v1.2 fecha débito visual P0 — paleta migrada Opção A em alinhamento com `docs/design/visual-benchmark-and-design-system.md` v1.0 SSOT)
 **Owner:** Uma (UX/UI Designer) ♋
-**Próximo owner:** River (@sm) — story creation Epic 1, 2 (Stories 3.x destravadas com este patch)
+**Próximo owner:** River (@sm) — propagar tokens novos em stories pendentes
 **Handoff seguinte:** River (@sm) — story creation
+**Cross-doc dependency:** `docs/design/visual-benchmark-and-design-system.md` v1.0 (paleta canonical) + `docs/design/migration-globals-css-2026-04-29.md` (mapping legacy→novo)
 
 — Uma, desenhando com empatia 💝

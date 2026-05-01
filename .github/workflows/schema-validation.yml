@@ -1,0 +1,49 @@
+name: schema-validation
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: schema-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wait for Vercel preview deployment
+        id: vercel-preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
+          check_interval: 15
+          environment: Preview
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # TODO: npm i -D jsdom (uso transitivo apenas para script de validação)
+      - name: Install jsdom (validation runtime)
+        run: npm install --no-save jsdom@24
+
+      - name: Validate JSON-LD on key pages
+        env:
+          PREVIEW_URL: ${{ steps.vercel-preview.outputs.url }}
+        run: node scripts/validate-jsonld.mjs
+
+      # Story 6.10 — Pipeline NFR23. Falha CI se algum post YMYL
+      # com workflowStatus=published não tiver trilha completa de
+      # revisão médica + jurídica em reviewTrack. Ver
+      # docs/editorial/cms-guide.md.
+      - name: Audit Workflow Status (NFR23 pipeline revisão humana)
+        run: node scripts/audit-workflow-status.mjs

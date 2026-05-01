@@ -1,0 +1,76 @@
+/**
+ * Wrangler config — Cloudflare Workers (via @opennextjs/cloudflare, ADR-011).
+ *
+ * NOTA IMPORTANTE: este projeto roda em Cloudflare WORKERS, não Pages.
+ * @cloudflare/next-on-pages (Pages adapter) é incompatível com Next.js 16
+ * (peer dep next <=15.5.2). Cloudflare migrou suporte oficial Next.js para
+ * Workers via OpenNext. Detalhes em docs/devops/cloudflare-pages-setup.md.
+ *
+ * Comandos:
+ *   - Build:    npx opennextjs-cloudflare build
+ *   - Preview:  npx wrangler dev
+ *   - Deploy:   npx opennextjs-cloudflare deploy
+ *
+ * Bindings:
+ *   - ASSETS                     → estáticos servidos do .open-next/assets
+ *   - WORKER_SELF_REFERENCE      → self-binding para ISR/cache invalidation
+ *   - NEXT_INC_CACHE_R2_BUCKET   → R2 para incremental cache (ISR)
+ *   - IMAGES                     → Cloudflare Images binding (opt-in futuro)
+ *
+ * Pré-requisitos antes do primeiro deploy:
+ *   wrangler r2 bucket create planoamilempresas-opennext-cache
+ *   wrangler r2 bucket create planoamilempresas-preview-opennext-cache
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "planoamilempresas",
+  "compatibility_date": "2026-01-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "planoamilempresas"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "planoamilempresas-opennext-cache"
+    }
+  ],
+  "images": {
+    "binding": "IMAGES"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "env": {
+    "production": {
+      "name": "planoamilempresas",
+      "vars": {
+        "NEXT_PUBLIC_SITE_URL": "https://planoamilempresas.com.br"
+      }
+    },
+    "preview": {
+      "name": "planoamilempresas-preview",
+      "r2_buckets": [
+        {
+          "binding": "NEXT_INC_CACHE_R2_BUCKET",
+          "bucket_name": "planoamilempresas-preview-opennext-cache"
+        }
+      ],
+      "services": [
+        {
+          "binding": "WORKER_SELF_REFERENCE",
+          "service": "planoamilempresas-preview"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,66 @@
+# DORMANT — public/_redirects.contingency (Story 1.2a, Mitigação 4)
+#
+# Ativação: notificação Amil → migrar de planoamilempresas.com.br para
+# domínio-ponte planosaudeempresas.com.br. Procedimento de rollback <1h em
+# docs/devops/domain-contingency-plan.md.
+#
+# Conversão de vercel.contingency.json (52 redirects 301) para sintaxe
+# Cloudflare Static Assets:
+#   - vercel `:path*` → cloudflare `:splat` (catch-all wildcard)
+#   - vercel `:slug`  → cloudflare `:slug`  (named placeholder)
+#   - status 301 explícito (preservar SEO equity)
+#
+# NÃO COPIAR para `_redirects` ativo até autorização do stakeholder.
+
+/plano-amil                              /plano-empresarial               301
+/plano-amil/                             /plano-empresarial               301
+/empresarial                             /plano-empresarial               301
+/empresarial/*                           /plano-empresarial/:splat        301
+/planos                                  /tabela-planos                   301
+/planos/*                                /tabela-planos/:splat            301
+/tabela-de-precos                        /tabela-planos/precos            301
+/tabela-de-precos/*                      /tabela-planos/precos/:splat     301
+/cotacao-online                          /cotacao                         301
+/cotacao-online/*                        /cotacao/:splat                  301
+/rede-credenciada                        /rede-prestadores                301
+/rede-credenciada/*                      /rede-prestadores/:splat         301
+/rede                                    /rede-prestadores                301
+/rede/:uf                                /rede-prestadores/:uf            301
+/rede/:uf/:municipio                     /rede-prestadores/:uf/:municipio 301
+/rede/:uf/:municipio/*                   /rede-prestadores/:uf/:municipio/:splat 301
+/amil-dental                             /dental-empresarial              301
+/amil-dental/*                           /dental-empresarial/:splat       301
+/amil-espaco-saude-:unidade              /espaco-saude/:unidade           301
+/perguntas-frequentes                    /faq                             301
+/perguntas-frequentes/*                  /faq/:splat                      301
+/contato                                 /fale-conosco                    301
+/contato/*                               /fale-conosco/:splat             301
+/contato-empresas                        /fale-conosco-empresas           301
+/contato-empresas/*                      /fale-conosco-empresas/:splat    301
+/portal-empresa                          /area-do-cliente                 301
+/portal-empresa/*                        /area-do-cliente/:splat          301
+/sobre-nos                               /sobre                           301
+/sobre-nos/*                             /sobre/:splat                    301
+/blog                                    /conteudo                        301
+/blog/*                                  /conteudo/:splat                 301
+/autores/:slug                           /conteudo/autores/:slug          301
+/comparativos                            /comparar-planos                 301
+/comparativos/*                          /comparar-planos/:splat          301
+/plano-amil-:estado                      /plano-empresarial-:estado       301
+/plano-amil-:estado/*                    /plano-empresarial-:estado/:splat 301
+/cnae/:codigo                            /segmento/:codigo                301
+/cnae/:codigo/:cidade                    /segmento/:codigo/:cidade        301
+/porte/:porte                            /tamanho-empresa/:porte          301
+/porte/:porte/:cidade                    /tamanho-empresa/:porte/:cidade  301
+/cidade/:slug                            /cidades/:slug                   301
+/cidade/:slug/:cnae                      /cidades/:slug/:cnae             301
+/preco-amil/:plano                       /preco/:plano                    301
+/cobertura-amil                          /cobertura                       301
+/cobertura-amil/*                        /cobertura/:splat                301
+/coparticipacao                          /modalidades/coparticipacao      301
+/sem-coparticipacao                      /modalidades/sem-coparticipacao  301
+/amil-one                                /produtos/premium                301
+/amil-s380                               /produtos/intermediario-1        301
+/amil-s450                               /produtos/intermediario-2        301
+/amil-s750                               /produtos/master                 301
+/dominio-ponte                           /                                301

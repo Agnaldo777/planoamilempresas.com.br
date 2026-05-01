@@ -24,12 +24,12 @@ export default function EmpresarialPage() {
       <SchemaGraph pageType="page" breadcrumb={[{ name: 'Empresarial', href: '/empresarial' }]} />
       <BreadcrumbNav items={[{ label: 'Empresarial', href: '/empresarial' }]} />
 
-      <section className="bg-amil-blue px-4 py-16 text-white">
+      <section className="bg-slate-900 px-4 py-16 text-white">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
             Plano de Saúde Amil Empresarial
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-amil-blue-light">
+          <p className="mt-4 max-w-2xl text-lg text-slate-200">
             Para empresas de todos os portes: MEI, PME e grandes corporações. Cobertura nacional,
             hospitais renomados, telemedicina 24h.
           </p>
@@ -52,7 +52,7 @@ export default function EmpresarialPage() {
                 href={`/empresarial/${seg.slug}`}
                 className="rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-md"
               >
-                <h3 className="text-lg font-bold text-amil-blue">{seg.nome}</h3>
+                <h3 className="text-lg font-bold text-slate-900">{seg.nome}</h3>
                 <p className="mt-2 text-sm text-gray-500">{seg.desc}</p>
               </Link>
             ))}

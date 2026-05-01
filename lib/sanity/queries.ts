@@ -1,3 +1,15 @@
+/**
+ * @deprecated GROQ queries legados em snake_case PT (`titulo`, `conteudo`,
+ * `imagem_destaque`). O schema novo (Story 6.11.a) usa camelCase EN
+ * (`title`, `body`, `ogImage`).
+ *
+ * **Novos consumers:** importar de `@/lib/sanity/blog` (Story 6.11.a).
+ *
+ * Este arquivo permanece como referência histórica até as queries de
+ * `plano`/`cidade`/`faq`/`blogPost` legacy serem migradas. Não use em
+ * código novo.
+ */
+
 // GROQ queries for Sanity CMS
 
 export const ALL_PLANOS_QUERY = `*[_type == "plano"] | order(preco_base asc) {

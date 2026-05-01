@@ -1,11 +1,11 @@
 # Plano Amil Empresas — Product Requirements Document (PRD)
 
-**Documento:** Product Requirements Document v1.2.2
-**Projeto:** planoamilempresas.com.br
+**Documento:** Product Requirements Document v1.3.1
+**Projeto:** planoamilempresas.com.br (Fase 1) + `planosaudeamil.com.br` (Fase 2 roadmap)
 **Autor:** Morgan (Product Manager — Strategist ♑) — Synkra AIOS
-**Data:** 2026-04-26 (última atualização v1.2.2)
-**Modo:** Pós-Story 1.0 — todos os 13 placeholders resolvidos via `docs/stakeholder-inputs.md`
-**Status:** v1.2.2 — APPROVED PARA REVALIDAÇÃO @po
+**Data:** 2026-04-28 (última atualização v1.3.1)
+**Modo:** v1.3.1 incorpora research adicional de `amilsaudebr.com.br` (ver `docs/research/competitors/09-amilsaudebr-kitcorretor-deep-scrape.md`) sobre v1.3 — adiciona FR50-FR54 + NFR26. v1.3 incorpora research competitiva (13 acertos PSAmil + 8 acertos AmilPlanos), Caminho C (Astro descartado — ADR-008), ecossistema hub-and-spoke (ADR-009) e Fase 2 amplo (`planosaudeamil.com.br`) como roadmap futuro
+**Status:** v1.3.1 — APPROVED PARA REVALIDAÇÃO @po
 
 ---
 
@@ -40,6 +40,8 @@ O mercado brasileiro de **planos de saúde coletivos empresariais** movimenta R$
 | 2026-04-26 | 1.2.3 | Story 1.0c (Spike Clint API) adicionada pós Pax re-validação — desbloqueia Story 4.3 com viability check técnico antes da implementação | Aria (Architect) + Pax (PO) |
 | 2026-04-26 | 1.2.4 | Recalibração rede credenciada (dataset 9.325 prestadores · 26 UFs); **Epic 7 NOVO** "Programmatic SEO Rede Credenciada Amil" (11 stories 7.0a→7.10); Stories 6.5/6.6 movidas para Epic 7; Epic 6 fica focado em "Price Intelligence & Calculator + Library"; Story 5.7 AC nova (audit por amostragem estratificada). Conforme `docs/sprint-change-proposal-v1.2.3.md`. ADR-005 v2 (recalibração) + ADR-006 (URL-as-trademark, Proposed) + ADR-007 (Dataset SSOT, Accepted) | Orion (Master) + Morgan (PM) + Pax (PO) |
 | 2026-04-26 | 1.2.5 | **Story 1.1 (Fork+Strip Bradesco) CONCLUÍDA** via consolidação Caminho A — codebase `amil-empresarial/site/` migrado para `planoamilempresas/`. Stack atualizada: **Next.js 14 → Next.js 16 + React 19 + Tailwind CSS 4** (sync com codebase real, não downgrade). Sanity v3 → v5.17.1. Docs paralelas arquivadas em `docs/_archive/from-amil-empresarial/` para audit trail | Orion (Master) + stakeholder (autor original do clone) |
+| 2026-04-28 | 1.3   | **Atualização research-driven + ecosystem + Fase 2.** (1) Incorporação de 13 acertos de `planodesaudeamil.com.br` + 8 acertos de `amilplanos.com.br` + anti-erros como FRs/NFRs (FR31-FR45, NFR21-NFR25): 11 schemas JSON-LD, meta description dinâmica, H1 city pages com qualifier, tabela auto-atualizada com selo de freshness, hospitais REAIS por município, FAQ schema sobre 45+ Q&A, simulador interativo, comparador, calculadora carências, mapa interativo, glossário, max 2 telefones, Author schema YMYL, sub-pillars rede (D'or, One, Fácil, Clássica, Selecionada), página `/preco/coparticipacao/` dedicada, blog 30+ on-topic ZERO off-topic, posts comparativos, sem slugs `-2`. (2) Nova seção **"Estratégia de Ecossistema (Hub-and-Spoke)"** referenciando ADR-009 e `docs/ecosystem-link-strategy.md` — footer cross-domain, schema `parentOrganization`, anti-PBN. (3) Nova seção **"Fase 2 Roadmap — `planosaudeamil.com.br`"** (escopo amplo PJ+PF+adesão+dental, fork da Fase 1, ~80% reuso, 8-10 semanas pós-MVP) marcada explicitamente como **out-of-scope MVP v1**. (4) Caminho C consolidado: Astro descartado para ambos satélites Amil (ref. ADR-008). Fontes: `docs/research/competitors/06-tabela-comparativa-concorrentes.md` + `08-acertos-erros-detalhado.md`. | Morgan (PM) + Aria (Architect, ADR-008/009) |
+| 2026-04-28 | 1.3.1 | **Patch research-driven amilsaudebr.com.br.** Incorpora 6 novos requisitos derivados de `docs/research/competitors/09-amilsaudebr-kitcorretor-deep-scrape.md` (deep-scrape do clone amilsaudebr — 11 schemas JSON-LD, AggregateOffer, FAQPage, OG, title com ano "2026"). Adições: **FR50** title pattern com ano renovável (`[Tipo] Amil [ANO] — [Qualificador]`, currentYear via Sanity); **FR51** AggregateOffer per-estado (não só nacional); **FR52** tabelas HTML semânticas `<table>` (Featured Snippet + a11y); **FR53** `<OpenGraph>` component reusável dinâmico com fallback; **FR54** schema `Organization.name: "BeneficioRH"` (NUNCA "Amil") — Amil só em `category` ou `Product.brand`, conformidade ADR-006; **NFR26** CI valida sitemap × routing (anti-erro de inconsistência detectado em amilsaudebr). Nota anti-padrão clone+canonical adicionada à seção "Estratégia de Ecossistema". | Morgan (PM) |
 
 ---
 
@@ -77,6 +79,30 @@ O mercado brasileiro de **planos de saúde coletivos empresariais** movimenta R$
 - **FR28:** O site deve exibir **selo "Avaliado no Reclame Aqui"** (linkando perfil público) e meta de conquistar selo RA1000 em até M12.
 - **FR29:** O site deve ter **página 404 útil** com busca, links para pillar page e cornerstones top, e CTA para WhatsApp.
 - **FR30:** O site deve implementar **redirecionamentos 301** para qualquer URL legada, slug change ou migração de CMS, preservando link equity.
+- **FR31:** O site deve implementar **11 tipos de schema JSON-LD** transversais ao site (anti-erro estrutural dos concorrentes que têm ZERO schema): `Organization` + `LocalBusiness` (×N city pages) + `Product` + `Offer` + `AggregateOffer` + `FAQPage` + `BreadcrumbList` + `Article` + `MedicalBusiness/MedicalClinic` (rede credenciada) + `HowTo` (cornerstones operacionais) + `WebSite` com `SearchAction`. Validação obrigatória via Schema.org validator + Google Rich Results Test no CI (alinhado a NFR19 e Story 7.9).
+- **FR32:** O site deve garantir **meta description dinâmica em 100% das páginas**, gerada por template + variáveis de contexto (cidade, produto, faixa, CNAE) e nunca vazia (anti-erro: ambos concorrentes diretos têm meta description **ausente** em todas as páginas; gap competitivo).
+- **FR33:** O site deve gerar **H1 de city pages com qualifier descritivo**, no padrão "Plano de Saúde Amil em [Cidade] — [UF]" ou variação rica em keyword (anti-erro: `planodesaudeamil.com.br` usa H1 só com nome da cidade, ex: "São Paulo"; perde keyword + contexto).
+- **FR34:** O site deve oferecer **tabela de preços auto-atualizada via job mensal automatizado** (cron / GitHub Actions), com **selo "Atualizado em [mm/aaaa]" visível no topo da página** (não apenas dentro da tabela). Anti-erro: `amilplanos.com.br` exibe tabela de **setembro/2022** (3+ anos defasada); freshness é fator de ranking decisivo. Sanity v3 content scheduled OU webhook → Vercel Revalidate API.
+- **FR35:** O site deve gerar **city pages com hospitais REAIS por município** (não lista nacional repetida), construídos por join entre dataset IBGE de municípios + dataset rede credenciada Amil filtrado por geolocation/UF/município. Anti-erro: `planodesaudeamil.com.br` lista Sírio-Libanês e Albert Einstein em city pages de municípios pequenos (ex: Abadia de Goiás) — risco direto de Helpful Content Update.
+- **FR36:** O site deve oferecer **`FAQPage` schema sobre 45+ Q&As** com componente accordion + JSON-LD válido. Anti-erro: `planodesaudeamil.com.br` tem 45+ Q&As em texto puro **sem schema**, desperdiçando rich results em SERP. Replicar o conteúdo (texto público) e capturar via schema.
+- **FR37:** O site deve oferecer **simulador interativo de plano** (não apenas formulário), com cálculo client-side de estimativa de mensalidade por porte + faixa etária + produto. Diferencia do CTA "calcular plano" puramente vinculado a formulário visto nos concorrentes.
+- **FR38:** O site deve oferecer **comparador entre planos** em rota dedicada (ex: `/comparar/?planos=bronze,prata,ouro`) com URL shareable, schema `Product` × N, e copy que explica trade-offs (acomodação, abrangência regional vs nacional, coparticipação).
+- **FR39:** O site deve oferecer **calculadora de carências** (widget JS) inline em cornerstone de carência + página dedicada — anti-erro: `amilplanos.com.br` menciona carência em texto sem ferramenta interativa.
+- **FR40:** O site deve oferecer **mapa interativo de hospitais** (Leaflet OSS ou Mapbox tier gratuito) na página master `/rede-credenciada/` e em páginas de cidade — anti-erro: ambos concorrentes têm zero mapa interativo, apenas listas estáticas.
+- **FR41:** O site deve publicar **glossário de termos** em `/glossario/` (carência, CPT, coparticipação, copart% vs franquia, reajuste etário vs sinistralidade, portabilidade, abrangência geográfica, acomodação coletiva vs particular, etc.) com schema `DefinedTerm`/`DefinedTermSet`, contribuindo para People Also Ask + interlinking semântico.
+- **FR42:** O site deve exibir **no máximo 2 telefones de contato em qualquer página** (anti-erro: `amilplanos.com.br` repete 5 telefones por página, gerando indecisão e poluição visual). UX: 1 CTA primário (simulador OU formulário) + 1 WhatsApp.
+- **FR43:** O site deve manter **estrutura de URL livre de slugs duplicados com sufixo `-2`** (anti-erro: `amilplanos.com.br` tem **centenas** de slugs como `/sao-paulo-2/`, gerando canibalização interna). URL builder com detecção de colisão + 410/301 para legados.
+- **FR44:** O site deve publicar **páginas dedicadas a sub-redes credenciadas Amil** em rotas próprias: `/rede/hospitais-dor/`, `/rede/amil-one-rede-selecionada/`, `/rede/clinicas-amil/`, `/rede/amil-facil-rede/`, `/rede/clascica/` (ou slug equivalente conforme ADR-006). Captura gap parcial: `amilplanos.com.br` tem `/rede-de-hospitais-dor-amil/` dedicada e `planodesaudeamil.com.br` mistura sub-redes com tiers.
+- **FR45:** O site deve publicar **página `/preco/coparticipacao/` dedicada com ~2.500 palavras + calculadora inline** (referenciada em FR8/FR39). Anti-erro: `planodesaudeamil.com.br` NÃO tem URL dedicada de coparticipação (apenas `amilplanos.com.br` tem ~2.100 palavras — único acerto exclusivo desse concorrente que devemos cobrir).
+- **FR46:** O site deve publicar **blog editorial com mínimo 30 posts on-topic em 12 meses** com cadência mensal mínima e ZERO posts off-topic. Anti-erro: `amilplanos.com.br` publica WNBA, Champions League, Austin TX e casino entre os 9 posts (44% spam off-topic) destruindo autoridade temática YMYL.
+- **FR47:** O site deve publicar **posts comparativos cross-operadora** ("Amil vs Bradesco", "Amil vs SulAmérica", "Amil vs Hapvida"), gap não coberto por nenhum dos 2 concorrentes diretos. Outbound aos respectivos satélites BeneficioRH (Bradesco) ou ao hub multi-operadora (`planodesaudepj.com.br/operadoras/[op]/`) conforme `docs/ecosystem-link-strategy.md`.
+- **FR48:** O site deve declarar `Organization` schema com **`parentOrganization` apontando para o hub `planodesaudepj.com.br`** (ref. ADR-009 + `docs/ecosystem-link-strategy.md`), e `subOrganization` no hub apontando para os satélites — sinaliza ao Google a estrutura legítima de portfolio (anti-PBN).
+- **FR49:** O site deve apresentar **footer global cross-domain** listando explicitamente o hub + satélites irmãos com `rel="me"` (alinhado ao snippet do `ecosystem-link-strategy.md` §5.1), reforçando autoridade verificável e disclaimer único de operação BeneficioRH.
+- **FR50:** O site deve adotar **title pattern com ano renovável** no padrão `[Tipo] Amil [ANO] — [Qualificador opcional]` em todas as páginas indexáveis (homepage, tabela de preços, produtos, estaduais, cornerstones). O ano deve ser injetado dinamicamente a partir de variável `currentYear` no Sanity v3 (atualizada anualmente via single-source-of-truth document) — Next.js (App Router, ADR-008) consome via GROQ no `generateMetadata()` de cada `page.tsx`. Exemplos: "Plano de Saúde Amil 2026 — Empresarial PJ", "Tabela Amil 2026 — São Paulo PME", "Amil Black 2026 — Cobertura Internacional". Justificativa: `amilsaudebr.com.br` usa "Amil 2026" no title sinalizando frescura ao Google e ao usuário em SERP — gap competitivo barato de cobrir.
+- **FR51:** O site deve declarar **`AggregateOffer` schema próprio por estado** em cada página estadual (`/rede-credenciada/[uf]/` e `/precos/[uf]/`), com campos `lowPrice`, `highPrice`, `offerCount`, `priceCurrency: "BRL"`, `availability: "InStock"`, derivados do dataset de preços filtrado por UF. Não usar apenas `AggregateOffer` nacional — granularidade regional vence em SERPs de "preço plano amil [estado]". Anti-erro: `amilsaudebr.com.br` declara `AggregateOffer` apenas nacional (R$ 102–3.500); per-estado é gap explorável.
+- **FR52:** O site deve implementar **todas as tabelas de preços (master + per-estado + per-produto) como `<table>` HTML semântico** com `<thead>`, `<tbody>`, `<th scope="col">` e `<caption>` descritivo. Não usar div/CSS Grid puro nem componentes JS proprietários sem fallback HTML. Razões: (a) Featured Snippet do Google para "plano amil tabela" prefere `<table>` nativo; (b) acessibilidade a leitores de tela (NFR9 / WCAG 2.1 AA); (c) schema `Table` é mapeável para rich results. Anti-erro: `amilsaudebr.com.br` não tem `<table>` HTML nativo — gap explorável.
+- **FR53:** O site deve oferecer **componente `<OpenGraph>` reusável** em `src/components/seo/` que recebe props `title`, `description`, `image`, `type` (`website` | `product` | `article`) e gera as meta tags `<meta property="og:*">` + `<meta name="twitter:*">` correspondentes. Fallbacks automáticos: se `title` ausente → usa o page title; se `image` ausente → usa default `/og-default.jpg`; se `description` ausente → usa meta description da página (FR32). Usado em `app/layout.tsx` global (Next.js App Router, ADR-008) com override por página via `generateMetadata()`. Diferenciação vs. `amilsaudebr.com.br`: OG dinâmico contextual por produto/cidade vs. OG estático único.
+- **FR54:** O site deve declarar **schema `Organization` global usando `name: "BeneficioRH Corretora de Seguros"`** com `url` do site, `taxID: "14.764.085/0001-99"`, `identifier` SUSEP `201054484`, e `parentOrganization` referenciando o hub `planodesaudepj.com.br` (alinhado a FR48). **A marca "Amil" NUNCA aparece como `Organization.name`** — apenas como `category` no schema `Organization` ou em `Product.brand` nas páginas de produto. Conformidade obrigatória com `docs/decisions/adr-006-url-as-trademark-policy.md` (URL-as-Trademark). Anti-erro: `amilsaudebr.com.br` declara `Organization.name: "Amil"` (operadora oficial) — risco de violação de trademark UnitedHealth + falsa autoridade institucional + canibalização do schema oficial Amil em SERP.
 
 ### Non Functional
 
@@ -100,6 +126,12 @@ O mercado brasileiro de **planos de saúde coletivos empresariais** movimenta R$
 - **NFR18:** **Compatibilidade de browser:** últimas 2 versões estáveis de Chrome, Edge, Safari, Firefox. iOS Safari 14+. Android Chrome 90+. Degradação graceful em browsers mais antigos (sem JavaScript ativo, conteúdo ainda acessível).
 - **NFR19:** **SEO Technical Excellence:** schema.org validado via Rich Results Test Google + Schema.org validator; sitemap validado; robots.txt validado; páginas sem erros no GSC (index coverage); CWV "Good" no CrUX.
 - **NFR20:** **Editorial Quality:** conteúdo 100% original (verificação via Copyscape antes de publicar), revisão por advogado de cada batch de conteúdo regulado, política editorial documentada, versionamento de artigos com histórico de mudanças.
+- **NFR21:** **Schema Coverage Mínimo:** 100% das páginas indexáveis têm pelo menos 1 schema JSON-LD válido (Organization global + tipo específico por template). Validação automatizada no CI via `schema-validation.yml` (Story 1.3 AC4) bloqueia merge em caso de schema malformado. Cobertura por template documentada em `architecture.md`.
+- **NFR22:** **E-E-A-T YMYL — Author schema obrigatório:** todo conteúdo médico/de saúde publicado em cornerstones, blog e landings programáticas deve declarar `author` (Person ou Organization) com credenciais quando aplicável (corretor SUSEP, médico revisor, advogado revisor regulatório). Conforme `docs/editorial/brand-usage-policy.md` (deliverable Story 2.4) e diretrizes Google YMYL.
+- **NFR23:** **E-E-A-T — revisão técnica humana em conteúdo de saúde:** conteúdo médico/regulatório (cornerstones de carência, CPT, ANS, reajuste, coberturas, doenças) NUNCA pode ser IA-only — exige revisão humana com track-changes arquivada antes de publicação. Pipeline editorial (redator → corretor → advogado) registrado em `docs/editorial/cms-guide.md` e enforced via Sanity workflow status field (Story 3.1).
+- **NFR24:** **Compliance Cross-Domain:** todo satélite do ecossistema BeneficioRH (incluindo `planoamilempresas.com.br` Fase 1 e `planosaudeamil.com.br` Fase 2) deve exibir, em rodapé global, **CNPJ 14.764.085/0001-99 + SUSEP 201054484 + disclaimer ANS por operadora referenciada + links cross-domain (`rel="me"`)** conforme `docs/ecosystem-link-strategy.md` §5.1. Auditoria mensal por @qa (Quinn) anti-duplicate content cross-site.
+- **NFR25:** **Anti-Cookie-Cutter / Helpful Content Update:** nenhum template programático (city pages, CNAE pages, rede pages) pode produzir páginas com texto > 70% idêntico entre instâncias — variação contextual mínima de 30% por interpolação real (hospitais reais por cidade, CNAE-specific copy, dados ANS por UF). Auditoria por amostragem estratificada (Story 5.7 AC v1.2.4) verifica conformidade. Risco direto identificado em research dos 2 concorrentes (`planodesaudeamil.com.br` tem ~2.400 city pages com texto idêntico).
+- **NFR26:** **CI valida sitemap × routing:** GitHub Action obrigatória em cada PR executa `scripts/validate-sitemap-routing.mjs` que: (a) parseia o output de `app/sitemap.ts` (Next.js App Router, ADR-008); (b) descobre as rotas Next.js via discovery em `app/**/page.tsx` (incluindo dynamic segments resolvidos por `generateStaticParams`); (c) **falha o build** se alguma URL declarada no sitemap não tiver rota correspondente OU se alguma rota indexável (não-`noindex`) estiver ausente do sitemap. Bloqueia merge no GitHub. Anti-erro: `amilsaudebr.com.br` tem sitemap inconsistente com links internos (sitemap lista `/sao-paulo` mas links apontam para `/tabela-amil-sao-paulo-2026.html` — dois conjuntos paralelos de URLs gerando confusão de indexação ao Google).
 
 ---
 
@@ -1191,6 +1223,111 @@ Como **@dev (Dex)** quero **tipos novos + loader compatível com schema redesenh
 
 ---
 
+## Estratégia de Ecossistema (Hub-and-Spoke) — NOVO v1.3
+
+> **Referências canônicas:** `docs/ecosystem-link-strategy.md` (especificação completa) + ADR-009 (a publicar — Aria/Architect, ver Task #14) + `docs/decisions/adr-006-url-as-trademark-policy.md` (URL-as-Trademark, política de slugs).
+
+### Visão Geral
+
+`planoamilempresas.com.br` opera como **satélite especializado Amil PJ** dentro de um ecossistema digital da corretora BeneficioRH (Agnaldo Silva — SUSEP 201054484 — CNPJ 14.764.085/0001-99) estruturado em **hub-and-spoke**:
+
+- **Hub master:** `planodesaudepj.com.br` (multi-operadora, 10 operadoras, 131 páginas, recebe backlinks orgânicos externos)
+- **Satélites operadora-específicos:**
+  - `bradescosaudeempresas.com.br` (Bradesco PJ — no ar)
+  - `planoamilempresas.com.br` (**Amil PJ — Fase 1, escopo deste PRD**)
+  - `planosaudeamil.com.br` (Amil amplo — Fase 2, ver seção próxima)
+
+### Princípios
+
+1. **Hub concentra autoridade:** investimento em backlinks foca o hub; satélites recebem juice via páginas `/operadoras/[op]/` no hub
+2. **Satélites linkam de volta ao hub** via footer global + página `/sobre/`
+3. **Diferenciação obrigatória:** cada satélite tem dataset, copy editorial e design próprios — NUNCA cookie-cutter cross-site (ver NFR25)
+4. **Anti-PBN:** auditoria mensal de duplicate content cross-site por @qa (Quinn); anchor text natural; hosting distribuído via Cloudflare DNS
+5. **Cross-domain canonical:** apenas onde há sobreposição real (ex: `/empresarial/` Fase 2 → canonical Fase 1, especialização vence)
+
+### Implementações Requeridas neste PRD
+
+- **FR48:** schema `Organization.parentOrganization` apontando para hub
+- **FR49:** footer global cross-domain (`rel="me"`)
+- **NFR24:** compliance cross-domain (CNPJ + SUSEP + disclaimer único)
+- Story 1.5 / 1.7 ajustadas para entregar o footer global conforme snippet do `ecosystem-link-strategy.md` §5.1
+- Story 4.7 (NOVA, opcional v1.3) — auditoria mensal de duplicate content cross-site via script `tools/cross-site-content-diff.mjs`
+
+### KPIs do Ecossistema
+
+> **Sem inventar % de conversão.** Conforme feedback `feedback_claims_metricas.md` em memória — preferir A/B test e honestidade. Indicadores qualitativos a monitorar pós-baseline: posições GSC por keyword core, páginas indexadas por site, backlinks externos genuínos (Ahrefs/SEMRush), CTR em SERPs, CWV, leads por satélite vs leads pelo hub, origem do lead. Definir baselines após 30 dias de cada lançamento.
+
+### Anti-Padrão: Clone com Canonical Externo (learning amilsaudebr) — NOVO v1.3.1
+
+`amilsaudebr.com.br` é um clone do master `onlineplanodesaude.com.br/amil-saude-2026.html` — declara `<link rel="canonical">` apontando para o domínio externo. Isso significa que `amilsaudebr.com.br` **renuncia explicitamente ao SEO em favor de outro domínio**, funcionando como sat-alias sem propósito (`docs/research/competitors/09-amilsaudebr-kitcorretor-deep-scrape.md` §1).
+
+**Para o nosso ecossistema (Fase 1 + Fase 2 + futuros satélites):**
+- Cada satélite tem **canonical próprio apontando para si mesmo** (self-canonical) — nunca para hub ou para outro satélite
+- Diferenciação editorial real (NFR25) garante que cada domínio mereça indexação independente
+- Cross-domain canonical é aceito **apenas em casos excepcionais e bilateralmente acordados** (ex: `/empresarial/` em Fase 2 → canonical Fase 1, onde a especialização vence — definido em ADR-009 quando publicado)
+- Footer cross-domain (FR49) e `parentOrganization` schema (FR48) são os mecanismos legítimos de sinalização de portfolio — clones com canonical externo NÃO são
+
+---
+
+## Fase 2 Roadmap — `planosaudeamil.com.br` (OUT OF SCOPE MVP v1)
+
+> **Status:** Roadmap futuro v2.x — **NÃO** faz parte do escopo do MVP da Fase 1 (`planoamilempresas.com.br`). Documentado aqui para alinhar visão de longo prazo, evitar débito arquitetural e permitir reuso planejado de componentes/datasets.
+
+### Escopo Funcional Fase 2
+
+`planosaudeamil.com.br` é o **satélite Amil amplo** complementar ao Fase 1:
+
+| Dimensão | Fase 1 — `planoamilempresas.com.br` | Fase 2 — `planosaudeamil.com.br` |
+|----------|--------------------------------------|----------------------------------|
+| Público | Empresas (PJ) | PF + PJ + adesão + dental |
+| Foco SEO | "amil empresarial", "amil PJ", "amil PME [cidade]" | "plano de saúde amil" (head), "amil [cidade]", "amil one", "amil black", "amil por adesão", "amil dental" |
+| Produtos | 6 PME públicos + 4 premium "sob consulta" | Catálogo amplo: PJ + PF + adesão (`/planos/individual-por-adesao/` + `/planos/familiar-por-adesao/`) + dental |
+| Concorrentes diretos | 16 do `competitor-analysis.md` Tier A-D | `planodesaudeamil.com.br`, `amilplanos.com.br` (research em `docs/research/competitors/`) |
+| Domínio | Registrado | ✅ **REGISTRADO em 2026-04-28** (estado intermediário: redirect 301 → Fase 1, runbook `docs/devops/redirect-301-planosaudeamil.md`) |
+
+### Stack Fase 2
+
+**Idêntica à Fase 1** — Caminho C consolidado conforme `docs/decisions/adr-008-stack-unificada-nextjs-satelites-amil.md`:
+
+- Next.js 16 App Router + React 19 + Tailwind CSS 4
+- Sanity v3 (CMS headless) — Sanity hosted (`*.sanity.studio`, ADR-011)
+- **Cloudflare Workers** (hosting + edge) — `@opennextjs/cloudflare@1.19.4`, ADR-011
+- Cloudflare DNS + R2 incremental cache
+- Upstash Redis (rate limiting + cache)
+- TypeScript strict + Vitest + Playwright
+
+**Astro DESCARTADO** para os dois satélites Amil (ADR-008 Accepted 2026-04-28). Motivos resumidos: (1) custo cronograma +6-8 semanas reescrevendo ~14 componentes React maduros, (2) perda de Visual Editing nativo Sanity, (3) ganho de LCP marginal invisível ao público-alvo (vertical YMYL ranqueia por schema/E-E-A-T/conteúdo único, não CWV marginal). Memória `project_satelite_amil_astro.md` é histórica/superada.
+
+### Estrutura — Fork da Fase 1
+
+- **Repo:** novo repositório `planosaudeamil` forkado de `planoamilempresas` (semelhante ao fork original `bradescosaudeempresas` → `planoamilempresas` — Story 1.1 já validou o pattern)
+- **Monorepo opcional v2.x:** se complexidade justificar, evoluir para layout `/apps/{planoamilempresas,planosaudeamil}` + `/packages/ui/` + `/packages/data/` (Turborepo). Decisão postergada para após MVP Fase 2 estabilizar
+- **Reuso esperado: ~80% componentes** (calculadora, formulário, PriceTable, Disclaimer, ComplianceBadges, WhatsAppButton, QuoteForm, NetworkSearch, Footer global, Schema components)
+- **Differenciador 20%:** city pages com hospitais REAIS por município (FR35), copy PF/adesão/dental específica, posicionamento head term mais agressivo
+
+### Cronograma Estimado
+
+- **Pré-requisito hard:** MVP Fase 1 (`planoamilempresas.com.br`) no ar e estável (≥30 dias com tráfego baseline)
+- **Janela:** 8-10 semanas após go-live MVP Fase 1
+- **Início estimado:** ~M3-M4 do roadmap Fase 1
+
+### Posicionamento SEO Fase 2
+
+Head + long-tail amplo Amil. Captura keywords não-PJ que Fase 1 não persegue (PF, adesão, dental, produtos premium individual). Anti-canibalização entre os dois satélites Amil resolvida por canonical cross-domain conforme `ecosystem-link-strategy.md` §3.3.
+
+### Pré-Setup Fase 2 (Tarefas Não-Bloqueantes)
+
+1. ⏳ Verificar disponibilidade `planosaudeamil.com.br` no Registro.br
+2. ⏳ Registrar domínio se disponível (defensivo, antes de competidor capturar)
+3. ⏳ Documentar dataset adicional necessário (catálogo PF + dental + adesão)
+4. ⏳ Decidir se monorepo é introduzido na Fase 2 ou postergado para v2.x
+
+### O Que NÃO Faz Parte do MVP v1 (anti-scope-creep)
+
+Para clareza absoluta: **as Stories e ACs deste PRD cobrem APENAS `planoamilempresas.com.br` Fase 1**. Toda menção a `planosaudeamil.com.br` é roadmap futuro. Nenhum FR/NFR de Fase 2 deve inflar Stories de Epic 1-7. Fase 2 receberá PRD próprio (ou anexo a este PRD versão v2.0) quando entrar em planejamento ativo.
+
+---
+
 ## Checklist Results Report
 
 *Esta seção será populada após execução do `pm-checklist` por @po ou @aios-master. Placeholder atual:*
@@ -1281,7 +1418,7 @@ Após completar architecture, handoff para @data-engineer (para schema detalhado
 
 ---
 
-**Status do documento:** **v1.2.2 — APPROVED PARA REVALIDAÇÃO @po** em 2026-04-26
+**Status do documento:** **v1.3 — APPROVED PARA REVALIDAÇÃO @po** em 2026-04-28
 
 **Histórico de versões:**
 - v1.0 (2026-04-16): Draft inicial — Morgan (PM)
@@ -1289,16 +1426,28 @@ Após completar architecture, handoff para @data-engineer (para schema detalhado
 - v1.2 (2026-04-16): Pivot arquitetural Astro→Next.js via fork de clone pré-existente — 12 Edits aplicados conforme Sprint Change Proposal — Orion (Master) + Morgan (PM)
 - v1.2.1 (2026-04-16): Refinamentos pós re-validação integrada PO (Story 1.0 AC1 expandida com items 1.11/1.12/1.13) — Pax (PO)
 - v1.2.2 (2026-04-26): 11 correções pós conclusão Story 1.0 — nomenclatura produtos Bronze→Platinum Mais, CRM Clint, Sanity v3 fechado, Story 5.0 (742 cidades-clone), Story 1.2a (DNS ponte), Story 6.5 expandida (~3.500 URLs), Story 6.6 cobre 2 datasets, Story 6.1 PrecoSobConsulta, ADRs 001/002, 3 deliverables Story 2.4 — Morgan (PM)
+- v1.2.3 (2026-04-26): Story 1.0c (Spike Clint API) adicionada pós Pax re-validação — Aria (Architect) + Pax (PO)
+- v1.2.4 (2026-04-26): Recalibração rede credenciada (9.325 prestadores · 26 UFs); Epic 7 NOVO; Stories 6.5/6.6 movidas para Epic 7; ADR-005 v2 + ADR-006 + ADR-007 — Orion (Master) + Morgan (PM) + Pax (PO)
+- v1.2.5 (2026-04-26): Story 1.1 CONCLUÍDA via Caminho A; Stack atualizada Next.js 16 + React 19 + Tailwind 4 + Sanity v5.17.1 — Orion (Master) + stakeholder
+- **v1.3 (2026-04-28):** Atualização research-driven + ecosystem hub-and-spoke + Fase 2 roadmap. (1) FR31-FR49 + NFR21-NFR25 incorporando 13 acertos `planodesaudeamil.com.br` + 8 acertos `amilplanos.com.br` + anti-erros (schema 11 tipos, meta description dinâmica, H1 com qualifier, freshness selo topo, hospitais reais por município, FAQ schema sobre 45+ Q&A, simulador, comparador, calculadora carências, mapa, glossário, max 2 telefones, sub-pillars rede, `/preco/coparticipacao/`, blog 30+ on-topic ZERO off-topic, posts comparativos, sem slugs `-2`). (2) Nova seção **"Estratégia de Ecossistema"** referenciando ADR-009 + `docs/ecosystem-link-strategy.md`. (3) Nova seção **"Fase 2 Roadmap — `planosaudeamil.com.br`"** explicitamente OUT OF SCOPE MVP v1. (4) Caminho C consolidado: Astro descartado para AMBOS satélites Amil (ref. ADR-008 Accepted 2026-04-28). — Morgan (PM) + Aria (Architect, ADR-008/009)
 
 **Placeholders:** ✅ TODOS OS 13 RESOLVIDOS em sessão Story 1.0 (2026-04-24) — ver `docs/stakeholder-inputs.md`
-**Plano B documentado:** caso pivot Next.js se mostre inviável, Astro + Cloudflare (PRD v1.1) preservado em git history como fallback
+**Plano B documentado:** ~~Astro + Cloudflare (PRD v1.1)~~ — **OBSOLETO em v1.3.** Caminho C unificado Next.js consolidado (ADR-008). Não há plano B Astro ativo para nenhum satélite Amil.
 **Owner atual:** aprovado para handoff paralelo + revalidação @po pendente
 
 **Próximos owners (paralelo):**
-- @po (Pax) — **REVALIDAÇÃO v1.2.2** focando nas 11 correções (Stories 5.0, 1.2a, 6.5 expandida, 6.6 expandida, 6.1 PrecoSobConsulta, ADRs 001/002, 3 deliverables Story 2.4) — ~30min
-- @ux-design-expert (Uma) — `front-end-spec.md` (Radix UI + Tailwind do clone como baseline; prerequisite de Epic 3 Story 3.2)
-- @architect (Aria) — `architecture.md` (Next.js 14 + Vercel + Upstash + Sanity v3 + Clint CRM como stack definitiva; prerequisite técnico para @sm iniciar story creation)
+- @po (Pax) — **REVALIDAÇÃO v1.3** focando nas adições: FR31-FR49, NFR21-NFR25, seção Ecossistema, seção Fase 2 Roadmap. Verificar consistência com Stories existentes (1.5/1.7 footer global, 5.0 city pages, Epic 7 schema). Estimativa ~45min.
+- @ux-design-expert (Uma) — refresh do `front-end-spec.md` para incorporar componentes novos: simulador interativo (FR37), comparador (FR38), calculadora carências (FR39), mapa interativo (FR40), glossário (FR41), accordion FAQ schema-ready (FR36), `<PrecoSobConsulta />` já existente
+- @architect (Aria) — finalizar **ADR-009** (estratégia de ecossistema) com Status Accepted + atualizar `architecture.md` para refletir cobertura schema 11 tipos (FR31), `parentOrganization` cross-domain (FR48), e auditoria anti-duplicate cross-site (NFR24)
+- @sm (River) — avaliar criação de Stories novas:
+  - Story 4.7 (auditoria duplicate cross-site mensal — NFR24/NFR25)
+  - Story 6.9 (página `/preco/coparticipacao/` dedicada — FR45)
+  - Story 6.10 (calculadora de carências — FR39)
+  - Story 6.11 (comparador de planos — FR38)
+  - Story 7.11 (mapa interativo Leaflet — FR40)
+  - Story 3.20 (glossário `/glossario/` — FR41)
+  - Story 3.21 (10+ posts comparativos cross-operadora — FR47)
 
-**Handoff seguinte:** @sm (River) — story creation individual em `docs/stories/` a partir do PRD v1.2.2 + front-end-spec + architecture
+**Handoff seguinte:** @sm (River) — story creation a partir do PRD v1.3 + ADR-008 + ADR-009 + `docs/ecosystem-link-strategy.md`
 
-— Morgan (PM, v1.0, v1.2.2) · Pax (PO, v1.1, v1.2.1) · Orion (Master, v1.2)
+— Morgan (PM, v1.0–v1.3) · Pax (PO, v1.1, v1.2.1) · Orion (Master, v1.2, v1.2.4, v1.2.5) · Aria (Architect, v1.2.3, v1.3 ADRs)

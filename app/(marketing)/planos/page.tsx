@@ -45,11 +45,11 @@ export default function PlanosPage() {
                 className="flex items-center justify-between rounded-lg border border-gray-200 p-5 transition-shadow hover:shadow-md"
               >
                 <div>
-                  <span className="text-xs font-medium text-amil-blue">{plano.linha}</span>
+                  <span className="text-xs font-medium text-sky-600">{plano.linha}</span>
                   <h2 className="text-lg font-bold text-gray-900">{plano.nome}</h2>
                   <p className="text-sm text-gray-500">A partir de {plano.preco}/mês</p>
                 </div>
-                <span className="text-amil-blue">→</span>
+                <span className="text-sky-600">→</span>
               </Link>
             ))}
           </div>

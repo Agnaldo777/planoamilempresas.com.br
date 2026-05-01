@@ -1,0 +1,12 @@
+# Cloudflare Static Assets redirects — planoamilempresas (ADR-011)
+#
+# Sintaxe: https://developers.cloudflare.com/pages/configuration/redirects/
+#   <source>  <destination>  <status>
+#
+# Estado ativo no MVP: SEM redirects de aplicação. Mitigação 4 (notificação
+# Amil → migração para domínio-ponte) está DORMENTE em
+# `public/_redirects.contingency` (52 entradas). Ativação:
+#   1. Renomear este arquivo para `_redirects.legacy`
+#   2. Renomear `_redirects.contingency` para `_redirects`
+#   3. Deploy via @devops (`@devops *deploy`)
+# Procedimento detalhado: docs/devops/domain-contingency-plan.md

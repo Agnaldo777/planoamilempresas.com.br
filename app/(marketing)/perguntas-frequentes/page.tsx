@@ -1,49 +1,130 @@
+/**
+ * /perguntas-frequentes — Story 4.7 (FR36)
+ *
+ * Renderiza 45+ Q&A canônicos via <FAQAccordion> (SEO RSC), agrupados
+ * por categoria, com JSON-LD FAQPage único agregando todas as Q&As.
+ *
+ * Decisão: usamos um único schema FAQPage no topo da página (mainEntity
+ * com 45 entradas) para Google Rich Results "FAQ accordion" SERP.
+ * Cada categoria também é renderizada como seção visual com seu próprio
+ * <FAQAccordion> sem schema duplicado (emitSchema={false}).
+ *
+ * Build-time data: FAQS_AMIL_EMPRESARIAL (data/faqs/...). Migração
+ * para Sanity GROQ é v2 (não bloqueia esta story).
+ */
+
 import type { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/utils/seo';
 import { SchemaGraph } from '@/components/seo/SchemaGraph';
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
-import { FAQAccordion } from '@/components/ui/FAQAccordion';
+import { FAQAccordion } from '@/components/seo/FAQAccordion';
+import {
+  FAQS_AMIL_EMPRESARIAL,
+  FAQS_BY_CATEGORY,
+  FAQ_CATEGORY_LABELS,
+  type FAQCategory,
+} from '@/data/faqs/faq-amil-empresarial';
+import { getCurrentYear } from '@/lib/seo/title';
+
+const CURRENT_YEAR = getCurrentYear();
 
 export const metadata: Metadata = generatePageMetadata({
   type: 'page',
-  title: 'Perguntas Frequentes Amil 2026 | FAQ Planos de Saúde',
-  description: 'Respostas para as dúvidas mais comuns sobre planos Amil: carência, coparticipação, reembolso, rede credenciada, MEI e mais.',
+  title: `Perguntas Frequentes Amil ${CURRENT_YEAR} — FAQ Plano Empresarial`,
+  description: `45+ perguntas e respostas sobre Plano Amil Empresarial ${CURRENT_YEAR}: carência, coparticipação, reembolso, rede credenciada, MEI, ANS e mais. Atualizado e revisado.`,
   canonical: '/perguntas-frequentes',
 });
 
-const faqItems = [
-  { question: 'Qual o valor do plano Amil Empresarial?', answer: 'O plano Amil Empresarial varia conforme a faixa etária dos beneficiários e o tipo de plano escolhido. Para a faixa de 00 a 18 anos, o Amil Fácil S80 começa em R$ 101,84. O preço final é calculado de acordo com o número de vidas e idades dos funcionários.' },
-  { question: 'O plano Amil Empresarial aceita MEI?', answer: 'Sim. O Plano Amil MEI é comercializado para Microempreendedores Individuais a partir de 2 vidas, com CNPJ com no mínimo 180 dias de abertura.' },
-  { question: 'O plano Amil Empresarial tem carência?', answer: 'Para empresas com 30 ou mais vidas, geralmente há isenção de carência. Para empresas menores (2-29 vidas), pode haver carência reduzida conforme negociação.' },
-  { question: 'Qual a diferença entre Amil S380 e S450?', answer: 'O Amil S450 tem uma rede credenciada mais ampla que o S380, incluindo hospitais de maior referência. Ambos têm cobertura nacional, mas o S450 oferece mais opções de reembolso.' },
-  { question: 'O que é coparticipação no plano Amil?', answer: 'Coparticipação é quando o beneficiário paga uma parte do custo de cada procedimento utilizado, além da mensalidade. Isso reduz o valor da mensalidade mensal do plano.' },
-  { question: 'Como funciona o reembolso da Amil?', answer: 'O reembolso Amil permite que você consulte médicos fora da rede credenciada e seja ressarcido parcialmente. O valor e prazo variam por plano: Amil One reembolsa em até 3 dias úteis.' },
-  { question: 'A Amil cobre cirurgia bariátrica?', answer: 'Sim, a Amil cobre cirurgia bariátrica conforme as regras da ANS, para pacientes com IMC acima de 40 ou IMC acima de 35 com comorbidades, após avaliação médica.' },
-  { question: 'Como fazer portabilidade para a Amil?', answer: 'A portabilidade permite trocar de operadora sem cumprir novas carências. Você precisa ter pelo menos 2 anos no plano atual (ou 3 anos se tiver usado cobertura parcial temporária) e o plano Amil deve ser compatível.' },
+const CATEGORY_ORDER: FAQCategory[] = [
+  'carencias',
+  'coparticipacao',
+  'reembolso',
+  'rede-credenciada',
+  'adesao',
+  'ans',
+  'cobertura',
+  'cancelamento',
 ];
 
-export default function FAQPage() {
+export default function PerguntasFrequentesPage() {
   return (
     <>
+      {/* Schema gráfico — Organization (BeneficioRH) + Breadcrumb */}
       <SchemaGraph
         pageType="faq"
-        breadcrumb={[{ name: 'Perguntas Frequentes', href: '/perguntas-frequentes' }]}
-        faq={faqItems}
+        breadcrumb={[
+          { name: 'Perguntas Frequentes', href: '/perguntas-frequentes' },
+        ]}
       />
-      <BreadcrumbNav items={[{ label: 'Perguntas Frequentes', href: '/perguntas-frequentes' }]} />
+
+      <BreadcrumbNav
+        items={[
+          { label: 'Perguntas Frequentes', href: '/perguntas-frequentes' },
+        ]}
+      />
 
       <section className="px-4 py-12">
         <div className="mx-auto max-w-4xl">
-          <h1 className="text-3xl font-bold text-gray-900 md:text-4xl">
-            Perguntas Frequentes — Amil Saúde 2026
+          <h1 className="text-balance text-3xl font-bold text-slate-900 md:text-4xl">
+            Perguntas Frequentes — Plano Amil Empresarial {CURRENT_YEAR}
           </h1>
-          <p className="mt-4 text-lg text-gray-500">
-            Tire suas dúvidas sobre planos Amil, carência, preços e cobertura.
+          <p className="mt-4 max-w-3xl text-lg text-slate-600">
+            {FAQS_AMIL_EMPRESARIAL.length} respostas detalhadas sobre carência, coparticipação,
+            reembolso, rede credenciada, adesão MEI/PME, ANS e mais. Conteúdo
+            revisado pela BeneficioRH (corretora SUSEP 201054484).
           </p>
 
-          <div className="mt-10">
-            <FAQAccordion items={faqItems} includeSchema={false} />
-          </div>
+          {/* JSON-LD único agregando TODAS as 45+ Q&As (Google Rich Results) */}
+          <FAQAccordion
+            items={FAQS_AMIL_EMPRESARIAL}
+            emitSchema
+            id="faq-all"
+            className="sr-only"
+            headingLevel="h3"
+          />
+
+          {/* Renderização visual por categoria — schema NÃO duplicado */}
+          {CATEGORY_ORDER.map((cat) => {
+            const items = FAQS_BY_CATEGORY[cat];
+            if (!items || items.length === 0) return null;
+            return (
+              <section
+                key={cat}
+                id={`faq-${cat}`}
+                className="mt-12"
+                aria-labelledby={`heading-${cat}`}
+              >
+                <h2
+                  id={`heading-${cat}`}
+                  className="mb-4 text-2xl font-semibold text-slate-900"
+                >
+                  {FAQ_CATEGORY_LABELS[cat]}
+                  <span className="ml-2 text-base font-normal text-slate-500">
+                    ({items.length} {items.length === 1 ? 'pergunta' : 'perguntas'})
+                  </span>
+                </h2>
+                <FAQAccordion
+                  items={items}
+                  emitSchema={false}
+                  headingLevel="h3"
+                />
+              </section>
+            );
+          })}
+
+          {/* Aviso revisão NFR23 */}
+          <aside
+            role="note"
+            className="mt-12 rounded-xl border border-amber-200 bg-amber-50 px-6 py-5 text-sm text-amber-900"
+          >
+            <p>
+              <strong>Conteúdo em revisão</strong> — algumas respostas seguem
+              em validação pela equipe técnica BeneficioRH (NFR23: revisão
+              humana obrigatória em conteúdo regulatório). Para dúvidas
+              urgentes ou esclarecimentos específicos sobre o seu contrato,
+              entre em contato com o nosso atendimento. SUSEP 201054484.
+            </p>
+          </aside>
         </div>
       </section>
     </>

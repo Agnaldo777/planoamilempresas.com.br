@@ -112,8 +112,12 @@ export interface MunicipioRedeAmil {
 /**
  * Estatísticas agregadas da rede inteira — usadas no hub
  * `/rede-credenciada` (Story 7.2 stats dataset-driven).
+ *
+ * `geradoEm` é o ISO timestamp do snapshot Power BI (`dataset.geradoEm`)
+ * — usado em `<time>` no hub para "última atualização".
  */
 export interface EstatisticasRede {
+  geradoEm: string;
   totalPrestadores: number;
   totalUFs: number;
   totalMunicipios: number;

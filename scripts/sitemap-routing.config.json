@@ -1,0 +1,49 @@
+{
+  "$schema": "./sitemap-routing.config.schema.json",
+  "_doc": "Story 1.9 — exclusões config-driven. Mudanças requerem aprovação @qa.",
+  "excludeFromSitemap": [
+    "/api",
+    "/api/og"
+  ],
+  "excludeFromRoutingCheck": [
+    "/",
+    "/planos/amil-facil-s60",
+    "/planos/amil-facil-s80",
+    "/planos/amil-s380",
+    "/planos/amil-s450",
+    "/planos/amil-s580",
+    "/planos/amil-s750",
+    "/planos/amil-one-s2500",
+    "/planos/amil-one-s6500-black",
+    "/rede-credenciada/hospitais-dor",
+    "/rede-credenciada/amil-one-rede-selecionada",
+    "/rede-credenciada/amil-facil-rede-selecionada",
+    "/rede-credenciada/classica",
+    "/rede-credenciada/amil-medial",
+    "/blog/categoria/carencias",
+    "/blog/categoria/coparticipacao",
+    "/blog/categoria/reembolso",
+    "/blog/categoria/rede-credenciada",
+    "/blog/categoria/adesao-mei-pme",
+    "/blog/categoria/ans-regulamentacao",
+    "/blog/categoria/cobertura",
+    "/blog/categoria/cancelamento",
+    "/blog/carencia-amil-empresarial-prazos-2026",
+    "/blog/coparticipacao-vs-completo-pme",
+    "/blog/amil-one-vs-classica-rede-cobertura",
+    "/blog/mei-pode-contratar-plano-empresarial",
+    "/blog/portabilidade-carencias-operadoras"
+  ],
+  "_excludeFromRoutingCheck_doc": "URLs cobertas por generateStaticParams em dynamic routes — validator v1 não expande params. Migrar para validator v2 (Story 1.9 AC14: adapter via .next manifest) deve eliminar necessidade deste array.",
+  "noindexRoutes": [
+    "/planos/amil-facil-s60",
+    "/planos/amil-facil-s80",
+    "/planos/amil-s380",
+    "/planos/amil-s450",
+    "/planos/amil-s580",
+    "/planos/amil-s750",
+    "/planos/amil-one-s2500",
+    "/planos/amil-one-s6500-black"
+  ],
+  "_noindexRoutes_doc": "Stub pages dynamic — noindex até cornerstone Epic 3 substituir conteúdo placeholder por editorial completo."
+}

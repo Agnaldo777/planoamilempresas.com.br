@@ -2,6 +2,9 @@
 
 > Site SEO de **Plano de Saúde Amil Empresarial** operado por corretor autorizado SUSEP 201054484 (BeneficioRH).
 
+[![CI](https://github.com/BeneficioRH/planoamilempresas/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/BeneficioRH/planoamilempresas/actions/workflows/ci.yml)
+[![Lighthouse CI](https://img.shields.io/badge/Lighthouse_CI-Perf_%E2%89%A590-brightgreen)](https://github.com/BeneficioRH/planoamilempresas/actions/workflows/lighthouse.yml)
+[![Accessibility](https://img.shields.io/badge/a11y-axe_WCAG_AA-blue)](https://github.com/BeneficioRH/planoamilempresas/actions/workflows/accessibility.yml)
 [![Status](https://img.shields.io/badge/status-MVP_em_desenvolvimento-blue)](docs/prd.md)
 [![Stack](https://img.shields.io/badge/stack-Next_16_+_React_19_+_Tailwind_4-black)]()
 [![Hosting](https://img.shields.io/badge/hosting-Vercel-black)]()

@@ -43,7 +43,7 @@ const phoneNumbers = [
 
 export function Footer() {
   return (
-    <footer className="bg-amil-blue-dark text-white">
+    <footer className="bg-slate-900 text-white">
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid gap-8 md:grid-cols-4">
           {footerSections.map((section) => (
@@ -82,11 +82,16 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-white/20 pt-8 text-center text-xs text-gray-400">
-          <p>Corretora autorizada Amil. SUSEP: XXXXXX</p>
-          <p className="mt-1">
-            &copy; {new Date().getFullYear()} Amil Saúde — Corretora Autorizada. Todos os direitos
-            reservados.
+          <p>
+            Operado por <strong>BeneficioRH Corretora de Seguros</strong> — corretor autorizado a
+            intermediar planos da Amil Assistência Médica Internacional S.A. (registro ANS nº
+            326305).
           </p>
+          <p className="mt-1">
+            CNPJ 14.764.085/0001-99 · SUSEP 201054484 · Site independente, não substitui canais
+            oficiais Amil.
+          </p>
+          <p className="mt-1">&copy; {new Date().getFullYear()} BeneficioRH. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

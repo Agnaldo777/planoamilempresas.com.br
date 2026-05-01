@@ -28,7 +28,7 @@ export function TestimonialCard({ nome, cargo, empresa, texto, rating }: Testimo
       </div>
       <p className="mt-4 text-sm leading-relaxed text-gray-600">&ldquo;{texto}&rdquo;</p>
       <div className="mt-4 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amil-blue text-sm font-bold text-white">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white">
           {initials}
         </div>
         <div>

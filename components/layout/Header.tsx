@@ -13,7 +13,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="text-xl font-bold text-amil-blue">
+        <Link href="/" className="text-xl font-bold text-slate-900">
           Amil Saúde
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
@@ -21,7 +21,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-gray-700 transition-colors hover:text-amil-blue"
+              className="text-sm font-medium text-gray-700 transition-colors hover:text-sky-600"
             >
               {item.label}
             </Link>
