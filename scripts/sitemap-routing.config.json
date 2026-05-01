@@ -3,7 +3,6 @@
   "_doc": "Story 1.9 — exclusões config-driven. Mudanças requerem aprovação @qa.",
   "excludeFromSitemap": [
     "/api",
-    "/studio",
     "/api/og"
   ],
   "excludeFromRoutingCheck": [

@@ -1,0 +1,26 @@
+name: Cookie-Cutter Audit (Monthly)
+
+# Story 5.7 — auditoria estratificada anti-cookie-cutter (NFR25).
+# Roda mensal dia 15 06:00 UTC contra preview Cloudflare Workers.
+# NOTE: HTTP fetch precisa de servidor rodando — em CI futuro:
+# deploy preview Cloudflare + run contra preview URL.
+# Initial: tolerar falhas (continue-on-error: true) até preview Cloudflare ativo.
+
+on:
+  schedule:
+    - cron: '0 6 15 * *'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Run cookie-cutter audit
+        run: node scripts/audit-cookie-cutter.mjs
+        continue-on-error: true

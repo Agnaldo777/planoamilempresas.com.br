@@ -1283,16 +1283,16 @@ Como **@dev (Dex)** quero **tipos novos + loader compatível com schema redesenh
 | Foco SEO | "amil empresarial", "amil PJ", "amil PME [cidade]" | "plano de saúde amil" (head), "amil [cidade]", "amil one", "amil black", "amil por adesão", "amil dental" |
 | Produtos | 6 PME públicos + 4 premium "sob consulta" | Catálogo amplo: PJ + PF + adesão (`/planos/individual-por-adesao/` + `/planos/familiar-por-adesao/`) + dental |
 | Concorrentes diretos | 16 do `competitor-analysis.md` Tier A-D | `planodesaudeamil.com.br`, `amilplanos.com.br` (research em `docs/research/competitors/`) |
-| Domínio | Registrado | **A registrar — verificar disponibilidade Registro.br antes de iniciar Fase 2** |
+| Domínio | Registrado | ✅ **REGISTRADO em 2026-04-28** (estado intermediário: redirect 301 → Fase 1, runbook `docs/devops/redirect-301-planosaudeamil.md`) |
 
 ### Stack Fase 2
 
 **Idêntica à Fase 1** — Caminho C consolidado conforme `docs/decisions/adr-008-stack-unificada-nextjs-satelites-amil.md`:
 
 - Next.js 16 App Router + React 19 + Tailwind CSS 4
-- Sanity v3 (CMS headless)
-- Vercel (hosting + edge)
-- Cloudflare DNS
+- Sanity v3 (CMS headless) — Sanity hosted (`*.sanity.studio`, ADR-011)
+- **Cloudflare Workers** (hosting + edge) — `@opennextjs/cloudflare@1.19.4`, ADR-011
+- Cloudflare DNS + R2 incremental cache
 - Upstash Redis (rate limiting + cache)
 - TypeScript strict + Vitest + Playwright
 
