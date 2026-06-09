@@ -8,7 +8,7 @@ import {
   getDatasetMetadata,
   type TipoAtendimentoInferido,
 } from '@/lib/operadoras/amil/rede-credenciada-loader';
-import { isUfValida, ufNome } from '@/lib/uf';
+import { isUfValida, ufNome, tituloLocal } from '@/lib/uf';
 import {
   MIN_PRESTADORES_TIPO,
   ITEMLIST_MAX_PRESTADORES,
@@ -75,7 +75,7 @@ export async function generateMetadata({
   if (!r) return { title: 'Página não encontrada' };
 
   const mun = getMunicipioBySlug(uf, municipio);
-  const munNome = mun?.municipio ?? municipio;
+  const munNome = tituloLocal(mun?.municipio ?? municipio);
   const plural = TIPO_PLURAL[r.inferido];
   const total = r.prestadores.length;
 
@@ -100,7 +100,7 @@ export default async function TipoUfMunicipioPage({
   const { inferido, prestadores } = r;
   const ufLower = uf.toLowerCase();
   const mun = getMunicipioBySlug(uf, municipio);
-  const munNome = mun?.municipio ?? municipio;
+  const munNome = tituloLocal(mun?.municipio ?? municipio);
   const nome = ufNome(uf);
   const plural = TIPO_PLURAL[inferido];
   const total = prestadores.length;
@@ -230,7 +230,7 @@ export default async function TipoUfMunicipioPage({
                     {p.nome}
                   </Link>
                   {p.bairro.length > 0 && (
-                    <div className="mt-1 text-sm text-gray-500">{p.bairro}</div>
+                    <div className="mt-1 text-sm text-gray-500">{tituloLocal(p.bairro)}</div>
                   )}
                 </li>
               ))}

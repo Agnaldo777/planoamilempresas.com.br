@@ -30,39 +30,39 @@ export function buildClusterEFaqs(
 
   return [
     {
-      pergunta: `Quanto custa o plano Amil ${redeLabel} em ${ufNome}?`,
+      pergunta: `Quanto custa o plano ${redeLabel} em ${ufNome}?`,
       resposta:
-        `O valor do Amil ${redeLabel} em ${ufNome} varia conforme a faixa etária, ` +
+        `O valor do ${redeLabel} em ${ufNome} varia conforme a faixa etária, ` +
         `o número de vidas e o tipo de contratação (PME ou empresarial). Solicite uma ` +
         `cotação personalizada com um corretor autorizado para receber o preço exato ` +
         `do seu perfil — não há tabela fixa pública.`,
     },
     {
-      pergunta: `Quais hospitais e clínicas aceitam o Amil ${redeLabel} em ${ufNome}?`,
+      pergunta: `Quais hospitais e clínicas aceitam o ${redeLabel} em ${ufNome}?`,
       resposta:
         `Atualmente há ${total.toLocaleString('pt-BR')} prestadores credenciados ao ` +
-        `Amil ${redeLabel} em ${ufNome}, com maior concentração em ${cidadesTexto}. ` +
+        `${redeLabel} em ${ufNome}, com maior concentração em ${cidadesTexto}. ` +
         `A rede está sujeita a alterações pela operadora; confirme sempre no app oficial ` +
         `Amil antes de utilizar.`,
     },
     {
-      pergunta: `Como contratar o Amil ${redeLabel} para a minha empresa em ${ufNome}?`,
+      pergunta: `Como contratar o ${redeLabel} para a minha empresa em ${ufNome}?`,
       resposta:
-        `A contratação empresarial do Amil ${redeLabel} é feita via corretor autorizado ` +
+        `A contratação empresarial do ${redeLabel} é feita via corretor autorizado ` +
         `(SUSEP). Informe CNPJ, número de vidas e perfil etário dos colaboradores para ` +
         `receber a proposta. O processo inclui análise de carências e formalização do contrato.`,
     },
     {
-      pergunta: `O Amil ${redeLabel} tem cobertura em todo o estado de ${ufNome}?`,
+      pergunta: `O ${redeLabel} tem cobertura em todo o estado de ${ufNome}?`,
       resposta:
-        `A cobertura do Amil ${redeLabel} se concentra onde há prestadores credenciados — ` +
+        `A cobertura do ${redeLabel} se concentra onde há prestadores credenciados — ` +
         `em ${ufNome}, principalmente em ${cidadesTexto}. Empresas com colaboradores em ` +
         `municípios sem rede própria podem avaliar outras linhas Amil ou cobertura nacional.`,
     },
     {
-      pergunta: `Existe carência no Amil ${redeLabel}?`,
+      pergunta: `Existe carência no ${redeLabel}?`,
       resposta:
-        `Sim. Como todo plano de saúde regulamentado pela ANS, o Amil ${redeLabel} possui ` +
+        `Sim. Como todo plano de saúde regulamentado pela ANS, o ${redeLabel} possui ` +
         `prazos de carência que variam por tipo de procedimento. Em contratações ` +
         `empresariais com número mínimo de vidas, pode haver redução ou isenção de carências — ` +
         `confirme as condições com o corretor.`,

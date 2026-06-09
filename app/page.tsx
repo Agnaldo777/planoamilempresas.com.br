@@ -1,33 +1,22 @@
 /**
- * Canary page — Story 1.4 (AC1)
+ * Home — Landing comercial B2B (substitui a canary da Story 1.4).
  *
- * Rota: `/` — primeira página visível em produção pós-fork.
- * Render: React Server Component (sem 'use client'), markup
- * mínimo para Lighthouse ≥95 sem optimização adicional.
- *
- * Restrições visuais (paleta Opção A — slate-900 + teal-600,
- * NÃO azul Amil oficial #0066B3):
- * - Background: slate-900
- * - CTA badge: teal-600
- * - Texto principal: branco
- * - Tipografia: Inter (já carregado em RootLayout)
- *
- * Build info exposto:
- * - GITHUB_SHA / VERCEL_GIT_COMMIT_SHA (curto, 7 chars) — seguro de expor
- * - BUILD_TIME — timestamp injetado em build via Date.now()
- * - Cloudflare Workers preenche `CF_VERSION_METADATA`; CI fallback
- *   é `GITHUB_SHA`. Legacy `VERCEL_GIT_COMMIT_SHA` removível Story 1.5+.
- *
- * Schema JSON-LD inline mínimo (WebSite + Organization
- * BeneficioRH; conformidade FR54 — operador é a corretora,
- * não a Amil).
+ * RSC (sem 'use client'). Disclaimer canônico ADR-006, sem logo/trade dress Amil
+ * (NFR8 + brand-usage-policy). Operador = BeneficioRH (corretora SUSEP 201054484).
+ * Números reais do dataset de rede credenciada. Build/health preservados no rodapé.
  */
 
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { getEstatisticasRede } from '@/lib/operadoras/amil/rede-credenciada-loader';
+import {
+  DISCLAIMER_AMIL_REDE,
+  AMIL_SITE_OFICIAL,
+  AMIL_RAZAO_SOCIAL,
+} from '@/content/disclaimers/amil-rede';
 
-// Build-time constants. Resolvidos uma vez quando o módulo é
-// avaliado em build; não recalculados a cada request graças a
-// SSG. Em dev (`next dev`) refletem o último reload.
+export const revalidate = 2592000;
+
 function resolveBuildSha(): string {
   const cfMeta = process.env.CF_VERSION_METADATA;
   if (cfMeta) {
@@ -41,102 +30,175 @@ function resolveBuildSha(): string {
   }
   const gh = process.env.GITHUB_SHA;
   if (gh && gh.length >= 7) return gh.slice(0, 7);
-  const vercel = process.env.VERCEL_GIT_COMMIT_SHA;
-  if (vercel && vercel.length >= 7) return vercel.slice(0, 7);
   return 'local';
 }
 
 const BUILD_SHA: string = resolveBuildSha();
-const BUILD_TIME_ISO: string = new Date(Date.now()).toISOString();
-const BUILD_TIME_HUMAN: string = new Date(BUILD_TIME_ISO).toLocaleString(
-  'pt-BR',
-  { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Sao_Paulo' },
-);
-
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://planoamilempresas.com.br';
 
 export const metadata: Metadata = {
-  title: 'Em breve — planoamilempresas.com.br',
+  title: 'Plano de Saúde Amil Empresarial 2026 | Cotação PJ — BeneficioRH',
   description:
-    'Plano Amil Empresarial 2026 — em breve, conteúdo completo da BeneficioRH (corretora autorizada SUSEP 201054484). Cotação online, comparativos e tabela de preços.',
+    'Plano Amil Empresarial para CNPJ: linhas S380, S450, S750, One e Black, rede credenciada em todo o Brasil e cotação online. Corretora autorizada SUSEP 201054484.',
   alternates: { canonical: '/' },
-  robots: {
-    index: false,
-    follow: false,
-  },
+  robots: { index: true, follow: true },
 };
 
-export default function CanaryPage() {
-  // Schema JSON-LD: WebSite + Organization (escopo Story 1.4
-  // mínimo; rich schemas vêm em Stories 2.x+ via SchemaGraph).
+const LINHAS = [
+  { nome: 'Amil S380', desc: 'Entrada nacional — o mais contratado por PMEs.', tag: 'Nacional' },
+  { nome: 'Amil S450', desc: 'Intermediário, rede ampliada de hospitais e maternidades.', tag: 'Nacional' },
+  { nome: 'Amil S750', desc: 'Topo da Linha Selecionada, rede mais completa.', tag: 'Nacional' },
+  { nome: 'Amil One S6500 Black', desc: 'Premium, com cobertura internacional.', tag: 'Premium' },
+  { nome: 'Amil Black', desc: 'Linha Clássica de alto padrão de rede.', tag: 'Clássica' },
+];
+
+const DIFERENCIAIS = [
+  { t: 'Atendimento por corretor autorizado', d: 'Intermediação SUSEP 201054484, sem custo adicional para a empresa.' },
+  { t: 'Cobertura nacional', d: 'Linhas Selecionadas (S380/S450/S750) com rede em todo o Brasil.' },
+  { t: 'Cotação personalizada', d: 'Preço por perfil etário, número de vidas e CNPJ — sem tabela genérica.' },
+  { t: 'Rede transparente', d: 'Consulte hospitais, laboratórios e clínicas credenciados por cidade e bairro.' },
+];
+
+export default function HomePage() {
+  const stats = getEstatisticasRede();
+
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'WebSite',
-        '@id': `${SITE_URL}#website`,
-        url: SITE_URL,
-        name: 'planoamilempresas.com.br',
-        inLanguage: 'pt-BR',
-      },
+      { '@type': 'WebSite', '@id': `${SITE_URL}#website`, url: SITE_URL, name: 'planoamilempresas.com.br', inLanguage: 'pt-BR' },
       {
         '@type': 'Organization',
         '@id': `${SITE_URL}#organization`,
         name: 'BeneficioRH',
         url: SITE_URL,
-        // FR54 — operador é a corretora; SUSEP confirma autorização.
         identifier: 'SUSEP 201054484',
         taxID: '14.764.085/0001-99',
+        sameAs: [AMIL_SITE_OFICIAL],
       },
     ],
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-900 px-6 py-16 text-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
+    <main className="min-h-screen bg-white text-slate-900">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
-      <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-6 text-center">
-        <span
-          className="inline-flex items-center rounded-full bg-teal-600 px-4 py-1 text-sm font-semibold uppercase tracking-wide text-white"
-          aria-label="Status: em breve"
-        >
-          Em breve
-        </span>
+      {/* Hero */}
+      <section className="bg-gradient-to-b from-blue-700 to-blue-600 px-6 py-20 text-white">
+        <div className="mx-auto max-w-5xl text-center">
+          <span className="inline-flex items-center rounded-full bg-white/15 px-4 py-1 text-sm font-semibold uppercase tracking-wide">
+            Corretora autorizada · SUSEP 201054484
+          </span>
+          <h1 className="mt-6 text-balance text-4xl font-bold leading-tight md:text-5xl">
+            Plano de Saúde Amil Empresarial para a sua empresa
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-balance text-lg text-blue-100 md:text-xl">
+            Cobertura nacional, rede credenciada ampla e cotação personalizada por CNPJ.
+            Atendimento por corretor autorizado, sem custo adicional.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link href="/cotacao-online" className="rounded-lg bg-white px-7 py-3 font-semibold text-blue-700 transition hover:bg-blue-50">
+              Solicitar cotação →
+            </Link>
+            <Link href="/rede-credenciada" className="rounded-lg border border-white/40 px-7 py-3 font-semibold text-white transition hover:bg-white/10">
+              Ver rede credenciada
+            </Link>
+          </div>
+          <p className="mx-auto mt-6 max-w-2xl text-xs text-blue-200">{DISCLAIMER_AMIL_REDE}</p>
+        </div>
+      </section>
 
-        <h1 className="text-balance text-4xl font-bold leading-tight md:text-5xl">
-          planoamilempresas.com.br
-        </h1>
+      {/* Stats reais do dataset */}
+      <section className="border-b border-slate-100 bg-slate-50 px-6 py-10">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 text-center sm:grid-cols-3">
+          {[
+            { n: stats.totalPrestadores.toLocaleString('pt-BR'), l: 'Prestadores credenciados' },
+            { n: String(stats.totalUFs), l: 'Estados com cobertura' },
+            { n: stats.totalMunicipios.toLocaleString('pt-BR'), l: 'Municípios atendidos' },
+          ].map((s) => (
+            <div key={s.l}>
+              <div className="text-3xl font-bold text-blue-700 md:text-4xl">{s.n}</div>
+              <div className="mt-1 text-sm text-slate-600">{s.l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <p className="max-w-xl text-balance text-lg text-slate-300 md:text-xl">
-          Conteúdo completo sobre Plano Amil Empresarial está em produção.
-          Site operado pela <strong className="text-white">BeneficioRH</strong>,
-          corretora autorizada SUSEP 201054484.
-        </p>
+      {/* Linhas de plano */}
+      <section className="px-6 py-16">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-center text-3xl font-bold">Linhas de plano Amil 2026</h2>
+          <p className="mt-2 text-center text-slate-600">Da entrada nacional ao premium internacional — escolha pela rede e pelo perfil da equipe.</p>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {LINHAS.map((p) => (
+              <div key={p.nome} className="rounded-xl border border-slate-200 p-6 transition hover:border-blue-400 hover:shadow-sm">
+                <span className="text-xs font-semibold uppercase tracking-wide text-blue-600">{p.tag}</span>
+                <h3 className="mt-2 text-xl font-bold">{p.nome}</h3>
+                <p className="mt-2 text-sm text-slate-600">{p.desc}</p>
+              </div>
+            ))}
+            <Link href="/planos" className="flex items-center justify-center rounded-xl border border-dashed border-blue-300 p-6 font-semibold text-blue-700 transition hover:bg-blue-50">
+              Ver todos os planos →
+            </Link>
+          </div>
+        </div>
+      </section>
 
-        <p className="text-sm text-slate-400">
-          CNPJ 14.764.085/0001-99 — Agnaldo Silva (responsável técnico).
-        </p>
-      </div>
+      {/* Diferenciais */}
+      <section className="bg-slate-50 px-6 py-16">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-center text-3xl font-bold">Por que contratar com a BeneficioRH</h2>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            {DIFERENCIAIS.map((d) => (
+              <div key={d.t} className="rounded-xl bg-white p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-900">{d.t}</h3>
+                <p className="mt-2 text-sm text-slate-600">{d.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <footer className="mt-16 text-center text-xs text-slate-500">
-        <p>
-          Build <code className="font-mono text-slate-300">{BUILD_SHA}</code>
-          {' · '}
-          <time dateTime={BUILD_TIME_ISO}>{BUILD_TIME_HUMAN}</time>
-        </p>
-        <p className="mt-2">
-          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- /api/healthz é route handler (JSON), não página navegável via <Link> */}
-          <a
-            href="/api/healthz"
-            className="text-sky-400 underline-offset-2 hover:underline"
-          >
-            /api/healthz
-          </a>
-        </p>
+      {/* CTA final */}
+      <section className="px-6 py-16">
+        <div className="mx-auto max-w-4xl rounded-2xl bg-blue-700 p-10 text-center text-white">
+          <h2 className="text-3xl font-bold">Receba uma cotação para o seu CNPJ</h2>
+          <p className="mx-auto mt-3 max-w-xl text-blue-100">
+            Informe número de vidas e perfil da equipe e retornamos com as melhores opções de plano Amil empresarial.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link href="/cotacao-online" className="rounded-lg bg-white px-7 py-3 font-semibold text-blue-700 transition hover:bg-blue-50">
+              Solicitar cotação →
+            </Link>
+            <Link href="/contato-empresas" className="rounded-lg border border-white/40 px-7 py-3 font-semibold text-white transition hover:bg-white/10">
+              Falar com um corretor
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Rodapé */}
+      <footer className="border-t border-slate-200 bg-slate-50 px-6 py-10 text-sm text-slate-600">
+        <div className="mx-auto max-w-5xl space-y-3">
+          <p>
+            <strong className="text-slate-800">BeneficioRH</strong> — corretora de seguros autorizada
+            (SUSEP 201054484), CNPJ 14.764.085/0001-99. {DISCLAIMER_AMIL_REDE} {AMIL_RAZAO_SOCIAL} mantém
+            seus canais oficiais em{' '}
+            <a href={AMIL_SITE_OFICIAL} className="underline" rel="nofollow noopener" target="_blank">amil.com.br</a>.
+          </p>
+          <p className="flex flex-wrap gap-x-4 gap-y-1">
+            <Link href="/planos" className="hover:text-blue-600">Planos</Link>
+            <Link href="/rede-credenciada" className="hover:text-blue-600">Rede credenciada</Link>
+            <Link href="/perguntas-frequentes" className="hover:text-blue-600">Perguntas frequentes</Link>
+            <Link href="/contato-empresas" className="hover:text-blue-600">Contato</Link>
+          </p>
+          <p className="text-xs text-slate-400">
+            Build <code className="font-mono">{BUILD_SHA}</code>
+            {' · '}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- /api/healthz é route handler (JSON), não página navegável via <Link> */}
+            <a href="/api/healthz" className="underline-offset-2 hover:underline">status</a>
+          </p>
+        </div>
       </footer>
     </main>
   );

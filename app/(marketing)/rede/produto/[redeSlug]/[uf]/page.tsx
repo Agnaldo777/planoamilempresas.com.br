@@ -8,7 +8,7 @@ import {
   getDatasetMetadata,
 } from '@/lib/operadoras/amil/rede-credenciada-loader';
 import { redeFromSlug } from '@/lib/operadoras/amil/slugs';
-import { isUfValida, ufNome } from '@/lib/uf';
+import { isUfValida, ufNome, tituloLocal } from '@/lib/uf';
 import { MIN_PRESTADORES_REDE_UF, ITEMLIST_MAX_PRESTADORES } from '@/config/seo';
 import { buildClusterEFaqs } from '@/content/cluster-e-faq';
 import {
@@ -53,6 +53,11 @@ function redeLabel(redeNome: string): string {
     .join(' ');
 }
 
+/** Nome comercial completo, sempre prefixado com "Amil" (sem duplicar). */
+function planoComercial(label: string): string {
+  return label.startsWith('Amil') ? label : `Amil ${label}`;
+}
+
 export async function generateStaticParams(): Promise<Params[]> {
   return getRedeUfCombosViaveis(MIN_PRESTADORES_REDE_UF);
 }
@@ -66,14 +71,14 @@ export async function generateMetadata({
   const rede = redeFromSlug(redeSlug);
   if (!rede || !isUfValida(uf)) return { title: 'Rede não encontrada' };
 
-  const label = redeLabel(rede);
+  const planoNome = planoComercial(redeLabel(rede));
   const nome = ufNome(uf);
   const stats = getEstatisticasRedeUF(rede, uf);
 
   return {
-    title: `Plano Amil ${label} em ${nome} — ${stats.totalPrestadores} Prestadores Credenciados`,
+    title: `Plano ${planoNome} em ${nome} — ${stats.totalPrestadores} Prestadores Credenciados`,
     description:
-      `Rede credenciada do Amil ${label} em ${nome}: ${stats.totalPrestadores} prestadores ` +
+      `Rede credenciada do ${planoNome} em ${nome}: ${stats.totalPrestadores} prestadores ` +
       `em ${stats.topCidades.length} cidades. Hospitais, laboratórios e clínicas. Cotação PJ.`,
     alternates: { canonical: `/rede/produto/${redeSlug}/${uf.toLowerCase()}` },
   };
@@ -91,7 +96,7 @@ export default async function RedeUfClusterEPage({
   const stats = getEstatisticasRedeUF(rede, uf);
   if (stats.totalPrestadores < MIN_PRESTADORES_REDE_UF) notFound();
 
-  const label = redeLabel(rede);
+  const planoNome = planoComercial(redeLabel(rede));
   const nome = ufNome(uf);
   const ufLower = uf.toLowerCase();
   const prestadores = getPrestadoresPorRedeUF(rede, uf);
@@ -101,10 +106,10 @@ export default async function RedeUfClusterEPage({
   const dataFormatada = new Date(geradoEm).toLocaleDateString('pt-BR');
 
   const faqs = buildClusterEFaqs(
-    label,
+    planoNome,
     nome,
     stats.totalPrestadores,
-    stats.topCidades.map((c) => c.municipio)
+    stats.topCidades.map((c) => tituloLocal(c.municipio))
   );
 
   const cotacaoHref =
@@ -115,7 +120,7 @@ export default async function RedeUfClusterEPage({
   const healthPlanSchema = {
     '@context': 'https://schema.org',
     '@type': 'HealthInsurancePlan',
-    name: `Amil ${label}`,
+    name: planoNome,
     provider: { '@type': 'Organization', name: 'Amil Assistência Médica' },
     areaServed: { '@type': 'State', name: nome },
     usesHealthPlanIdStandard: `ANS ${AMIL_ANS_REGISTRO}`,
@@ -124,7 +129,7 @@ export default async function RedeUfClusterEPage({
   const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: `Prestadores Amil ${label} em ${nome}`,
+    name: `Prestadores ${planoNome} em ${nome}`,
     numberOfItems: prestadores.length,
     itemListElement: topPrestadores.map((p, i) => ({
       '@type': 'ListItem',
@@ -134,7 +139,7 @@ export default async function RedeUfClusterEPage({
         name: p.nome,
         address: {
           '@type': 'PostalAddress',
-          addressLocality: p.municipio,
+          addressLocality: tituloLocal(p.municipio),
           addressRegion: uf.toUpperCase(),
           addressCountry: 'BR',
         },
@@ -159,7 +164,7 @@ export default async function RedeUfClusterEPage({
       { '@type': 'ListItem', position: 1, name: 'Início', item: '/' },
       { '@type': 'ListItem', position: 2, name: 'Rede Credenciada', item: '/rede-credenciada' },
       { '@type': 'ListItem', position: 3, name: nome, item: `/rede/${ufLower}` },
-      { '@type': 'ListItem', position: 4, name: `Amil ${label}`, item: `/rede/produto/${redeSlug}/${ufLower}` },
+      { '@type': 'ListItem', position: 4, name: planoNome, item: `/rede/produto/${redeSlug}/${ufLower}` },
     ],
   };
 
@@ -197,18 +202,18 @@ export default async function RedeUfClusterEPage({
             <span className="mx-2">›</span>
             <Link href={`/rede/${ufLower}`} className="hover:text-blue-600">{nome}</Link>
             <span className="mx-2">›</span>
-            <span className="text-gray-900">Amil {label}</span>
+            <span className="text-gray-900">{planoNome}</span>
           </nav>
 
           <header>
             <h1 className="text-3xl font-bold text-gray-900 md:text-4xl">
-              Plano Amil {label} em {nome}
+              Plano {planoNome} em {nome}
             </h1>
             <p className="mt-3 text-lg text-gray-600">
               <strong className="text-gray-900">
                 {stats.totalPrestadores.toLocaleString('pt-BR')} prestadores
               </strong>{' '}
-              credenciados ao Amil {label} em{' '}
+              credenciados ao {planoNome} em{' '}
               <strong className="text-gray-900">{stats.topCidades.length} cidades</strong> de {nome}.
             </p>
           </header>
@@ -219,7 +224,7 @@ export default async function RedeUfClusterEPage({
               href={cotacaoHref}
               className="inline-block rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
             >
-              Solicitar cotação do Amil {label} em {nome} →
+              Solicitar cotação do {planoNome} em {nome} →
             </Link>
           </div>
 
@@ -248,7 +253,7 @@ export default async function RedeUfClusterEPage({
           {topCidades.length > 0 && (
             <section className="mt-10">
               <h2 className="text-2xl font-bold text-gray-900">
-                Principais cidades com Amil {label} em {nome}
+                Principais cidades com {planoNome} em {nome}
               </h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {topCidades.map((c) => (
@@ -257,7 +262,7 @@ export default async function RedeUfClusterEPage({
                     href={`/rede/${ufLower}/${c.cidadeSlug}`}
                     className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm transition hover:border-blue-500"
                   >
-                    {c.municipio}{' '}
+                    {tituloLocal(c.municipio)}{' '}
                     <span className="text-gray-500">({c.total.toLocaleString('pt-BR')})</span>
                   </Link>
                 ))}
@@ -268,17 +273,17 @@ export default async function RedeUfClusterEPage({
           {/* Conteúdo editorial */}
           <section className="mt-10 max-w-3xl space-y-4 text-gray-700">
             <h2 className="text-2xl font-bold text-gray-900">
-              Sobre a rede do Amil {label} em {nome}
+              Sobre a rede do {planoNome} em {nome}
             </h2>
             <p>
-              O <strong>Amil {label}</strong> conta com{' '}
+              O <strong>{planoNome}</strong> conta com{' '}
               {stats.totalPrestadores.toLocaleString('pt-BR')} prestadores credenciados em {nome},
               distribuídos entre hospitais, laboratórios, clínicas e centros de diagnóstico. Para
               empresas que avaliam o plano para seus colaboradores, a amplitude e a localização da
               rede são determinantes na escolha da linha ideal.
             </p>
             <p>
-              A contratação do Amil {label} para empresas (PME e empresarial) é feita por meio de
+              A contratação do {planoNome} para empresas (PME e empresarial) é feita por meio de
               corretor autorizado, com análise de número de vidas, perfil etário e carências. O preço
               é personalizado — não há tabela pública fixa —, por isso recomendamos solicitar uma
               cotação para o perfil específico da sua empresa.
@@ -303,7 +308,7 @@ export default async function RedeUfClusterEPage({
                   >
                     <div className="font-semibold text-gray-900">{p.nome}</div>
                     <div className="mt-1 text-sm text-gray-500">
-                      {TIPO_LABELS[p.tipoInferido] ?? p.tipoInferido} · {p.municipio}
+                      {TIPO_LABELS[p.tipoInferido] ?? p.tipoInferido} · {tituloLocal(p.municipio)}
                     </div>
                   </li>
                 ))}
@@ -334,7 +339,7 @@ export default async function RedeUfClusterEPage({
           {/* CTA secundário */}
           <div className="mt-12 rounded-lg bg-blue-600 p-8 text-center">
             <h2 className="text-2xl font-bold text-white">
-              Cotação do Amil {label} para sua empresa
+              Cotação do {planoNome} para sua empresa
             </h2>
             <p className="mt-2 text-blue-100">
               Receba uma proposta personalizada para o perfil da sua empresa em {nome}.

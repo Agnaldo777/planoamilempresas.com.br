@@ -9,7 +9,7 @@ import {
   getPrestadoresPorBairro,
   getDatasetMetadata,
 } from '@/lib/operadoras/amil/rede-credenciada-loader';
-import { isUfValida, ufNome } from '@/lib/uf';
+import { isUfValida, ufNome, tituloLocal } from '@/lib/uf';
 import { MIN_PRESTADORES_BAIRRO, ITEMLIST_MAX_PRESTADORES } from '@/config/seo';
 import {
   DISCLAIMER_AMIL_REDE,
@@ -58,8 +58,8 @@ export async function generateMetadata({
   if (prestadores.length === 0) return { title: 'Bairro não encontrado' };
 
   const mun = getMunicipioBySlug(uf, municipio);
-  const munNome = mun?.municipio ?? municipio;
-  const bairroNome = prestadores[0].bairro;
+  const munNome = tituloLocal(mun?.municipio ?? municipio);
+  const bairroNome = tituloLocal(prestadores[0].bairro);
   const total = prestadores.length;
   const indexavel = total >= MIN_PRESTADORES_BAIRRO;
 
@@ -91,8 +91,8 @@ export default async function BairroPage({
 
   const ufLower = uf.toLowerCase();
   const mun = getMunicipioBySlug(uf, municipio);
-  const munNome = mun?.municipio ?? municipio;
-  const bairroNome = prestadores[0].bairro;
+  const munNome = tituloLocal(mun?.municipio ?? municipio);
+  const bairroNome = tituloLocal(prestadores[0].bairro);
   const nome = ufNome(uf);
   const total = prestadores.length;
   const topPrestadores = prestadores.slice(0, ITEMLIST_MAX_PRESTADORES);
@@ -264,7 +264,7 @@ export default async function BairroPage({
                       href={`/rede/${ufLower}/${municipio}/bairro/${b.slug}`}
                       className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm transition hover:border-blue-500"
                     >
-                      {b.bairro} <span className="text-gray-500">({b.total})</span>
+                      {tituloLocal(b.bairro)} <span className="text-gray-500">({b.total})</span>
                     </Link>
                   ))}
                 </div>
