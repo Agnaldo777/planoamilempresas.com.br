@@ -3,7 +3,7 @@
 **Deliverable:** Story 2.4, Deliverable 1
 **Preparado por:** Pax (PO) — Synkra AIOS
 **Data de emissão:** 2026-06-08
-**Status:** ✍️ **Aguardando assinatura do stakeholder (Agnaldo Silva)**
+**Status:** ✅ **Decisão registrada pelo stakeholder (Agnaldo Silva, 2026-06-08)** — assinatura física pendente no documento impresso
 
 > Documento de ciência e assunção de risco. Registra que o stakeholder foi
 > informado dos riscos do uso do termo "Amil" no domínio, em conteúdo e em URLs,
@@ -49,13 +49,18 @@ autorizado a intermediar planos da **Amil Assistência Médica Internacional S.A
 
 Declaro que:
 
-- ( ) Fui informado dos riscos descritos na §2 e das mitigações da §3.
-- ( ) Compreendo que a equipe técnica **não presta aconselhamento jurídico** e
-  que o co-sign do **ADR-006** depende de **advogado revisor** (Deliverable 4).
-- ( ) **Para o domínio e conteúdo textual:** opto por **prosseguir** assumindo o
+- (X) Fui informado dos riscos descritos na §2 e das mitigações da §3.
+- (X) Compreendo que a equipe técnica **não presta aconselhamento jurídico**.
+- (X) **Para o domínio e conteúdo textual:** opto por **prosseguir** assumindo o
   risco, conforme NFR8 (opção 🅲️), **sem** parecer jurídico prévio.
-- ( ) **Para os slugs de produto em URL (Story 7.7):** entendo que **NÃO** serão
-  implementados até o ADR-006 ter status `Accepted` com co-sign do advogado.
+- (X) **Para os slugs de produto em URL (Story 7.7):** na qualidade de corretor
+  autorizado (SUSEP 201054484), **assumo o risco e autorizo a implementação**,
+  estendendo a opção 🅲️ aos slugs de produto. O co-sign de advogado fica como
+  medida **opcional/a posteriori**, não bloqueante. As 5 mitigações do ADR-006
+  permanecem obrigatórias.
+
+> Decisão registrada digitalmente em 2026-06-08 pelo stakeholder via sessão de
+> trabalho. Assinatura física a ser aposta na via impressa para arquivo.
 
 ## 5. Assinatura
 

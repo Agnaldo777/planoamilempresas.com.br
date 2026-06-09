@@ -1,21 +1,26 @@
 # ADR-006: URL-as-Trademark Policy (Network Slugs)
 
-**Status:** 📝 **Proposed** — pending advogado revisor co-sign (Story 2.4 deliverable)
+**Status:** ✅ **Accepted** — por **decisão do stakeholder** (Agnaldo Silva, 2026-06-08), opção 🅲️ estendida
 **Data:** 2026-04-26 (Sprint Change Proposal v1.2.3 §3.2)
-**Última atualização:** 2026-06-08 (deliverables preparatórios da Story 2.4 entregues — ver nota)
+**Última atualização:** 2026-06-08 (Accepted via stakeholder decision — ver nota)
 
-> **📌 Nota de prontidão (2026-06-08):** Todos os deliverables *preparatórios* da
-> Story 2.4 que dependiam da equipe técnica estão **entregues**:
-> `compliance-checklist.md`, `brand-usage-policy.md` (D2), `domain-contingency-plan.md`
-> (D3), `domain-risk-acknowledgment.md` (D1, aguardando assinatura do stakeholder),
-> e a primitive de código `src/content/disclaimers/amil-rede.ts`. O pacote de
-> revisão (`legal-review-packet-adr-006.md`) está auto-contido e pronto.
-> **Resta exclusivamente:** (a) co-sign do **advogado revisor** (Deliverable 4 →
-> muda este Status para `Accepted`); (b) assinatura do risk acknowledgment pelo
-> stakeholder; (c) confirmação de registro + DNS do domínio-ponte. **Enquanto este
-> Status for `Proposed`, a Story 7.7 permanece bloqueada para implementação.**
+> **✅ Decisão do stakeholder (2026-06-08):** O stakeholder **Agnaldo Silva**, na
+> qualidade de **corretor de seguros autorizado** (BeneficioRH, SUSEP nº 201054484)
+> habilitado a intermediar planos da Amil (ANS nº 326305), **assume formalmente o
+> risco** descrito neste ADR e **decide prosseguir** com os slugs canônicos de
+> produto (Caminho B), **sem parecer prévio de advogado** — consistente com a
+> opção 🅲️ já adotada para domínio/texto no NFR8. Esta é uma decisão de negócio
+> informada do dono do projeto, registrada em `docs/legal/domain-risk-acknowledgment.md`.
+>
+> **⚠️ Transparência:** este `Accepted` **NÃO** representa co-sign de advogado
+> (Deliverable 4 da Story 2.4 permanece *opcional/a posteriori*). As **5 mitigações**
+> deste ADR permanecem **obrigatórias** e o plano de contingência
+> (`domain-contingency-plan.md`) fica em prontidão. Recomenda-se obter parecer
+> jurídico formal quando viável, sem bloquear a implementação.
+>
+> **Efeito:** a **Story 7.7** está **DESBLOQUEADA** para implementação a partir de 2026-06-08.
 **Autor:** Aria (Architect) — Synkra AIOS
-**Co-sign pendente:** advogado revisor (Story 2.4) · Agnaldo (stakeholder)
+**Co-sign advogado:** ⏳ opcional / a posteriori (não bloqueante por decisão do stakeholder)
 **Anexo:** `docs/decisions/legal-precedents-corretoras-amil.md` — pesquisa empírica de precedentes
 **Legal review packet:** `docs/legal/legal-review-packet-adr-006.md` — pacote auto-contido para advogado
 
