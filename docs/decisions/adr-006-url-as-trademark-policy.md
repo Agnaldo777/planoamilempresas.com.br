@@ -2,7 +2,18 @@
 
 **Status:** 📝 **Proposed** — pending advogado revisor co-sign (Story 2.4 deliverable)
 **Data:** 2026-04-26 (Sprint Change Proposal v1.2.3 §3.2)
-**Última atualização:** 2026-04-26 (refinamento Story 7.0c com precedentes empíricos)
+**Última atualização:** 2026-06-08 (deliverables preparatórios da Story 2.4 entregues — ver nota)
+
+> **📌 Nota de prontidão (2026-06-08):** Todos os deliverables *preparatórios* da
+> Story 2.4 que dependiam da equipe técnica estão **entregues**:
+> `compliance-checklist.md`, `brand-usage-policy.md` (D2), `domain-contingency-plan.md`
+> (D3), `domain-risk-acknowledgment.md` (D1, aguardando assinatura do stakeholder),
+> e a primitive de código `src/content/disclaimers/amil-rede.ts`. O pacote de
+> revisão (`legal-review-packet-adr-006.md`) está auto-contido e pronto.
+> **Resta exclusivamente:** (a) co-sign do **advogado revisor** (Deliverable 4 →
+> muda este Status para `Accepted`); (b) assinatura do risk acknowledgment pelo
+> stakeholder; (c) confirmação de registro + DNS do domínio-ponte. **Enquanto este
+> Status for `Proposed`, a Story 7.7 permanece bloqueada para implementação.**
 **Autor:** Aria (Architect) — Synkra AIOS
 **Co-sign pendente:** advogado revisor (Story 2.4) · Agnaldo (stakeholder)
 **Anexo:** `docs/decisions/legal-precedents-corretoras-amil.md` — pesquisa empírica de precedentes
