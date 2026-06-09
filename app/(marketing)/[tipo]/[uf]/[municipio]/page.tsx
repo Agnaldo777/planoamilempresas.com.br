@@ -121,6 +121,20 @@ export default async function TipoUfMunicipioPage({
         `A contratação empresarial é feita via corretor autorizado (SUSEP). Informe CNPJ, número ` +
         `de vidas e perfil etário para receber uma cotação com a rede de ${munNome}.`,
     },
+    {
+      pergunta: `O plano Amil com ${plural.toLowerCase()} em ${munNome} aceita MEI?`,
+      resposta:
+        `Sim. MEI com CNPJ ativo há pelo menos 180 dias pode contratar o Amil empresarial em ` +
+        `${munNome}, geralmente a partir de 2 vidas, com acesso aos ${plural.toLowerCase()} da rede ` +
+        `conforme a linha escolhida (S380, S450, S750 ou One).`,
+    },
+    {
+      pergunta: `Quais linhas Amil dão acesso aos ${plural.toLowerCase()} em ${munNome}?`,
+      resposta:
+        `As linhas nacionais (S380, S450, S750 e One) cobrem ${munNome} com redes progressivamente ` +
+        `mais amplas. Planos de linha superior costumam ampliar o acesso a ${plural.toLowerCase()} de ` +
+        `referência. Solicite a comparação na cotação para ver qual produto cobre o que sua equipe precisa.`,
+    },
   ];
 
   const itemListSchema = {
