@@ -1,0 +1,11 @@
+keyword,volume_mes,intent,dificuldade,janela
+plano de saude empresarial,40500-49500,comercial/transacional,KD 55-65,evitar head
+plano de saude CNPJ,14800-22200,transacional forte,KD 50-60,evitar head
+plano de saude para empresa,12100-18100,comercial,KD 50-60,evitar head
+plano de saude MEI,18100-27100,transacional em alta (boom MEI),KD 45-55,JANELA
+plano de saude PME,8100-12100,transacional,KD 45-55,meio de funil
+Amil empresarial,6600-9900,navegacional+comercial,KD 40-50,marca disputavel
+Amil empresarial preco / tabela 2026,2400-4400,transacional altissima (fundo funil),KD 30-45,JANELA (oficial ausente)
+Amil PME,1900-3600,transacional,KD 35-45,JANELA
+Amil empresarial [cidade] (long-tail somado),8000-15000,transacional local,KD 20-40,JANELA geo (oceano azul)
+Hospital X aceita Amil / rede Amil [cidade],long-tail,transacional-de-decisao,KD baixo,JANELA HOSPITALxCIDADE (data moat)

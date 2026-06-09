@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Análise Estratégica — Satélite Amil Empresarial</title>
+<style>
+  @page { size: A4; margin: 16mm 13mm 16mm 13mm; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; font-size: 9pt; line-height: 1.45; margin: 0; padding: 0; }
+  header.cover { background: linear-gradient(135deg, #003da5 0%, #0061d3 55%, #2b86ff 100%); color: white; padding: 34px 28px; margin-bottom: 24px; border-radius: 6px; border-bottom: 5px solid #ffd200; }
+  header.cover h1 { margin: 0 0 8px 0; font-size: 23pt; font-weight: 700; letter-spacing: -0.3px; }
+  header.cover .sub { font-size: 11pt; opacity: 0.95; margin-bottom: 16px; }
+  header.cover .meta { font-size: 9pt; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 14px; line-height: 1.7; }
+  h2.bloco { font-size: 13pt; margin: 22px 0 10px 0; padding: 8px 12px; border-left: 4px solid #0061d3; background: #eef4fd; color: #003da5; page-break-after: avoid; }
+  h2.anexo { font-size: 13pt; margin: 26px 0 10px 0; padding: 10px 12px; background: #003da5; color: white; border-radius: 4px; page-break-after: avoid; }
+  h3.sub { color: #003da5; margin-top: 18px; font-size: 11pt; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 8.3pt; page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  th { background: #0061d3; color: white; font-weight: 600; text-align: left; padding: 7px 8px; border: 1px solid #0061d3; vertical-align: top; }
+  td { padding: 6px 8px; border: 1px solid #d3ddec; vertical-align: top; }
+  tr:nth-child(even) td { background: #f4f8fe; }
+  td.center, th.center { text-align: center; }
+  td strong { color: #003da5; }
+  .badge { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 7.5pt; font-weight: 600; color: white; white-space: nowrap; }
+  .badge-vermelho { background: #c1121f; }
+  .badge-amarelo { background: #c08400; }
+  .badge-verde { background: #1c8c5a; }
+  .badge-cinza { background: #6b7280; }
+  .badge-azul { background: #0061d3; }
+  footer.fim { margin-top: 32px; padding-top: 14px; border-top: 2px solid #0061d3; text-align: center; color: #003da5; font-style: italic; font-weight: 600; }
+  .recap { background: #eef4fd; border-left: 4px solid #0061d3; padding: 12px 16px; margin: 18px 0; border-radius: 4px; }
+  .recap strong { color: #003da5; }
+  .recap.alerta { background: #fde8e8; border-left-color: #c1121f; }
+  .recap.alerta strong { color: #c1121f; }
+  .recap.ok { background: #e8f5ee; border-left-color: #1c8c5a; }
+  .recap.ok strong { color: #14704a; }
+  .recap.gold { background: #fff8e1; border-left-color: #ffb300; }
+  .recap.gold strong { color: #9a7424; }
+  .pagebreak { page-break-before: always; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .kpi-row { display: flex; gap: 10px; margin: 14px 0; }
+  .kpi { flex: 1; background: #003da5; color: white; border-radius: 6px; padding: 12px 10px; text-align: center; }
+  .kpi .v { font-size: 16pt; font-weight: 700; display: block; line-height: 1.1; }
+  .kpi .l { font-size: 7.5pt; opacity: 0.9; margin-top: 4px; display: block; }
+  .kpi.gold { background: #e6a700; }
+  small.fonte { color: #6b7280; font-size: 7.5pt; }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <h1>Análise Estratégica — Satélite <span style="color:#ffd200;">Amil Empresarial</span></h1>
+  <div class="sub">Mercado de plano de saúde empresarial/PME · concorrentes &amp; tempo de mercado · gaps · raspagem do nosso site · comparação lado a lado com o site oficial · veredicto Go/No-Go</div>
+  <div class="meta">
+    <strong>Analista:</strong> Atlas (AIOS Decoder) + Squad AIOS — 8 agentes, 153 buscas web<br>
+    <strong>Cliente:</strong> BeneficioRH — Agnaldo Silva · Corretor autorizado SUSEP 201054484<br>
+    <strong>Projeto:</strong> <code>planoamilempresas.com.br</code> · Next.js 16 + React 19 + Sanity + Cloudflare/Vercel · Operadora-alvo: Amil (ANS 326305)<br>
+    <strong>Data:</strong> 30 de maio de 2026 · <strong>Solicitante:</strong> Agnaldo Silva
+  </div>
+</header>
+
+<div class="recap gold">
+  <strong>🎯 TL;DR brutalmente honesto:</strong> O satélite ataca o ponto <strong>mais quente</strong> do mercado no momento certo: o coletivo empresarial já é <strong>84% das vidas</strong> (53,18 mi total), o individual está em <strong>extinção</strong> (-5,5%/ano) empurrando todos para o CNPJ, e o <strong>boom de MEI</strong> (13,1 mi ativos, +3,8 mi em 2025) cria demanda transacional explosiva. A Amil está em momento <strong>ótimo</strong> (turnaround: lucro R$ 619 mi em 2024, +874 mil vidas em 2025 — a que mais cresceu no Brasil, líder no RJ e vice em SP). O abismo é digital: o site oficial <strong>não publica preço PME, não tem páginas por cidade, não indexa a rede credenciada, não tem simulador nem comparativos</strong> — deixando o maior volume transacional órfão. A janela é a cauda longa transacional+geo+rede (KD 30-45) e, sobretudo, a camada <strong>HOSPITAL×CIDADE</strong> ("o hospital X aceita Amil?") — oceano azul que nenhum dos 10+ satélites EMD concorrentes faz, e que só nós temos dataset para gerar (9.325 prestadores). <strong>Veredicto: GO CONDICIONAL.</strong>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi"><span class="v">84%</span><span class="l">das vidas são coletivas (ANS mar/26)</span></div>
+  <div class="kpi gold"><span class="v">13,1 mi</span><span class="l">MEIs ativos (+3,8 mi em 2025)</span></div>
+  <div class="kpi"><span class="v">8/10</span><span class="l">saturação SERP no head</span></div>
+  <div class="kpi gold"><span class="v">~11 mil</span><span class="l">URLs-alvo do nosso satélite</span></div>
+</div>
+
+<h2 class="bloco">🟢 Bloco 1 — Mercado empresarial/PME: o vetor mais quente do setor</h2>
+<table>
+  <thead><tr><th>Indicador</th><th class="center">Valor</th><th>Significado para o satélite</th></tr></thead>
+  <tbody>
+    <tr><td>Beneficiários (assistência médica, BR)</td><td class="center"><strong>53,18 milhões</strong></td><td>Dez/2025, recorde ANS; crescimento puxado ~100% pelo coletivo</td></tr>
+    <tr style="background:#e8f5ee;"><td><strong>Participação dos planos COLETIVOS</strong></td><td class="center"><strong>84%</strong></td><td>Mar/2026; era 71,9% (só empresarial) em dez/2024 — domínio absoluto</td></tr>
+    <tr><td>Participação do INDIVIDUAL</td><td class="center">16,4% (8,6 mi)</td><td>Em queda -5,5%/ano; operadoras quase não vendem mais novo</td></tr>
+    <tr style="background:#fff8e1;"><td><strong>MEIs ativos / novos em 2025</strong></td><td class="center"><strong>13,1 mi / +3,8 mi</strong></td><td>Recorde (+22,1%); demanda "plano MEI/PJ/2 vidas" explode</td></tr>
+    <tr><td>Contratos coletivos de até 5 vidas</td><td class="center">15,3%</td><td>Era 4,7% em 2014 — micro/PME é o segmento que mais cresce</td></tr>
+    <tr><td>Economia PJ vs PF (cobertura equivalente)</td><td class="center">~30% (até 30-50%)</td><td>MEI ~40% mais barato; argumento de conversão central</td></tr>
+    <tr><td>Ticket médio empresarial / entrada Amil MEI</td><td class="center">R$ 180-600 · R$ 127</td><td>Micro 2-10 vidas R$ 150-350/pessoa</td></tr>
+    <tr><td>Mínimo de vidas (PME/MEI)</td><td class="center">2 vidas</td><td>Qualquer CNPJ ativo (MEI/ME/EPP/LTDA), 6+ meses</td></tr>
+    <tr><td>Churn do setor (12 meses)</td><td class="center">27,9%</td><td>Rotatividade alta = busca constante por cotação/portabilidade (leads quentes)</td></tr>
+  </tbody>
+</table>
+<div class="recap ok">
+  <strong>🎯 A tese em uma frase:</strong> o individual morre, todo mundo é empurrado para o CNPJ, e o MEI explode — exatamente o tráfego que <code>planoamilempresas.com.br</code> existe para capturar. Vento estrutural + conjuntural ao mesmo tempo.
+</div>
+
+<h2 class="bloco">⚖️ Bloco 2 — Regulatório: pool de risco, reajuste e o "calcanhar" da Amil</h2>
+<table>
+  <thead><tr><th>Tema</th><th>O que diz</th><th>Uso editorial</th></tr></thead>
+  <tbody>
+    <tr><td>Reajuste coletivo (sem teto ANS)</td><td>Calculado por sinistralidade. Médio 11,15% (2025) · ~9,9% (2026). Individual tem teto: 5,11% (2026)</td><td>Conteúdo "reduzir reajuste / cotação anual"</td></tr>
+    <tr style="background:#e8f5ee;"><td><strong>Pool de risco — RN 309/2012 (&lt;30 vidas)</strong></td><td>Obriga reajuste ÚNICO para todos os contratos &lt;30 vidas; protege a micro de reajuste explosivo por sinistro isolado</td><td>Argumento de segurança PME <strong>quase não explorado em SEO</strong></td></tr>
+    <tr><td>Reajuste &lt;30 vidas vs 30+ vidas (2026)</td><td>13,48% vs 8,71% — pequenas pagam ~5 p.p. a mais</td><td>Gancho "vale a pena migrar/portar"</td></tr>
+    <tr style="background:#fde8e8;"><td><strong>Reajuste coletivo da AMIL 2025</strong></td><td><strong style="color:#c1121f;">15,75% — o MAIOR entre as 10 maiores operadoras</strong> (Porto 15,08% · Bradesco 12,62% · SulAmérica 12,45%)</td><td>⚠️ Objeção real — tratar com honestidade (portabilidade/pool), não esconder</td></tr>
+    <tr><td>Carência empresarial</td><td>30+ vidas geralmente isenta; Amil reduz a partir de 10 vidas vindas de congênere</td><td>Urgência/benefício para CTAs</td></tr>
+    <tr><td>Portabilidade RN 438/2018</td><td>Troca sem nova carência (requisitos) — capta insatisfeito de concorrente</td><td>Cluster anti-reajuste de alta conversão</td></tr>
+  </tbody>
+</table>
+<div class="recap alerta">
+  <strong>⚠️ O ponto cego da Amil:</strong> aplicou o <strong>maior reajuste coletivo de 2025 (15,75%)</strong>. O usuário pesquisa isso antes de fechar. O conteúdo deve <strong>antecipar a objeção</strong> (portabilidade, pool de risco RN 309, cotação anual) e transformá-la em serviço — nunca prometer reajuste baixo.
+</div>
+
+<div class="pagebreak"></div>
+
+<h2 class="bloco">🔵 Bloco 3 — Amil 2026: operadora em turnaround (momento favorável)</h2>
+<table>
+  <thead><tr><th>Indicador</th><th class="center">Valor</th><th>Significado</th></tr></thead>
+  <tbody>
+    <tr><td>Fundação / tempo de mercado</td><td class="center">1978 (~47 anos)</td><td>Edson Bueno, RJ; pioneira da verticalização no Brasil</td></tr>
+    <tr style="background:#fff8e1;"><td><strong>Mudança de controle</strong></td><td class="center">Dez/2023 · R$ 11 bi</td><td>UnitedHealth saiu do Brasil → <strong>José Seripieri Filho</strong> (fundador da Qualicorp). <em>Não "Fiord Capital"</em></td></tr>
+    <tr style="background:#e8f5ee;"><td><strong>Resultado 2024 (turnaround)</strong></td><td class="center"><strong style="color:#1c8c5a;">Lucro R$ 619,8 mi</strong></td><td>Reverteu prejuízo de R$ 4,1 bi (2023); receita R$ 31 bi (+21%); EBITDA +R$ 858 mi</td></tr>
+    <tr><td>Sinistralidade (MLR) 2024</td><td class="center">84,8%</td><td>Queda de 12 p.p. no 1º ano da nova gestão</td></tr>
+    <tr style="background:#e8f5ee;"><td><strong>Crescimento de vidas 2025</strong></td><td class="center"><strong>+874 mil (a que mais cresceu)</strong></td><td>~6,1 mi clientes (+17%); <strong>líder no RJ, vice-líder em SP</strong>, +13% vs mercado ~2%</td></tr>
+    <tr><td>IDSS / ANS (ano-base 2023)</td><td class="center">~0,78 (8,2/10)</td><td>Abaixo de Bradesco ~0,94 e SulAmérica ~0,92; média setor 0,7805</td></tr>
+    <tr><td>Reclame Aqui</td><td class="center">7,7/10 (BOA)</td><td>7.722 reclamações, 76,9% resolvidas — acima da Hapvida</td></tr>
+    <tr><td>Rede</td><td class="center">+1.700 hospitais</td><td>+28 mil consultórios, +6 mil labs; ~14 hospitais próprios (metropolitana SP) + Américas (RJ)</td></tr>
+    <tr><td>Linha empresarial</td><td class="center">comercial 200/400/700 · dataset 30-160/S380-S750/ONE</td><td>⚠️ nomenclatura comercial (corretora) ≠ dataset oficial — usar SKU real no site (anti-thin); PME Porte I (2-29) e II (30-99)</td></tr>
+  </tbody>
+</table>
+<div class="recap ok">
+  <strong>✅ Diferença vs análises anteriores:</strong> a Amil <em>era</em> um risco (saída da UnitedHealth, judicialização de individuais em 2023). Hoje está <strong>financeiramente sã e em expansão</strong>, focada exatamente em coletivo empresarial em SP/RJ/DF. Apostar no satélite Amil empresarial 12-24 meses é decisão muito mais segura agora.
+</div>
+
+<h2 class="bloco">🧱 Bloco 4 — Raspagem do nosso site /planoamilempresas (estado atual)</h2>
+<p>Inventário extraído do código (<code>C:\Users\benef\planoamilempresas</code>). É o <strong>mais ambicioso satélite do portfólio</strong>:</p>
+<table>
+  <thead><tr><th>Dimensão</th><th class="center">Escopo</th><th>Detalhe</th></tr></thead>
+  <tbody>
+    <tr style="background:#e8f5ee;"><td><strong>Rede credenciada indexável</strong></td><td class="center"><strong>~10.500 URLs</strong></td><td><strong>9.325 prestadores × 49 redes em 26 UFs</strong> (dataset Power BI canônico, 2026-04-26) → matriz <code>rede/[uf]/[municipio]/[prestador]</code></td></tr>
+    <tr><td>Sub-redes canonizadas (eixo produto)</td><td class="center">5</td><td>hospitais-dor · amil-one · amil-facil · classica · amil-medial — já modeladas em código com posicionamento próprio (ADR-006)</td></tr>
+    <tr><td>Matriz programática</td><td class="center">~600 URLs</td><td>CNAE/segmento × cidade × porte · <code>empresarial/[segmento]</code>, <code>plano-amil-[estado]/[cidade]</code></td></tr>
+    <tr><td>Comparativos</td><td class="center">12</td><td>vs Bradesco, SulAmérica, Hapvida, Unimed, Porto, NotreDame, Omint, Care Plus + internos (400 vs 700, One)</td></tr>
+    <tr><td>Planos Amil</td><td class="center">200/400/500/700/S750/One</td><td><code>planos/[slug]</code> + <code>tabela-de-precos/[slug]</code></td></tr>
+    <tr><td>Rede por especialidade/sub-rede</td><td class="center">✓</td><td><code>rede-credenciada/[especialidade]</code> e <code>[subRede]</code></td></tr>
+    <tr><td>Blog + Autores (E-E-A-T)</td><td class="center">✓</td><td><code>blog/[slug]</code> + <code>categoria</code> + <code>autores/[slug]</code> + feed RSS</td></tr>
+    <tr><td>Ferramentas de conversão</td><td class="center">✓</td><td><code>cotacao-online</code>, <code>comparar</code>, <code>portal-empresa/[slug]</code></td></tr>
+    <tr><td>Conteúdo de apoio</td><td class="center">✓</td><td>carências, FAQs, glossário, amil-dental, amil-espaço-saúde, perguntas-frequentes</td></tr>
+  </tbody>
+</table>
+<p><small class="fonte">Stack: Next 16 · React 19 · Tailwind 4 · Radix · Sanity v3 · Upstash Redis · Cloudflare/Vercel · GA4 + Clarity + Sentry · Vitest/Playwright/axe · CRM Clint. Compliance: LGPD + ANS RN 195/2009 + 593/2024 + SUSEP. Titular: BeneficioRH (SUSEP 201054484).</small></p>
+<div class="recap ok">
+  <strong>✅ Diagnóstico:</strong> o site já tem o <strong>ativo decisivo</strong> (dataset de rede de 9.325 prestadores) que vira moat impossível de replicar rápido, além de E-E-A-T (autores), ferramentas (cotação/comparar) e compliance. A base é a mais forte dos satélites. O trabalho é <strong>executar o Epic 7 (rede indexável) e o simulador</strong>, não reinventar.
+</div>
+
+<div class="pagebreak"></div>
+
+<h2 class="bloco">⚔️ Bloco 5 — Comparação LADO A LADO: nós × oficial × concorrentes</h2>
+<table>
+  <thead><tr>
+    <th>Critério</th>
+    <th class="center">planoamilempresas<br>(nosso satélite)</th>
+    <th class="center">amil.com.br/empresas<br>(oficial)</th>
+    <th class="center">Satélites EMD<br>(planodesaudeamil…)</th>
+    <th class="center">Agregadores<br>(quero/joov)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td>Tabela de preço PME por cidade/idade/porte</td><td class="center"><span class="badge badge-verde">planejado</span></td><td class="center"><span class="badge badge-vermelho">não publica</span></td><td class="center"><span class="badge badge-amarelo">raso</span></td><td class="center"><span class="badge badge-verde">forte</span></td></tr>
+    <tr><td>Rede credenciada INDEXÁVEL por cidade/hospital</td><td class="center"><span class="badge badge-verde">~10.500 pgs</span></td><td class="center"><span class="badge badge-vermelho">busca JS</span></td><td class="center"><span class="badge badge-vermelho">não</span></td><td class="center"><span class="badge badge-vermelho">não</span></td></tr>
+    <tr><td>Simulador/calculadora de cotação</td><td class="center"><span class="badge badge-verde">cotacao-online</span></td><td class="center"><span class="badge badge-vermelho">só formulário</span></td><td class="center"><span class="badge badge-vermelho">não</span></td><td class="center"><span class="badge badge-amarelo">genérico</span></td></tr>
+    <tr><td>Comparativos (interno e vs concorrente)</td><td class="center"><span class="badge badge-verde">12</span></td><td class="center"><span class="badge badge-vermelho">zero</span></td><td class="center"><span class="badge badge-vermelho">zero</span></td><td class="center"><span class="badge badge-amarelo">lista</span></td></tr>
+    <tr><td>Páginas por profissão/CNAE × cidade × porte</td><td class="center"><span class="badge badge-verde">~600</span></td><td class="center"><span class="badge badge-vermelho">genérico</span></td><td class="center"><span class="badge badge-vermelho">não</span></td><td class="center"><span class="badge badge-amarelo">genérico</span></td></tr>
+    <tr><td>Autor humano / E-E-A-T (corretora SUSEP)</td><td class="center"><span class="badge badge-verde">autores + SUSEP</span></td><td class="center"><span class="badge badge-amarelo">institucional</span></td><td class="center"><span class="badge badge-vermelho">anônimo</span></td><td class="center"><span class="badge badge-vermelho">anônimo</span></td></tr>
+    <tr><td>Autoridade de domínio / marca</td><td class="center"><span class="badge badge-vermelho">novo</span></td><td class="center"><span class="badge badge-verde">alta</span></td><td class="center"><span class="badge badge-amarelo">média</span></td><td class="center"><span class="badge badge-verde">alta</span></td></tr>
+    <tr><td>Conteúdo de objeção (reajuste/pool/portabilidade)</td><td class="center"><span class="badge badge-verde">planejado</span></td><td class="center"><span class="badge badge-vermelho">não</span></td><td class="center"><span class="badge badge-vermelho">não</span></td><td class="center"><span class="badge badge-amarelo">genérico</span></td></tr>
+  </tbody>
+</table>
+<div class="recap">
+  <strong>Leitura:</strong> vencemos em <strong>profundidade de rede, ferramentas, comparativos e E-E-A-T</strong>; perdemos em <strong>autoridade de domínio</strong> (somos novos). O site oficial é forte em marca mas <strong>digitalmente cego</strong> no transacional. Os satélites EMD têm head-start de indexação mas são rasos — nosso dataset de rede (10.500 pgs) + ferramentas os supera.
+</div>
+
+<h2 class="bloco">🗺️ Bloco 6 — Mapa de concorrentes &amp; tempo de mercado</h2>
+<table>
+  <thead><tr><th>Operadora</th><th class="center">Fundação</th><th class="center">Vidas</th><th>Posição no B2B</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Hapvida / NotreDame (GNDI)</strong></td><td class="center">1979/1968</td><td class="center">~9-16 mi</td><td>Líder por vidas; verticalizado, preço PME imbatível; qualidade percebida menor</td></tr>
+    <tr><td>Unimed (sistema)</td><td class="center">1967 (~58a)</td><td class="center">~18 mi</td><td>Maior cobertura (84% do território); fragmentado por singular</td></tr>
+    <tr><td>Bradesco Saúde</td><td class="center">1984 (~42a)</td><td class="center">~3,5-4 mi</td><td>Líder segurador B2B (~96% coletivo); premium, não verticalizado; só PJ</td></tr>
+    <tr><td>SulAmérica</td><td class="center">1895 (130a)</td><td class="center">~2,5-3 mi</td><td>Premium tradicional; sinergia Rede D'Or pós-2022; linha Prestige</td></tr>
+    <tr><td>Porto Seguro Saúde</td><td class="center">1945 (grupo)</td><td class="center">~500-600 mil</td><td>Forte em PME SP; cross-sell ecossistema Porto; cobertura limitada</td></tr>
+    <tr><td>Omint</td><td class="center">1980 (~45a)</td><td class="center">~100-130 mil</td><td>Boutique premium executivo (Einstein/Sírio); nicho</td></tr>
+    <tr><td>Care Plus (Bupa)</td><td class="center">1992 (~33a)</td><td class="center">~150-200 mil</td><td>Premium corporativo/multinacionais; cobertura internacional</td></tr>
+    <tr style="background:#eef4fd;"><td><strong>Amil</strong> (nossa operadora-alvo)</td><td class="center"><strong>1978 (~47a)</strong></td><td class="center">~6,1 mi</td><td>Verticalizada; <strong>a que mais cresceu em 2025</strong>; líder RJ, vice SP; turnaround</td></tr>
+  </tbody>
+</table>
+<div class="recap gold">
+  <strong>💡 Insight de posicionamento:</strong> a Amil é a <strong>única grande verticalizada em forte expansão</strong> com foco declarado em coletivo empresarial em SP/RJ/DF — exatamente as praças onde a rede própria e o crescimento se concentram. É o terreno do nosso satélite geo.
+</div>
+
+<div class="pagebreak"></div>
+
+<h2 class="bloco">🟣 Bloco 7 — SERP: 8/10 no head, 4-5/10 na cauda longa-alvo</h2>
+<table>
+  <thead><tr><th>Keyword</th><th class="center">Volume/mês</th><th class="center">Dificuldade</th><th class="center">Estratégia</th></tr></thead>
+  <tbody>
+    <tr><td>plano de saúde empresarial</td><td class="center">40.500-49.500</td><td class="center"><span class="badge badge-vermelho">KD 55-65</span></td><td class="center">evitar head</td></tr>
+    <tr><td>plano de saúde CNPJ</td><td class="center">14.800-22.200</td><td class="center"><span class="badge badge-vermelho">KD 50-60</span></td><td class="center">evitar head</td></tr>
+    <tr><td>plano de saúde para empresa</td><td class="center">12.100-18.100</td><td class="center"><span class="badge badge-vermelho">KD 50-60</span></td><td class="center">evitar head</td></tr>
+    <tr><td>plano de saúde PME</td><td class="center">8.100-12.100</td><td class="center"><span class="badge badge-amarelo">KD 45-55</span></td><td class="center">meio de funil</td></tr>
+    <tr style="background:#e8f5ee;"><td><strong>Amil empresarial</strong></td><td class="center">6.600-9.900</td><td class="center"><span class="badge badge-amarelo">KD 40-50</span></td><td class="center">marca — disputável</td></tr>
+    <tr style="background:#e8f5ee;"><td>plano de saúde MEI</td><td class="center">5.400-8.100</td><td class="center"><span class="badge badge-verde">KD 40-50</span></td><td class="center"><strong>JANELA (boom MEI)</strong></td></tr>
+    <tr style="background:#e8f5ee;"><td><strong>Amil empresarial preço / tabela 2026</strong></td><td class="center">2.400-4.400</td><td class="center"><span class="badge badge-verde">KD 30-45</span></td><td class="center"><strong>JANELA — oficial ausente</strong></td></tr>
+    <tr style="background:#e8f5ee;"><td>Amil PME</td><td class="center">1.900-3.600</td><td class="center"><span class="badge badge-verde">KD 35-45</span></td><td class="center"><strong>JANELA</strong></td></tr>
+    <tr style="background:#e8f5ee;"><td>Amil PME / rede Amil [cidade]</td><td class="center">long-tail</td><td class="center"><span class="badge badge-verde">KD 25-40</span></td><td class="center"><strong>JANELA geo — espaço quase vazio</strong></td></tr>
+  </tbody>
+</table>
+<p><small class="fonte">Linhas verdes = janelas reais. Quem domina o top 10: agregadores (queroplanodesaude, joov, iquota, Qualicorp) no head; <strong>amil.com.br #1 só na própria marca</strong>; satélites EMD exact-match (planodesaudeamil.net.br, amilplanodesaude.net) dominam "tabela/preço Amil"; o oficial NÃO ranqueia para preço/tabela/rede.</p>
+
+<h2 class="bloco">🕳️ Bloco 8 — Os 3 gaps mais lucrativos</h2>
+<div class="recap gold">
+  <strong>Gap nº1 — HOSPITAL×PRODUTO×CIDADE (oceano azul absoluto).</strong> Os 10+ satélites EMD fazem páginas por produto e por cidade, mas <strong>quase nenhum por hospital individual</strong> ("Hospital São Camilo aceita Amil?", "rede Amil One em [cidade]"). O oficial usa busca JS não-rankeável. Com o dataset de <strong>9.325 prestadores (cada um com seu array de redes) já extraído</strong>, essa camada é gerável automaticamente — intenção transacional-de-decisão, concorrência editorial quase nula. É o moat que diferencia de todo EMD thin.
+</div>
+<div class="recap gold">
+  <strong>Gap nº2 — Tabela de preço + simulador Amil empresarial.</strong> O maior volume transacional ("amil empresarial preço", "tabela amil pme 2026", "amil 400 valor") é órfão — o oficial manda ao corretor. Tabela por produto + <strong>calculadora de cotação</strong> (vidas + faixas + cidade → estimativa + economia PJ vs PF) é o gap de conversão central.
+</div>
+<div class="recap gold">
+  <strong>Gap nº3 — Matriz profissão/CNAE × cidade × porte + objeção.</strong> Páginas por segmento de empresa, cidade e porte (2-29/30-99/100+ vidas) + comparativos (400 vs 700 vs One; Amil vs Bradesco/SulAmérica/Hapvida) + conteúdo de objeção (reduzir reajuste, portabilidade, pool de risco RN 309) — fundo e meio de funil ignorados pelo oficial.
+</div>
+
+<div class="pagebreak"></div>
+
+<h2 class="bloco">🟡 Bloco 9 — Por que a estrutura programmatic própria vence</h2>
+<table>
+  <thead><tr><th>Vantagem</th><th>Evidência / número</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Data moat irreplicável</strong></td><td>Dataset de rede Amil (9.325 prestadores, 26 UFs) → ~10.500 páginas que nenhum EMD/agregador tem; cobertura long-tail impossível de igualar manual</td></tr>
+    <tr><td><strong>E-E-A-T de corretora autorizada</strong></td><td>SUSEP 201054484 + CNPJ + autoria real + disclaimers = Trust superior em nicho YMYL; 88% das queries de saúde têm AI Overview</td></tr>
+    <tr><td><strong>Lead próprio exclusivo</strong></td><td>vs lead de marketplace revendido a vários corretores; CAC decrescente (conteúdo é ativo), dado primário alimenta CRM (Clint)</td></tr>
+    <tr><td><strong>Especialização = conversão</strong></td><td>Foco 100% Amil empresarial dá coerência e relevância vs agregador generalista; funil marca + transacional</td></tr>
+    <tr><td><strong>Controle e velocidade</strong></td><td>100% do conteúdo, schema, Core Web Vitals, A/B — responde a tendências (boom MEI, reajuste) em dias, não trimestres</td></tr>
+    <tr><td><strong>Programmatic scale</strong></td><td>Matriz plano×cidade×porte×profissão + rede×cidade (modelo Zapier/NerdWallet) — long-tail que oficial e agregador não alcançam</td></tr>
+  </tbody>
+</table>
+
+<h2 class="bloco">📉 Bloco 10 — Reputação comparada (Reclame Aqui)</h2>
+<table>
+  <thead><tr><th>Operadora</th><th class="center">Nota RA</th><th>Leitura</th></tr></thead>
+  <tbody>
+    <tr style="background:#e8f5ee;"><td>Bradesco Saúde</td><td class="center"><span class="badge badge-verde">~8,1</span></td><td>Topo do pelotão</td></tr>
+    <tr><td>SulAmérica</td><td class="center"><span class="badge badge-verde">~8,0</span></td><td>Boa</td></tr>
+    <tr><td>Porto Seguro Saúde</td><td class="center"><span class="badge badge-verde">~8,0</span></td><td>Boa reputação de atendimento</td></tr>
+    <tr style="background:#eef4fd;"><td><strong>Amil</strong></td><td class="center"><strong><span class="badge badge-azul">7,7</span></strong></td><td><strong>BOA</strong> · 7.722 reclamações · 76,9% resolvidas · 72,2% voltariam</td></tr>
+    <tr><td>Hapvida / NotreDame</td><td class="center"><span class="badge badge-amarelo">~7,0-7,5</span></td><td>Volume altíssimo de reclamações</td></tr>
+  </tbody>
+</table>
+<div class="recap ok">
+  <strong>✅ Boa notícia vs MedSênior:</strong> diferente do nicho sênior (onde a operadora tinha RA 5,78), a <strong>Amil tem reputação BOA (7,7) e acima da Hapvida</strong>. Isso permite comunicação de qualidade — a única objeção real a gerenciar é o <strong>reajuste</strong> (Bloco 2).
+</div>
+
+<div class="pagebreak"></div>
+
+<h2 class="anexo">🏁 Veredicto &amp; Plano de Ação</h2>
+<div class="recap ok">
+  <strong>✅ VEREDICTO: GO CONDICIONAL.</strong> Mercado (coletivo 84%, boom MEI, individual em extinção), operadora (Amil em turnaround, líder de crescimento, forte em SP/RJ/DF) e gap digital (oficial sem preço/geo/rede/simulador) convergem para uma janela rara. O projeto já está ~80% pronto (Caminho C) com o ativo decisivo (dataset de 9.325 prestadores) e 5 sub-redes modeladas. <strong>2 condições inegociáveis</strong> para virar GO pleno ↓
+</div>
+<table>
+  <thead><tr><th class="center">#</th><th>Condição inegociável</th></tr></thead>
+  <tbody>
+    <tr><td class="center">1</td><td><strong>Blindagem de marca + desbloquear Story 7.7 (ADR-006 "URL-as-Trademark")</strong>: disclaimer "não somos a Amil", sem logo, titular BeneficioRH/SUSEP, e-mail próprio, slug nunca "amil" sozinho, marca defensiva INPI — antes de escalar tráfego</td></tr>
+    <tr><td class="center">2</td><td><strong>Atacar SÓ meio/fundo de funil + geo + HOSPITAL×CIDADE via data moat</strong> — nunca competir no head (KD 55-65) dominado por agregadores; a ideia e o domínio já não são diferencial, só o dataset é</td></tr>
+  </tbody>
+</table>
+<p><small class="fonte">Diretriz de conteúdo permanente: tratar a objeção de reajuste com honestidade (Amil teve o maior coletivo de 2025: 15,75%) — portabilidade/pool RN 309/cotação anual, nunca prometer reajuste baixo.</small></p>
+<table style="display:none"><tbody>
+  </tbody>
+</table>
+
+<h3 class="sub">Roadmap priorizado P0 → P2</h3>
+<table>
+  <thead><tr><th class="center">Prio</th><th>Ação</th><th>Impacto</th></tr></thead>
+  <tbody>
+    <tr><td class="center"><span class="badge badge-vermelho">P0</span></td><td>Lançar cluster de <strong>rede credenciada indexável (Epic 7)</strong>: 9.325 prestadores → páginas SSG/ISR. Priorizar SP capital/ABC, RJ, BH, Brasília. Schema MedicalBusiness/Hospital</td><td>Maior moat + tráfego B2B de altíssima intenção que o oficial perde (~10.500 pgs)</td></tr>
+    <tr><td class="center"><span class="badge badge-vermelho">P0</span></td><td><strong>Simulador/calculadora de cotação PJ</strong> (vidas + faixas + cidade + porte → estimativa + economia vs PF) com captura para o CRM Clint + tabela de preços por produto c/ disclaimers ANS</td><td>Preenche o gap de conversão central; lead qualificado exclusivo</td></tr>
+    <tr><td class="center"><span class="badge badge-vermelho">P0</span></td><td><strong>Blindagem jurídica de marca</strong>: disclaimer corretora, sem logo oficial, titular BeneficioRH/SUSEP, e-mail próprio, termos, marca nominativa defensiva INPI</td><td>Mitiga o maior risco (SACI-Adm/uso indevido); compliance vira Trust</td></tr>
+    <tr><td class="center"><span class="badge badge-amarelo">P1</span></td><td>Cluster de <strong>comparativos</strong> de fundo de funil (400 vs 700 vs One; Amil vs Bradesco/SulAmérica/Hapvida) factual e fonte-referenciado</td><td>Captura intent comparativo ignorado pelo oficial; autoridade tópica</td></tr>
+    <tr><td class="center"><span class="badge badge-amarelo">P1</span></td><td>Matriz <strong>profissão/CNAE × cidade × porte</strong> (~600 URLs) com conteúdo único por cruzamento</td><td>Domina long-tail transacional+geo de KD baixo</td></tr>
+    <tr><td class="center"><span class="badge badge-amarelo">P1</span></td><td>Cluster de <strong>objeção/retenção</strong>: reduzir reajuste, portabilidade Amil, pool de risco RN 309, reajuste Amil 2026</td><td>Captura insatisfeitos (churn 27,9%) e converte via cotação/portabilidade</td></tr>
+    <tr><td class="center"><span class="badge badge-cinza">P2</span></td><td>Otimizar para <strong>AI Overviews</strong>: schema completo, respostas 40-60 palavras, autoria SUSEP</td><td>Citação na IA (88% das queries de saúde têm AIO; 60-69% zero-click)</td></tr>
+    <tr><td class="center"><span class="badge badge-cinza">P2</span></td><td>Conteúdo de timing: "boom MEI", "plano PJ 2 vidas", calculadora economia PJ vs PF; atualizar reajustes em maio</td><td>Surfa a tendência estrutural (MEI + extinção do individual)</td></tr>
+    <tr><td class="center"><span class="badge badge-cinza">P2</span></td><td>Preparar arquitetura <strong>multi-operadora</strong> (caminho C)</td><td>Diversifica risco de dependência da Amil; reaproveita o motor programático</td></tr>
+  </tbody>
+</table>
+
+<h3 class="sub">Riscos a monitorar</h3>
+<table>
+  <thead><tr><th>Risco</th><th class="center">Nível</th><th>Mitigação</th></tr></thead>
+  <tbody>
+    <tr><td>Marca de terceiro "Amil" no domínio</td><td class="center"><span class="badge badge-vermelho">Alto</span></td><td>Disclaimers, sem logo, titular corretora, marca defensiva INPI</td></tr>
+    <tr><td>SERP saturada no head (KD 55-65)</td><td class="center"><span class="badge badge-amarelo">Méd-alto</span></td><td>Foco disciplinado em long-tail+geo+rede</td></tr>
+    <tr><td>Objeção de reajuste Amil (15,75% em 2025)</td><td class="center"><span class="badge badge-amarelo">Médio</span></td><td>Conteúdo honesto de portabilidade/pool/cotação</td></tr>
+    <tr><td>Dependência de operadora única</td><td class="center"><span class="badge badge-amarelo">Médio</span></td><td>Arquitetura multi-operadora futura (caminho C)</td></tr>
+    <tr><td>Compliance ANS de publicidade (RN 195/2009)</td><td class="center"><span class="badge badge-amarelo">Médio</span></td><td>Registro ANS do produto, "sujeito a condições", fonte-referência</td></tr>
+    <tr><td>Manutenção do dataset de rede (YMYL)</td><td class="center"><span class="badge badge-cinza">Méd-baixo</span></td><td>Pipeline de atualização periódica + revalidação ISR</td></tr>
+  </tbody>
+</table>
+
+<h2 class="anexo">📎 Anexos &amp; Fontes</h2>
+<p><strong>Arquivos gerados</strong> (em <code>C:\Users\benef\analises-seo\</code>):</p>
+<ul>
+  <li><code>relatorio-amil-empresarial.pdf</code> / <code>.html</code> — este relatório</li>
+  <li><code>amil-analise-completa-2026-05-30.md</code> — markdown-fonte</li>
+  <li><code>amil-concorrentes.csv</code> — 8 operadoras × tempo de mercado / vidas / posição B2B</li>
+  <li><code>amil-serp-keywords.csv</code> — volume × intent × dificuldade</li>
+  <li><code>amil-comparacao-lado-a-lado.csv</code> — nós × oficial × EMD × agregadores</li>
+  <li><code>amil-reclame-aqui.csv</code> — reputação comparada</li>
+</ul>
+<p><strong>Fontes-chave:</strong> ANS (53,18 mi beneficiários dez/2025; coletivo 84%; reajustes coletivos; RN 309/2012; RN 195/2009; RN 438/2018), Sebrae/Receita (13,1 mi MEIs; +3,8 mi em 2025), InfoMoney/CNN/Exame (venda Amil R$ 11 bi a José Seripieri Filho; turnaround lucro R$ 619,8 mi 2024), Reclame Aqui (Amil 7,7; Bradesco ~8,1; SulAmérica ~8,0; Hapvida ~7,0-7,5), CQCS (reajuste Amil 15,75% maior top 10), BrightEdge/SE Ranking (AI Overview 88% saúde), memórias do projeto (dataset rede 9.325 prestadores). Lista completa de 153 buscas no markdown-fonte.</p>
+
+<footer class="fim">
+  Atlas (AIOS Decoder) + Squad AIOS · BeneficioRH (SUSEP 201054484) · 30 de maio de 2026<br>
+  "A Amil voltou a crescer e o site oficial é cego no transacional — capture a cauda longa com dataset de rede e rosto de corretora."
+</footer>
+
+</body>
+</html>
