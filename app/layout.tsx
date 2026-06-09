@@ -16,7 +16,7 @@
  */
 
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
 import Script from 'next/script';
 import { buildOpenGraphMetadata } from '@/components/seo/OpenGraph';
 import {
@@ -31,6 +31,14 @@ const inter = Inter({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+// Poppins — sans geométrica para títulos (aproxima a "Amil Typeface").
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  display: 'swap',
+  variable: '--font-poppins',
 });
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -55,7 +63,7 @@ const defaultOg = buildOpenGraphMetadata({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0F172A', // slate-900 (Opção A)
+  themeColor: '#461bff', // roxo-azul Amil
 };
 
 export const metadata: Metadata = {
@@ -90,7 +98,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={inter.variable}>
+    <html lang="pt-BR" className={`${inter.variable} ${poppins.variable}`}>
       <body className="font-sans antialiased">
         {children}
 
