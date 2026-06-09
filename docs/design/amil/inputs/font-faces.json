@@ -1,0 +1,104 @@
+[
+  {
+    "family": "Amil Typeface Regular",
+    "weight": "normal",
+    "style": null,
+    "display": null,
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "/themes/custom/amil_bootstrap/assets/fonts/AmilTypeface-Regular_WebOnly.woff2"
+    ],
+    "src_formats": [],
+    "source_css_url": "https://www.amil.com.br/sites/institucional/files/css/css_le5O-0_ArS6UJkMBAZcbVrV3kNnfoOAbYYsaF7lkJXQ.css?delta=1&language=pt-br&theme=amil_bootstrap&include=eJyNkFtqxTAMRDfkxEsycqz4CvQwkk2b3TdQaKHpx_3UnDMwCIS4VLMZ02HkzlaBt5gXk_ZUcU70gp_DAls5ie8zckdFB04_vVLBnSyfphM-MEzwP-jyTEmgYzl5UXtCwYgbR-kO1xOrNUyHOebDZJiiztj_WtsmqOtNrRzGSzTe1QVIk2AjyN_P2Q8Yk0zTAId79XhFbr4G8P6b7EvHqkzxwpbiiomSKwR-ASW4nXQ",
+    "raw": "@font-face{font-family:\"Amil Typeface Regular\";src:url(/themes/custom/amil_bootstrap/assets/fonts/AmilTypeface-Regular_WebOnly.woff2);font-weight:normal;}"
+  },
+  {
+    "family": "Amil Typeface Bold",
+    "weight": "bold",
+    "style": null,
+    "display": null,
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "/themes/custom/amil_bootstrap/assets/fonts/AmilTypeface-Bold_WebOnly.woff2"
+    ],
+    "src_formats": [],
+    "source_css_url": "https://www.amil.com.br/sites/institucional/files/css/css_le5O-0_ArS6UJkMBAZcbVrV3kNnfoOAbYYsaF7lkJXQ.css?delta=1&language=pt-br&theme=amil_bootstrap&include=eJyNkFtqxTAMRDfkxEsycqz4CvQwkk2b3TdQaKHpx_3UnDMwCIS4VLMZ02HkzlaBt5gXk_ZUcU70gp_DAls5ie8zckdFB04_vVLBnSyfphM-MEzwP-jyTEmgYzl5UXtCwYgbR-kO1xOrNUyHOebDZJiiztj_WtsmqOtNrRzGSzTe1QVIk2AjyN_P2Q8Yk0zTAId79XhFbr4G8P6b7EvHqkzxwpbiiomSKwR-ASW4nXQ",
+    "raw": "@font-face{font-family:\"Amil Typeface Bold\";src:url(/themes/custom/amil_bootstrap/assets/fonts/AmilTypeface-Bold_WebOnly.woff2);font-weight:bold;}"
+  },
+  {
+    "family": "Icomoon",
+    "weight": null,
+    "style": null,
+    "display": null,
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "/themes/custom/amil_bootstrap/assets/fonts/icomoon.woff"
+    ],
+    "src_formats": [],
+    "source_css_url": "https://www.amil.com.br/sites/institucional/files/css/css_le5O-0_ArS6UJkMBAZcbVrV3kNnfoOAbYYsaF7lkJXQ.css?delta=1&language=pt-br&theme=amil_bootstrap&include=eJyNkFtqxTAMRDfkxEsycqz4CvQwkk2b3TdQaKHpx_3UnDMwCIS4VLMZ02HkzlaBt5gXk_ZUcU70gp_DAls5ie8zckdFB04_vVLBnSyfphM-MEzwP-jyTEmgYzl5UXtCwYgbR-kO1xOrNUyHOebDZJiiztj_WtsmqOtNrRzGSzTe1QVIk2AjyN_P2Q8Yk0zTAId79XhFbr4G8P6b7EvHqkzxwpbiiomSKwR-ASW4nXQ",
+    "raw": "@font-face{font-family:\"Icomoon\";src:url(\"/themes/custom/amil_bootstrap/assets/fonts/icomoon.woff\");}"
+  },
+  {
+    "family": "BootstrapIcons",
+    "weight": "normal",
+    "style": "normal",
+    "display": null,
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "/themes/custom/amil_bootstrap/assets/fonts/bootstrap-icons.woff2",
+      "/themes/custom/amil_bootstrap/assets/fonts/bootstrap-icons.woff"
+    ],
+    "src_formats": [
+      "woff2",
+      "woff"
+    ],
+    "source_css_url": "https://www.amil.com.br/sites/institucional/files/css/css_le5O-0_ArS6UJkMBAZcbVrV3kNnfoOAbYYsaF7lkJXQ.css?delta=1&language=pt-br&theme=amil_bootstrap&include=eJyNkFtqxTAMRDfkxEsycqz4CvQwkk2b3TdQaKHpx_3UnDMwCIS4VLMZ02HkzlaBt5gXk_ZUcU70gp_DAls5ie8zckdFB04_vVLBnSyfphM-MEzwP-jyTEmgYzl5UXtCwYgbR-kO1xOrNUyHOebDZJiiztj_WtsmqOtNrRzGSzTe1QVIk2AjyN_P2Q8Yk0zTAId79XhFbr4G8P6b7EvHqkzxwpbiiomSKwR-ASW4nXQ",
+    "raw": "@font-face{font-family:\"BootstrapIcons\";src:url(\"/themes/custom/amil_bootstrap/assets/fonts/bootstrap-icons.woff2\") format(\"woff2\"),url(\"/themes/custom/amil_bootstrap/assets/fonts/bootstrap-icons.woff\") format(\"woff\");font-weight:normal;font-style:normal;}"
+  },
+  {
+    "family": "Font Awesome 5 Brands",
+    "weight": "400",
+    "style": "normal",
+    "display": "block",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "../webfonts/fa-brands-400.eot"
+    ],
+    "src_formats": [],
+    "source_css_url": "https://use.fontawesome.com/releases/v5.13.0/css/all.css",
+    "raw": "@font-face{font-family:\"Font Awesome 5 Brands\";font-style:normal;font-weight:400;font-display:block;src:url(../webfonts/fa-brands-400.eot);src:url(../webfonts/fa-brands-400.eot?#iefix) format(\"embedded-opentype\"),url(../webfonts/fa-brands-400.woff2) format(\"woff2\"),url(../webfonts/fa-brands-400.woff) format(\"woff\"),url(../webfonts/fa-brands-400.ttf) format(\"truetype\"),url(../webfonts/fa-brands-400.svg#fontawesome) format(\"svg\")}"
+  },
+  {
+    "family": "Font Awesome 5 Free",
+    "weight": "400",
+    "style": "normal",
+    "display": "block",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "../webfonts/fa-regular-400.eot"
+    ],
+    "src_formats": [],
+    "source_css_url": "https://use.fontawesome.com/releases/v5.13.0/css/all.css",
+    "raw": "@font-face{font-family:\"Font Awesome 5 Free\";font-style:normal;font-weight:400;font-display:block;src:url(../webfonts/fa-regular-400.eot);src:url(../webfonts/fa-regular-400.eot?#iefix) format(\"embedded-opentype\"),url(../webfonts/fa-regular-400.woff2) format(\"woff2\"),url(../webfonts/fa-regular-400.woff) format(\"woff\"),url(../webfonts/fa-regular-400.ttf) format(\"truetype\"),url(../webfonts/fa-regular-400.svg#fontawesome) format(\"svg\")}"
+  },
+  {
+    "family": "Font Awesome 5 Free",
+    "weight": "900",
+    "style": "normal",
+    "display": "block",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "../webfonts/fa-solid-900.eot"
+    ],
+    "src_formats": [],
+    "source_css_url": "https://use.fontawesome.com/releases/v5.13.0/css/all.css",
+    "raw": "@font-face{font-family:\"Font Awesome 5 Free\";font-style:normal;font-weight:900;font-display:block;src:url(../webfonts/fa-solid-900.eot);src:url(../webfonts/fa-solid-900.eot?#iefix) format(\"embedded-opentype\"),url(../webfonts/fa-solid-900.woff2) format(\"woff2\"),url(../webfonts/fa-solid-900.woff) format(\"woff\"),url(../webfonts/fa-solid-900.ttf) format(\"truetype\"),url(../webfonts/fa-solid-900.svg#fontawesome) format(\"svg\")}"
+  }
+]
