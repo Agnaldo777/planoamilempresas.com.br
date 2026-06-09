@@ -23,6 +23,7 @@ export default tseslint.config(
       'sanity/dist/**',
       'next-env.d.ts',
       'coverage/**',
+      'docs/**', // material de pesquisa/scripts standalone, não código de produção
     ],
   },
 
