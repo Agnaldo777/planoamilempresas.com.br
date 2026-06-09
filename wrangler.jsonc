@@ -50,7 +50,11 @@
       "name": "planoamilempresas",
       "vars": {
         "NEXT_PUBLIC_SITE_URL": "https://planoamilempresas.com.br"
-      }
+      },
+      "routes": [
+        { "pattern": "planoamilempresas.com.br", "custom_domain": true },
+        { "pattern": "www.planoamilempresas.com.br", "custom_domain": true }
+      ]
     },
     "preview": {
       "name": "planoamilempresas-preview",
