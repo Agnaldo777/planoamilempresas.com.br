@@ -26,7 +26,7 @@ import {
   REDES_AMIL_ATIVAS,
   isDatasetRedeAmil,
 } from '@/types/rede-credenciada-amil';
-import { validateRedeSlugsCoverage } from '@/lib/operadoras/amil/slugs';
+import { validateRedeSlugsCoverage, redeSlug } from '@/lib/operadoras/amil/slugs';
 import datasetRaw from '@/data/operadoras/amil/rede-credenciada.json';
 
 // ──────────────────────────────────────────────────────────────────────
@@ -501,6 +501,93 @@ export function getEstatisticasByUF(uf: string): EstatisticasUFAmil {
     porTipo,
     porRede,
   };
+}
+
+/**
+ * Estatísticas de uma rede em uma UF — Story 7.7 (Cluster E).
+ * `topCidades` ordenadas por nº de prestadores (desc).
+ */
+export interface EstatisticasRedeUF {
+  rede: RedeAmilNome;
+  uf: string;
+  totalPrestadores: number;
+  porTipo: Record<TipoAtendimentoInferido, number>;
+  topCidades: { municipio: string; cidadeSlug: string; total: number }[];
+}
+
+/**
+ * Prestadores de uma rede específica numa UF. Story 7.7 (Cluster E).
+ */
+export function getPrestadoresPorRedeUF(
+  rede: RedeAmilNome,
+  uf: string
+): readonly PrestadorAmil[] {
+  const ufUpper = uf.toUpperCase();
+  return getPrestadoresPorRede(rede).filter((p) => p.uf.toUpperCase() === ufUpper);
+}
+
+/**
+ * Estatísticas rede × UF (total, distribuição por tipo, top cidades).
+ * Story 7.7 AC5 / Task 3.1.
+ */
+export function getEstatisticasRedeUF(
+  rede: RedeAmilNome,
+  uf: string
+): EstatisticasRedeUF {
+  const prestadores = getPrestadoresPorRedeUF(rede, uf);
+
+  const porTipo = TIPOS_ATENDIMENTO_KEYS.reduce<Record<TipoAtendimentoInferido, number>>(
+    (acc, tipo) => {
+      acc[tipo] = prestadores.filter((p) => p.tipoInferido === tipo).length;
+      return acc;
+    },
+    {} as Record<TipoAtendimentoInferido, number>
+  );
+
+  const cidadesMap = new Map<string, { municipio: string; cidadeSlug: string; total: number }>();
+  for (const p of prestadores) {
+    const cidadeSlug = slugify(p.municipio);
+    const entry = cidadesMap.get(cidadeSlug);
+    if (entry) {
+      entry.total += 1;
+    } else {
+      cidadesMap.set(cidadeSlug, { municipio: p.municipio, cidadeSlug, total: 1 });
+    }
+  }
+  const topCidades = [...cidadesMap.values()].sort((a, b) => b.total - a.total);
+
+  return {
+    rede,
+    uf: uf.toUpperCase(),
+    totalPrestadores: prestadores.length,
+    porTipo,
+    topCidades,
+  };
+}
+
+/**
+ * Combinações rede × UF viáveis (≥ `min` prestadores) para
+ * `generateStaticParams()` da Story 7.7. Retorna slug canônico + UF lower.
+ */
+export function getRedeUfCombosViaveis(
+  min: number
+): { redeSlug: string; uf: string }[] {
+  const combos: { redeSlug: string; uf: string }[] = [];
+
+  for (const rede of REDES_AMIL_ATIVAS) {
+    const porUf = new Map<string, number>();
+    for (const p of getPrestadoresPorRede(rede)) {
+      const ufLower = p.uf.toLowerCase();
+      porUf.set(ufLower, (porUf.get(ufLower) ?? 0) + 1);
+    }
+    for (const [uf, total] of porUf) {
+      if (total >= min) {
+        combos.push({ redeSlug: redeSlug(rede), uf });
+      }
+    }
+  }
+
+  return combos;
 }
 
 /**

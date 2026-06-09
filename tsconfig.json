@@ -32,6 +32,15 @@
       "@/data/operadoras/*": [
         "./src/data/operadoras/*"
       ],
+      "@/content/*": [
+        "./src/content/*"
+      ],
+      "@/config/*": [
+        "./src/config/*"
+      ],
+      "@/lib/uf": [
+        "./src/lib/uf.ts"
+      ],
       "@/*": [
         "./*"
       ]

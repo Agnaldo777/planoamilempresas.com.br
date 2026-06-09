@@ -31,7 +31,10 @@ export default defineConfig({
     alias: {
       '@/types': path.resolve(__dirname, './src/types'),
       '@/lib/operadoras': path.resolve(__dirname, './src/lib/operadoras'),
+      '@/lib/uf': path.resolve(__dirname, './src/lib/uf.ts'),
       '@/data/operadoras': path.resolve(__dirname, './src/data/operadoras'),
+      '@/content': path.resolve(__dirname, './src/content'),
+      '@/config': path.resolve(__dirname, './src/config'),
       '@': path.resolve(__dirname, './'),
     },
   },
