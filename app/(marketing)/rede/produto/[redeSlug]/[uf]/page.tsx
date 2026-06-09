@@ -21,7 +21,9 @@ import {
 
 // Story 7.7 (Cluster E rede × UF) — ADR-006 Accepted (stakeholder, 2026-06-08).
 export const revalidate = 2592000; // 30 dias (ISR — ADR-005 v2)
-export const dynamicParams = false; // só as combinações pré-geradas; resto 404
+// dynamicParams=true: combos inválidos caem no notFound() interno (redeFromSlug
+// null / total < MIN). dynamicParams=false quebra o roteamento SSG no OpenNext/CF.
+export const dynamicParams = true;
 
 type Params = { redeSlug: string; uf: string };
 

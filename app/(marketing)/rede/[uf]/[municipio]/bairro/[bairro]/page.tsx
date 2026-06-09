@@ -18,7 +18,9 @@ import {
 
 // Story 7.6 — Páginas-bairro SSG filtradas (bipartite ≥3 indexável / 1-2 noindex).
 export const revalidate = 2592000; // 30 dias
-export const dynamicParams = false;
+// dynamicParams=true: bairro sem prestador cai no notFound() interno.
+// dynamicParams=false quebra o roteamento SSG no OpenNext/CF.
+export const dynamicParams = true;
 
 type Params = { uf: string; municipio: string; bairro: string };
 

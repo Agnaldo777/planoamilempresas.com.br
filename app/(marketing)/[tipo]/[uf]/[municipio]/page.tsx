@@ -22,7 +22,9 @@ import {
 
 // Story 7.8 — Páginas tipo × UF × município (namespace top-level, fora de /rede/).
 export const revalidate = 2592000; // 30 dias
-export const dynamicParams = false;
+// dynamicParams=true: tipo fora da allowlist / combo < MIN cai no notFound()
+// interno (resolve()). dynamicParams=false quebra o roteamento SSG no OpenNext/CF.
+export const dynamicParams = true;
 
 type Params = { tipo: string; uf: string; municipio: string };
 
