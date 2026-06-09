@@ -129,6 +129,7 @@ export default function CanaryPage() {
           <time dateTime={BUILD_TIME_ISO}>{BUILD_TIME_HUMAN}</time>
         </p>
         <p className="mt-2">
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- /api/healthz é route handler (JSON), não página navegável via <Link> */}
           <a
             href="/api/healthz"
             className="text-sky-400 underline-offset-2 hover:underline"

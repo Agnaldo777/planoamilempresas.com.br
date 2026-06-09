@@ -591,6 +591,77 @@ export function getRedeUfCombosViaveis(
 }
 
 /**
+ * Bairros de uma cidade com contagem e slug. `min` filtra o piso.
+ * Story 7.6 — `min=1` (todos, p/ generateStaticParams) ou `min=3` (viáveis/indexáveis).
+ */
+export function getBairrosPorCidade(
+  ufSlug: string,
+  cidadeSlug: string,
+  min: number
+): { bairro: string; slug: string; total: number }[] {
+  const prestadores = getPrestadoresPorMunicipio(ufSlug, cidadeSlug);
+  const counts = new Map<string, { bairro: string; slug: string; total: number }>();
+  for (const p of prestadores) {
+    if (p.bairro.length === 0) continue;
+    const slug = slugify(p.bairro);
+    const entry = counts.get(slug);
+    if (entry) entry.total += 1;
+    else counts.set(slug, { bairro: p.bairro, slug, total: 1 });
+  }
+  return [...counts.values()]
+    .filter((b) => b.total >= min)
+    .sort((a, b) => b.total - a.total);
+}
+
+/** Todos os bairros (≥1) de uma cidade. Story 7.6 generateStaticParams. */
+export function getTodosBairrosPorCidade(
+  ufSlug: string,
+  cidadeSlug: string
+): { bairro: string; slug: string; total: number }[] {
+  return getBairrosPorCidade(ufSlug, cidadeSlug, 1);
+}
+
+/** Bairros viáveis (≥3) de uma cidade. Story 7.6 sitemap + internal linking. */
+export function getBairrosViaveisPorCidade(
+  ufSlug: string,
+  cidadeSlug: string
+): { bairro: string; slug: string; total: number }[] {
+  return getBairrosPorCidade(ufSlug, cidadeSlug, 3);
+}
+
+/**
+ * Combinações UF × município de um tipo com `≥ min` prestadores daquele tipo.
+ * Story 7.8 (tipo × UF × município).
+ */
+export function getTipoUfMunicipios(
+  tipo: TipoAtendimentoInferido,
+  min: number
+): { uf: string; ufSlug: string; municipio: string; cidadeSlug: string; total: number }[] {
+  const counts = new Map<
+    string,
+    { uf: string; ufSlug: string; municipio: string; cidadeSlug: string; total: number }
+  >();
+  for (const p of getPrestadoresPorTipo(tipo)) {
+    const ufSlug = p.uf.toLowerCase();
+    const cidadeSlug = slugify(p.municipio);
+    const key = `${ufSlug}|${cidadeSlug}`;
+    const entry = counts.get(key);
+    if (entry) entry.total += 1;
+    else
+      counts.set(key, {
+        uf: p.uf.toUpperCase(),
+        ufSlug,
+        municipio: p.municipio,
+        cidadeSlug,
+        total: 1,
+      });
+  }
+  return [...counts.values()]
+    .filter((c) => c.total >= min)
+    .sort((a, b) => b.total - a.total);
+}
+
+/**
  * Slug de um prestador (já gerado em `parsePrestador()`). Acessor canônico.
  */
 export function prestadorSlug(prestador: PrestadorAmil): string {

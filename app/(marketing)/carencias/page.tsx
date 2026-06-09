@@ -18,6 +18,7 @@
  */
 
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { generatePageMetadata } from '@/lib/utils/seo';
 import { SchemaGraph } from '@/components/seo/SchemaGraph';
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
@@ -201,12 +202,12 @@ export default function CarenciasPage() {
           <p className="mt-2 text-sm text-slate-600">
             5 perguntas mais comuns sobre carências no Plano Amil Empresarial.
             Para o catálogo completo (45+), visite{' '}
-            <a
+            <Link
               href="/perguntas-frequentes"
               className="font-medium text-teal-700 underline hover:text-teal-800"
             >
               Perguntas Frequentes
-            </a>
+            </Link>
             .
           </p>
           <div className="mt-6">
