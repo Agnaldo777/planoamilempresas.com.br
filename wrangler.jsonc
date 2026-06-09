@@ -14,12 +14,13 @@
  * Bindings:
  *   - ASSETS                     → estáticos servidos do .open-next/assets
  *   - WORKER_SELF_REFERENCE      → self-binding para ISR/cache invalidation
- *   - NEXT_INC_CACHE_R2_BUCKET   → R2 para incremental cache (ISR)
  *   - IMAGES                     → Cloudflare Images binding (opt-in futuro)
  *
- * Pré-requisitos antes do primeiro deploy:
- *   wrangler r2 bucket create planoamilempresas-opennext-cache
- *   wrangler r2 bucket create planoamilempresas-preview-opennext-cache
+ * NOTA (go-live MVP): incremental cache via R2 foi REMOVIDO para destravar o
+ * primeiro deploy sem depender de R2 ativo na conta (site é majoritariamente
+ * SSG). Para reativar ISR com cache persistente, recriar o binding
+ * `NEXT_INC_CACHE_R2_BUCKET` aqui + `r2IncrementalCache` em open-next.config.ts
+ * e rodar `wrangler r2 bucket create planoamilempresas-opennext-cache`.
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -35,12 +36,6 @@
     {
       "binding": "WORKER_SELF_REFERENCE",
       "service": "planoamilempresas"
-    }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "NEXT_INC_CACHE_R2_BUCKET",
-      "bucket_name": "planoamilempresas-opennext-cache"
     }
   ],
   "images": {
@@ -59,12 +54,6 @@
     },
     "preview": {
       "name": "planoamilempresas-preview",
-      "r2_buckets": [
-        {
-          "binding": "NEXT_INC_CACHE_R2_BUCKET",
-          "bucket_name": "planoamilempresas-preview-opennext-cache"
-        }
-      ],
       "services": [
         {
           "binding": "WORKER_SELF_REFERENCE",
