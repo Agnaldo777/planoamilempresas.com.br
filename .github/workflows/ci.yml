@@ -63,8 +63,8 @@ jobs:
       - name: Install (cache miss fallback)
         run: npm ci --prefer-offline --no-audit --fund=false
 
-      - name: Run ESLint (next lint)
-        run: npx next lint
+      - name: Run ESLint
+        run: npm run lint
 
   typecheck:
     name: typecheck
