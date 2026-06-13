@@ -58,6 +58,12 @@
     },
     "preview": {
       "name": "planoamilempresas-preview",
+      // Habilita Version Preview URLs (<hash>-planoamilempresas-preview.<subdominio>.workers.dev)
+      // para o CI de qualidade (preview-quality.yml) rodar axe/lhci/schema contra um
+      // preview real. Default de preview_urls passou a seguir workers_dev (wrangler >=4.44),
+      // então declaramos ambos explicitamente. Produção segue em custom domain, sem workers.dev.
+      "workers_dev": true,
+      "preview_urls": true,
       "services": [
         {
           "binding": "WORKER_SELF_REFERENCE",
