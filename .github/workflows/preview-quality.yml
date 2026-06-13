@@ -1,0 +1,225 @@
+name: preview-quality
+
+# Cobertura de qualidade em PR (a11y / Lighthouse / schema) contra um
+# preview real do Cloudflare Workers. Substitui os antigos workflows
+# accessibility/lighthouse/schema-validation que dependiam de preview da
+# Vercel (removidos após a migração — ADR-011).
+#
+# Fluxo: job `preview` builda com OpenNext, faz `wrangler versions upload
+# --env preview`, resolve a Version Preview URL e a expõe como output;
+# os jobs axe/lhci/validate rodam em paralelo contra essa URL.
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: preview-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    name: Build & upload preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      url: ${{ steps.preview-url.outputs.url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+      - name: Build search index (prebuild)
+        run: npm run build:search-index
+
+      - name: Build with OpenNext Cloudflare adapter
+        run: npx opennextjs-cloudflare build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://planoamilempresas.com.br
+          NEXT_PUBLIC_WHATSAPP_NUMBER: '5511926510515'
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder' }}
+          NEXT_PUBLIC_SANITY_DATASET: production
+
+      - name: Upload preview version (Cloudflare Workers)
+        id: deploy_preview
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload --env preview
+          packageManager: npm
+
+      - name: Resolve preview URL
+        id: preview-url
+        env:
+          # `versions upload` nem sempre popula deployment-url (wrangler-action #343),
+          # então caímos para parsing da "Version Preview URL" no stdout do comando.
+          DEPLOY_URL: ${{ steps.deploy_preview.outputs.deployment-url }}
+          CMD_OUT: ${{ steps.deploy_preview.outputs.command-output }}
+        run: |
+          set -eo pipefail
+          URL="$DEPLOY_URL"
+          if [ -z "$URL" ]; then
+            URL=$(printf '%s' "$CMD_OUT" | grep -oiE 'https://[a-z0-9.-]+\.workers\.dev' | head -n1)
+          fi
+          if [ -z "$URL" ]; then
+            echo "::error::Nao foi possivel resolver a Preview URL do Cloudflare (deployment-url vazio e parsing do stdout falhou)."
+            echo "---- command-output ----"
+            printf '%s\n' "$CMD_OUT"
+            exit 1
+          fi
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "Preview URL resolvida: $URL"
+
+      - name: Wait for preview to be reachable
+        env:
+          URL: ${{ steps.preview-url.outputs.url }}
+        run: |
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$URL" || echo 000)
+            echo "Attempt $i -> HTTP $code"
+            if [ "$code" = "200" ]; then echo "Preview pronto"; exit 0; fi
+            sleep 6
+          done
+          echo "::warning::Preview nao retornou 200 apos ~2min; os checks downstream podem ficar flaky."
+
+      - name: Comment preview URL on PR
+        if: always()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const url = '${{ steps.preview-url.outputs.url }}';
+            if (!url) return;
+            const marker = '<!-- preview-quality-url -->';
+            const body = `${marker}\n### 🔍 Preview do Cloudflare\n\n**URL:** ${url}\n\n` +
+              `Checks de qualidade rodando contra este preview: **axe** (WCAG AA) · ` +
+              `**Lighthouse** (perf/a11y/BP/SEO) · **schema** (JSON-LD + NFR23).`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner, repo: context.repo.repo, comment_id: existing.id, body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body,
+              });
+            }
+
+  axe:
+    name: axe
+    needs: preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install axe-core CLI
+        run: npm install -g @axe-core/cli@4
+
+      - name: Run axe-core against preview pages (WCAG AA)
+        env:
+          BASE: ${{ needs.preview.outputs.url }}
+        run: |
+          set -eo pipefail
+          URLS=(
+            "$BASE"
+            "$BASE/empresarial"
+            "$BASE/planos"
+            "$BASE/rede-credenciada"
+            "$BASE/cotacao-online"
+            "$BASE/perguntas-frequentes"
+          )
+          FAIL=0
+          for url in "${URLS[@]}"; do
+            echo "::group::axe $url"
+            axe "$url" \
+              --tags wcag2a,wcag2aa,wcag21a,wcag21aa,best-practice \
+              --exit \
+              --timeout 90000 \
+              --no-sandbox || FAIL=1
+            echo "::endgroup::"
+          done
+          exit $FAIL
+
+  lhci:
+    name: lhci
+    needs: preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ needs.preview.outputs.url }}
+            ${{ needs.preview.outputs.url }}/empresarial
+            ${{ needs.preview.outputs.url }}/planos
+            ${{ needs.preview.outputs.url }}/rede-credenciada
+            ${{ needs.preview.outputs.url }}/cotacao-online
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 1
+
+  validate:
+    name: validate
+    needs: preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install jsdom (validation runtime)
+        run: npm install --no-save jsdom@24
+
+      - name: Validate JSON-LD on key pages
+        env:
+          PREVIEW_URL: ${{ needs.preview.outputs.url }}
+        run: node scripts/validate-jsonld.mjs
+
+      # Story 6.10 — Pipeline NFR23. Falha CI se algum post YMYL
+      # com workflowStatus=published não tiver trilha completa de
+      # revisão médica + jurídica em reviewTrack.
+      - name: Audit Workflow Status (NFR23 pipeline revisão humana)
+        run: node scripts/audit-workflow-status.mjs
