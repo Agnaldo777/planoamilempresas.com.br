@@ -1,9 +1,13 @@
 /**
  * Home — Landing comercial B2B (substitui a canary da Story 1.4).
  *
+ * Vive dentro do grupo (marketing) para herdar Header + Footer + StickyQuoteCTA
+ * do layout compartilhado (app/(marketing)/layout.tsx). O <main> e o rodapé
+ * são fornecidos pelo layout — aqui ficam só as seções de conteúdo.
+ *
  * RSC (sem 'use client'). Disclaimer canônico ADR-006, sem logo/trade dress Amil
  * (NFR8 + brand-usage-policy). Operador = BeneficioRH (corretora SUSEP 201054484).
- * Números reais do dataset de rede credenciada. Build/health preservados no rodapé.
+ * Números reais do dataset de rede credenciada.
  */
 
 import type { Metadata } from 'next';
@@ -12,28 +16,10 @@ import { getEstatisticasRede } from '@/lib/operadoras/amil/rede-credenciada-load
 import {
   DISCLAIMER_AMIL_REDE,
   AMIL_SITE_OFICIAL,
-  AMIL_RAZAO_SOCIAL,
 } from '@/content/disclaimers/amil-rede';
 
 export const revalidate = 2592000;
 
-function resolveBuildSha(): string {
-  const cfMeta = process.env.CF_VERSION_METADATA;
-  if (cfMeta) {
-    try {
-      const parsed = JSON.parse(cfMeta) as { id?: string; tag?: string };
-      const id = parsed.id ?? parsed.tag;
-      if (id && id.length >= 7) return id.slice(0, 7);
-    } catch {
-      // ignore
-    }
-  }
-  const gh = process.env.GITHUB_SHA;
-  if (gh && gh.length >= 7) return gh.slice(0, 7);
-  return 'local';
-}
-
-const BUILD_SHA: string = resolveBuildSha();
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://planoamilempresas.com.br';
 
@@ -80,7 +66,7 @@ export default function HomePage() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
+    <div className="bg-white text-slate-900">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
       {/* Hero */}
@@ -176,30 +162,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Rodapé */}
-      <footer className="border-t border-slate-200 bg-slate-50 px-6 py-10 text-sm text-slate-600">
-        <div className="mx-auto max-w-5xl space-y-3">
-          <p>
-            <strong className="text-slate-800">BeneficioRH</strong> — corretora de seguros autorizada
-            (SUSEP 201054484), CNPJ 14.764.085/0001-99. {DISCLAIMER_AMIL_REDE} {AMIL_RAZAO_SOCIAL} mantém
-            seus canais oficiais em{' '}
-            <a href={AMIL_SITE_OFICIAL} className="underline" rel="nofollow noopener" target="_blank">amil.com.br</a>.
-          </p>
-          <p className="flex flex-wrap gap-x-4 gap-y-1">
-            <Link href="/planos" className="hover:text-blue-600">Planos</Link>
-            <Link href="/rede-credenciada" className="hover:text-blue-600">Rede credenciada</Link>
-            <Link href="/perguntas-frequentes" className="hover:text-blue-600">Perguntas frequentes</Link>
-            <Link href="/contato-empresas" className="hover:text-blue-600">Contato</Link>
-          </p>
-          <p className="text-xs text-slate-400">
-            Build <code className="font-mono">{BUILD_SHA}</code>
-            {' · '}
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- /api/healthz é route handler (JSON), não página navegável via <Link> */}
-            <a href="/api/healthz" className="underline-offset-2 hover:underline">status</a>
-          </p>
-        </div>
-      </footer>
-    </main>
+    </div>
   );
 }
