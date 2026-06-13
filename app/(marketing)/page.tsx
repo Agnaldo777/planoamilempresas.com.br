@@ -13,10 +13,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getEstatisticasRede } from '@/lib/operadoras/amil/rede-credenciada-loader';
-import {
-  DISCLAIMER_AMIL_REDE,
-  AMIL_SITE_OFICIAL,
-} from '@/content/disclaimers/amil-rede';
+import { AMIL_SITE_OFICIAL } from '@/content/disclaimers/amil-rede';
 
 export const revalidate = 2592000;
 
@@ -76,11 +73,11 @@ export default function HomePage() {
             Corretora autorizada · SUSEP 201054484
           </span>
           <h1 className="mt-6 text-balance text-4xl font-bold leading-tight md:text-5xl">
-            Plano de Saúde Amil Empresarial para a sua empresa
+            Plano de Saúde Amil Empresarial: cotação por CNPJ em minutos
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-balance text-lg text-blue-100 md:text-xl">
-            Cobertura nacional, rede credenciada ampla e cotação personalizada por CNPJ.
-            Atendimento por corretor autorizado, sem custo adicional.
+            Compare as linhas S380, S450, S750 e One, consulte a rede credenciada da sua
+            cidade e receba uma cotação personalizada por CNPJ — sem custo de corretagem.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link href="/cotacao-online" className="rounded-lg bg-white px-7 py-3 font-semibold text-blue-700 transition hover:bg-blue-50">
@@ -90,7 +87,6 @@ export default function HomePage() {
               Ver rede credenciada
             </Link>
           </div>
-          <p className="mx-auto mt-6 max-w-2xl text-xs text-blue-200">{DISCLAIMER_AMIL_REDE}</p>
         </div>
       </section>
 
