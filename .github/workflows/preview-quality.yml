@@ -1,13 +1,13 @@
 name: preview-quality
 
-# Cobertura de qualidade em PR (a11y / Lighthouse / schema) contra um
-# preview real do Cloudflare Workers. Substitui os antigos workflows
-# accessibility/lighthouse/schema-validation que dependiam de preview da
-# Vercel (removidos após a migração — ADR-011).
+# Cobertura de qualidade em PR (a11y / Lighthouse / schema). Substitui os
+# antigos workflows accessibility/lighthouse/schema-validation que dependiam
+# de um preview da Vercel (removidos na migração para Cloudflare — ADR-011).
 #
-# Fluxo: job `preview` builda com OpenNext, faz `wrangler versions upload
-# --env preview`, resolve a Version Preview URL e a expõe como output;
-# os jobs axe/lhci/validate rodam em paralelo contra essa URL.
+# Estratégia: em vez de publicar um preview externo, buildamos e servimos o
+# site DENTRO do runner (next start em localhost) e rodamos os checks contra
+# ele. Sem dependência de preview URL, subdomínio workers.dev ou secrets de
+# deploy. As páginas testadas são SSG, então o HTML servido é o mesmo de prod.
 
 on:
   pull_request:
@@ -19,20 +19,16 @@ concurrency:
 
 env:
   NODE_VERSION: '20'
+  BASE_URL: 'http://localhost:3000'
 
 permissions:
   contents: read
 
 jobs:
-  preview:
-    name: Build & upload preview
+  quality:
+    name: a11y / lighthouse / schema
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-      pull-requests: write
-    outputs:
-      url: ${{ steps.preview-url.outputs.url }}
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -46,114 +42,44 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit --fund=false
 
-      - name: Build search index (prebuild)
-        run: npm run build:search-index
-
-      - name: Build with OpenNext Cloudflare adapter
-        run: npx opennextjs-cloudflare build
+      - name: Build (Next.js)
+        run: npm run build
         env:
           NEXT_PUBLIC_SITE_URL: https://planoamilempresas.com.br
           NEXT_PUBLIC_WHATSAPP_NUMBER: '5511926510515'
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder' }}
           NEXT_PUBLIC_SANITY_DATASET: production
 
-      - name: Upload preview version (Cloudflare Workers)
-        id: deploy_preview
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env preview
-          packageManager: npm
-
-      - name: Resolve preview URL
-        id: preview-url
-        env:
-          # `versions upload` nem sempre popula deployment-url (wrangler-action #343),
-          # então caímos para parsing da "Version Preview URL" no stdout do comando.
-          DEPLOY_URL: ${{ steps.deploy_preview.outputs.deployment-url }}
-          CMD_OUT: ${{ steps.deploy_preview.outputs.command-output }}
+      - name: Start server (next start)
         run: |
-          set -eo pipefail
-          URL="$DEPLOY_URL"
-          if [ -z "$URL" ]; then
-            URL=$(printf '%s' "$CMD_OUT" | grep -oiE 'https://[a-z0-9.-]+\.workers\.dev' | head -n1)
-          fi
-          if [ -z "$URL" ]; then
-            echo "::error::Nao foi possivel resolver a Preview URL do Cloudflare (deployment-url vazio e parsing do stdout falhou)."
-            echo "---- command-output ----"
-            printf '%s\n' "$CMD_OUT"
-            exit 1
-          fi
-          echo "url=$URL" >> "$GITHUB_OUTPUT"
-          echo "Preview URL resolvida: $URL"
+          npm start > /tmp/next-server.log 2>&1 &
+          echo "SERVER_PID=$!" >> "$GITHUB_ENV"
 
-      - name: Wait for preview to be reachable
-        env:
-          URL: ${{ steps.preview-url.outputs.url }}
+      - name: Wait for server to be ready
         run: |
-          for i in $(seq 1 20); do
-            code=$(curl -s -o /dev/null -w '%{http_code}' "$URL" || echo 000)
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$BASE_URL" || echo 000)
             echo "Attempt $i -> HTTP $code"
-            if [ "$code" = "200" ]; then echo "Preview pronto"; exit 0; fi
-            sleep 6
+            if [ "$code" = "200" ]; then echo "Server ready"; exit 0; fi
+            sleep 3
           done
-          echo "::warning::Preview nao retornou 200 apos ~2min; os checks downstream podem ficar flaky."
-
-      - name: Comment preview URL on PR
-        if: always()
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const url = '${{ steps.preview-url.outputs.url }}';
-            if (!url) return;
-            const marker = '<!-- preview-quality-url -->';
-            const body = `${marker}\n### 🔍 Preview do Cloudflare\n\n**URL:** ${url}\n\n` +
-              `Checks de qualidade rodando contra este preview: **axe** (WCAG AA) · ` +
-              `**Lighthouse** (perf/a11y/BP/SEO) · **schema** (JSON-LD + NFR23).`;
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number,
-            });
-            const existing = comments.find((c) => c.body && c.body.includes(marker));
-            if (existing) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner, repo: context.repo.repo, comment_id: existing.id, body,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body,
-              });
-            }
-
-  axe:
-    name: axe
-    needs: preview
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup Node ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+          echo "::error::Servidor next start nao respondeu 200 em ~2min."
+          echo "---- server log ----"; cat /tmp/next-server.log || true
+          exit 1
 
       - name: Install axe-core CLI
         run: npm install -g @axe-core/cli@4
 
-      - name: Run axe-core against preview pages (WCAG AA)
-        env:
-          BASE: ${{ needs.preview.outputs.url }}
+      - name: Run axe-core against pages (WCAG AA)
         run: |
           set -eo pipefail
           URLS=(
-            "$BASE"
-            "$BASE/empresarial"
-            "$BASE/planos"
-            "$BASE/rede-credenciada"
-            "$BASE/cotacao-online"
-            "$BASE/perguntas-frequentes"
+            "$BASE_URL"
+            "$BASE_URL/empresarial"
+            "$BASE_URL/planos"
+            "$BASE_URL/rede-credenciada"
+            "$BASE_URL/cotacao-online"
+            "$BASE_URL/perguntas-frequentes"
           )
           FAIL=0
           for url in "${URLS[@]}"; do
@@ -167,55 +93,26 @@ jobs:
           done
           exit $FAIL
 
-  lhci:
-    name: lhci
-    needs: preview
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup Node ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            ${{ needs.preview.outputs.url }}
-            ${{ needs.preview.outputs.url }}/empresarial
-            ${{ needs.preview.outputs.url }}/planos
-            ${{ needs.preview.outputs.url }}/rede-credenciada
-            ${{ needs.preview.outputs.url }}/cotacao-online
+            http://localhost:3000
+            http://localhost:3000/empresarial
+            http://localhost:3000/planos
+            http://localhost:3000/rede-credenciada
+            http://localhost:3000/cotacao-online
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 1
 
-  validate:
-    name: validate
-    needs: preview
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup Node ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install jsdom (validation runtime)
+      - name: Install jsdom (schema validation runtime)
         run: npm install --no-save jsdom@24
 
       - name: Validate JSON-LD on key pages
         env:
-          PREVIEW_URL: ${{ needs.preview.outputs.url }}
+          PREVIEW_URL: 'http://localhost:3000'
         run: node scripts/validate-jsonld.mjs
 
       # Story 6.10 — Pipeline NFR23. Falha CI se algum post YMYL
@@ -223,3 +120,7 @@ jobs:
       # revisão médica + jurídica em reviewTrack.
       - name: Audit Workflow Status (NFR23 pipeline revisão humana)
         run: node scripts/audit-workflow-status.mjs
+
+      - name: Stop server
+        if: always()
+        run: kill "$SERVER_PID" 2>/dev/null || true
