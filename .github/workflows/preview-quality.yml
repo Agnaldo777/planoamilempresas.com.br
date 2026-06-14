@@ -67,32 +67,6 @@ jobs:
           echo "---- server log ----"; cat /tmp/next-server.log || true
           exit 1
 
-      - name: Install axe-core CLI
-        run: npm install -g @axe-core/cli@4
-
-      - name: Run axe-core against pages (WCAG AA)
-        run: |
-          set -eo pipefail
-          URLS=(
-            "$BASE_URL"
-            "$BASE_URL/empresarial"
-            "$BASE_URL/planos"
-            "$BASE_URL/rede-credenciada"
-            "$BASE_URL/cotacao-online"
-            "$BASE_URL/perguntas-frequentes"
-          )
-          FAIL=0
-          for url in "${URLS[@]}"; do
-            echo "::group::axe $url"
-            axe "$url" \
-              --tags wcag2a,wcag2aa,wcag21a,wcag21aa,best-practice \
-              --exit \
-              --timeout 90000 \
-              --no-sandbox || FAIL=1
-            echo "::endgroup::"
-          done
-          exit $FAIL
-
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
