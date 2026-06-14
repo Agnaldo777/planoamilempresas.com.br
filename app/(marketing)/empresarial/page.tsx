@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { generatePageMetadata } from '@/lib/utils/seo';
 import { SchemaGraph } from '@/components/seo/SchemaGraph';
 import { BreadcrumbNav } from '@/components/seo/BreadcrumbNav';
+import { getTopMunicipios } from '@/lib/operadoras/amil/rede-credenciada-loader';
 
 export const metadata: Metadata = generatePageMetadata({
   type: 'page',
@@ -19,6 +20,7 @@ const segmentos = [
 ];
 
 export default function EmpresarialPage() {
+  const cidades = getTopMunicipios(30);
   return (
     <>
       <SchemaGraph pageType="page" breadcrumb={[{ name: 'Empresarial', href: '/empresarial' }]} />
@@ -54,6 +56,28 @@ export default function EmpresarialPage() {
               >
                 <h3 className="text-lg font-bold text-slate-900">{seg.nome}</h3>
                 <p className="mt-2 text-sm text-gray-500">{seg.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-slate-50 px-4 py-12">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-2xl font-bold text-gray-900">Plano Amil empresarial nas principais cidades</h2>
+          <p className="mt-2 text-gray-600">
+            Veja hospitais credenciados, valores de referência e fale com um corretor local na sua cidade.
+          </p>
+          <div className="mt-6 grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {cidades.map((c) => (
+              <Link
+                key={`${c.ufSlug}-${c.cidadeSlug}`}
+                href={`/plano-de-saude-empresarial/${c.ufSlug}/${c.cidadeSlug}`}
+                className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm transition hover:border-blue-400 hover:shadow-sm"
+              >
+                <span className="font-semibold text-slate-900">{c.municipio}</span>
+                <span className="text-gray-500"> /{c.uf}</span>
+                <span className="block text-xs text-gray-500">{c.totalPrestadores} prestadores</span>
               </Link>
             ))}
           </div>
