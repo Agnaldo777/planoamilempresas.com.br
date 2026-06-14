@@ -4,6 +4,7 @@ import { BLOG_CATEGORIES } from '@/data/blog/categories';
 import { getMockPosts } from '@/data/blog/mock-posts';
 import redeDataset from '@/data/rede-credenciada/rede-credenciada.json';
 import { SEGMENTO_SLUGS } from '@/content/segmentos-empresarial';
+import { COMPARATIVO_SLUGS } from '@/content/comparativos-concorrentes';
 import { getTopMunicipios } from '@/lib/operadoras/amil/rede-credenciada-loader';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://planoamilempresas.com.br';
@@ -37,6 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/cotacao-online`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/calculadora-economia`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/reduzir-reajuste-amil`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/comparativos`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/perguntas-frequentes`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     // Story 3.20 (FR39) — Calculadora de Carências
     { url: `${BASE_URL}/carencias`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -107,6 +109,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Comparativos vs concorrentes (rotas estáticas)
+  const comparativoPages: MetadataRoute.Sitemap = COMPARATIVO_SLUGS.map((slug) => ({
+    url: `${BASE_URL}/comparativos/${slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   // TODO: Add dynamic pages from Sanity (cidades, FAQs, comparativos)
 
   return [
@@ -114,6 +124,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...planoPages,
     ...segmentoPages,
     ...cidadeDensaPages,
+    ...comparativoPages,
     ...authorPages,
     ...blogCategoryPages,
     ...blogPostPages,

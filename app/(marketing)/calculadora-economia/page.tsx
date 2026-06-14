@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { buildOpenGraphMetadata } from '@/components/seo/OpenGraph';
-import { EconomiaCalculator } from '@/components/ui/EconomiaCalculator';
+import { EconomiaCalculatorLazy } from '@/components/ui/EconomiaCalculatorLazy';
 import {
   DISCLAIMER_AMIL_REDE,
   ORGANIZATION_JSONLD_DEFAULTS,
@@ -86,7 +86,7 @@ export default function CalculadoraEconomiaPage() {
 
       <section className="px-4 py-10">
         <div className="mx-auto max-w-3xl">
-          <EconomiaCalculator />
+          <EconomiaCalculatorLazy />
 
           <section className="mt-10 space-y-4 text-gray-700">
             <h2 className="text-2xl font-bold text-gray-900">Por que o plano PJ é mais barato que o individual</h2>
