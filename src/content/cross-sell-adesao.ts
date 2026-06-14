@@ -10,8 +10,8 @@
  * e o WhatsApp do corretor, sem link externo que daria 404.
  */
 export const ADESAO_SITE = {
-  url: 'https://planodeadesao.com.br',
-  nome: 'Plano de Adesão',
+  url: 'https://planosdesaudeadesao.com.br',
+  nome: 'Planos de Saúde por Adesão',
   /** Trocar para true quando o site de adesão estiver publicado. */
   DISPONIVEL: false,
 } as const;
