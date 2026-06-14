@@ -22,7 +22,7 @@ export default function CotacaoOnlinePage() {
           <h1 className="text-3xl font-bold text-gray-900 md:text-4xl">
             Cotação Grátis em 30 Segundos
           </h1>
-          <p className="mt-4 text-gray-500">
+          <p className="mt-4 text-gray-600">
             Apenas 4 campos. Receba sua proposta personalizada no WhatsApp.
           </p>
         </div>

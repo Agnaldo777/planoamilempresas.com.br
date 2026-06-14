@@ -1,0 +1,100 @@
+name: preview-quality
+
+# Cobertura de qualidade em PR (a11y / Lighthouse / schema). Substitui os
+# antigos workflows accessibility/lighthouse/schema-validation que dependiam
+# de um preview da Vercel (removidos na migração para Cloudflare — ADR-011).
+#
+# Estratégia: em vez de publicar um preview externo, buildamos e servimos o
+# site DENTRO do runner (next start em localhost) e rodamos os checks contra
+# ele. Sem dependência de preview URL, subdomínio workers.dev ou secrets de
+# deploy. As páginas testadas são SSG, então o HTML servido é o mesmo de prod.
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: preview-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+  BASE_URL: 'http://localhost:3000'
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: a11y / lighthouse / schema
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --fund=false
+
+      - name: Build (Next.js)
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://planoamilempresas.com.br
+          NEXT_PUBLIC_WHATSAPP_NUMBER: '5511926510515'
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder' }}
+          NEXT_PUBLIC_SANITY_DATASET: production
+
+      - name: Start server (next start)
+        run: |
+          npm start > /tmp/next-server.log 2>&1 &
+          echo "SERVER_PID=$!" >> "$GITHUB_ENV"
+
+      - name: Wait for server to be ready
+        run: |
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$BASE_URL" || echo 000)
+            echo "Attempt $i -> HTTP $code"
+            if [ "$code" = "200" ]; then echo "Server ready"; exit 0; fi
+            sleep 3
+          done
+          echo "::error::Servidor next start nao respondeu 200 em ~2min."
+          echo "---- server log ----"; cat /tmp/next-server.log || true
+          exit 1
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://localhost:3000
+            http://localhost:3000/empresarial
+            http://localhost:3000/planos
+            http://localhost:3000/rede-credenciada
+            http://localhost:3000/cotacao-online
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 1
+
+      - name: Install jsdom (schema validation runtime)
+        run: npm install --no-save jsdom@24
+
+      - name: Validate JSON-LD on key pages
+        env:
+          PREVIEW_URL: 'http://localhost:3000'
+        run: node scripts/validate-jsonld.mjs
+
+      # Story 6.10 — Pipeline NFR23. Falha CI se algum post YMYL
+      # com workflowStatus=published não tiver trilha completa de
+      # revisão médica + jurídica em reviewTrack.
+      - name: Audit Workflow Status (NFR23 pipeline revisão humana)
+        run: node scripts/audit-workflow-status.mjs
+
+      - name: Stop server
+        if: always()
+        run: kill "$SERVER_PID" 2>/dev/null || true

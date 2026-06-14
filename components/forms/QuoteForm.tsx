@@ -78,7 +78,7 @@ export function QuoteForm() {
           <div key={label} className="flex items-center gap-2">
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${
-                i <= step ? 'bg-slate-900 text-white' : 'bg-gray-200 text-gray-500'
+                i <= step ? 'bg-slate-900 text-white' : 'bg-gray-200 text-gray-700'
               }`}
             >
               {i + 1}
@@ -93,7 +93,7 @@ export function QuoteForm() {
       {/* Step 1: Tipo */}
       {step === 0 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Quem é você?</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Quem é você?</h2>
           <div className="grid grid-cols-2 gap-3">
             {tipoOptions.map((opt) => {
               const Icon = opt.icon;
@@ -113,7 +113,7 @@ export function QuoteForm() {
                 >
                   <Icon className="h-8 w-8 text-slate-700" />
                   <span className="mt-2 font-semibold text-gray-900">{opt.label}</span>
-                  <span className="text-xs text-gray-500">{opt.desc}</span>
+                  <span className="text-xs text-gray-600">{opt.desc}</span>
                 </button>
               );
             })}
@@ -127,7 +127,7 @@ export function QuoteForm() {
       {/* Step 2: Vidas */}
       {step === 1 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Quantas pessoas?</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Quantas pessoas?</h2>
           <div className="space-y-3">
             {vidasOptions.map((opt) => (
               <button
@@ -153,9 +153,10 @@ export function QuoteForm() {
       {/* Step 3: Região */}
       {step === 2 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Qual sua região?</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Qual sua região?</h2>
           <input
             {...register('cidade')}
+            aria-label="Cidade"
             placeholder="Digite sua cidade"
             className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-teal-600"
           />
@@ -175,11 +176,12 @@ export function QuoteForm() {
       {/* Step 4: Dados */}
       {step === 3 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Seus dados</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Seus dados</h2>
           <div className="space-y-3">
             <div>
               <input
                 {...register('nome')}
+                aria-label="Seu nome"
                 placeholder="Seu nome"
                 className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-teal-600"
               />
@@ -188,6 +190,8 @@ export function QuoteForm() {
             <div>
               <input
                 {...register('whatsapp')}
+                aria-label="WhatsApp para contato"
+                inputMode="tel"
                 placeholder="(11) 99999-9999"
                 className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 outline-none transition-colors focus:border-teal-600"
               />
@@ -210,7 +214,7 @@ export function QuoteForm() {
         <button
           type="button"
           onClick={() => setStep(step - 1)}
-          className="mt-4 w-full text-center text-sm text-gray-500 hover:text-sky-600"
+          className="mt-4 w-full text-center text-sm text-gray-600 hover:text-sky-600"
         >
           ← Voltar
         </button>
@@ -219,7 +223,7 @@ export function QuoteForm() {
         <button
           type="button"
           onClick={() => setStep(step - 1)}
-          className="mt-3 w-full text-center text-sm text-gray-500 hover:text-sky-600"
+          className="mt-3 w-full text-center text-sm text-gray-600 hover:text-sky-600"
         >
           ← Voltar
         </button>
