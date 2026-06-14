@@ -42,6 +42,7 @@ import { ORGANIZATION_NAME } from '@/lib/schema/organization'
 import { getCurrentYear } from '@/lib/seo/title'
 import { tituloLocal } from '@/lib/uf'
 import { DISCLAIMER_AMIL_REDE } from '@/content/disclaimers/amil-rede'
+import { getSkuMinimo } from '@/lib/operadoras/amil/sku-minimo'
 
 export const revalidate = 2592000 // 30 dias (ISR — pipeline mensal Story 7.10)
 export const dynamic = 'force-static'
@@ -255,6 +256,7 @@ export default async function PrestadorPage({
   const cidadeExib = tituloLocal(prestador.municipio)
   const bairroExib = prestador.bairro ? tituloLocal(prestador.bairro) : ''
   const redesLista = prestador.redes.join(', ')
+  const skuMinimo = getSkuMinimo(prestador)
   const cotacaoHref = `/cotacao-online?uf=${uf.toLowerCase()}&cidade=${municipio.toLowerCase()}`
 
   const faqs = isHospital
@@ -381,6 +383,36 @@ export default async function PrestadorPage({
               >
                 Cotar plano com acesso ao {nomeExib} →
               </Link>
+            </section>
+          )}
+
+          {/* SKU-mínimo de acesso — plano de entrada que credencia o prestador */}
+          {skuMinimo && (
+            <section className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">
+                Plano de entrada para atender aqui
+              </p>
+              <p className="mt-1 text-lg font-bold text-emerald-900">
+                {skuMinimo.nivel === 'adesao'
+                  ? `Acesso a partir de planos de adesão (${skuMinimo.produto})`
+                  : `A partir do ${skuMinimo.produto}`}
+                {skuMinimo.desde !== 'sob consulta' && (
+                  <span className="font-semibold"> — {skuMinimo.desde}/vida*</span>
+                )}
+              </p>
+              <p className="mt-2 text-sm text-emerald-900">
+                {skuMinimo.nivel === 'premium'
+                  ? `${nomeExib} é um prestador de rede premium — o acesso começa nas linhas top da Amil.`
+                  : `Este é o plano Amil mais acessível que credencia o ${nomeExib}. Linhas superiores ampliam a rede em outros hospitais.`}
+              </p>
+              {skuMinimo.planoSlug && (
+                <Link
+                  href={`/planos/${skuMinimo.planoSlug}`}
+                  className="mt-3 inline-block text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline"
+                >
+                  Ver detalhes do {skuMinimo.produto} →
+                </Link>
+              )}
             </section>
           )}
 

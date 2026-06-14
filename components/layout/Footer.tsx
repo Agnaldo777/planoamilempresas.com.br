@@ -25,10 +25,11 @@ const footerSections = [
     title: 'Informações',
     links: [
       { href: '/tabela-de-precos', label: 'Tabela de Preços' },
+      { href: '/calculadora-economia', label: 'Calculadora de Economia' },
+      { href: '/reduzir-reajuste-amil', label: 'Reduzir Reajuste' },
       { href: '/rede-credenciada', label: 'Rede Credenciada' },
       { href: '/perguntas-frequentes', label: 'Perguntas Frequentes' },
       { href: '/blog', label: 'Blog' },
-      { href: '/contato', label: 'Contato' },
     ],
   },
 ];
