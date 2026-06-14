@@ -73,20 +73,27 @@ export default function HomePage() {
             Corretora autorizada · SUSEP 201054484
           </span>
           <h1 className="mt-6 text-balance text-4xl font-bold leading-tight md:text-5xl">
-            Plano de Saúde Amil Empresarial: cotação por CNPJ em minutos
+            Plano de saúde Amil para CNPJ: até 40% mais barato que o plano individual
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-balance text-lg text-blue-100 md:text-xl">
-            Compare as linhas S380, S450, S750 e One, consulte a rede credenciada da sua
-            cidade e receba uma cotação personalizada por CNPJ — sem custo de corretagem.
+            Sua empresa, MEI ou PME paga a tabela coletiva — em média 30% a 40% menos que um
+            plano pessoa física, com a mesma rede Amil. Cotação por CNPJ em minutos, sem custo de corretagem.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link href="/cotacao-online" className="rounded-lg bg-white px-7 py-3 font-semibold text-blue-700 transition hover:bg-blue-50">
-              Solicitar cotação →
+              Fazer cotação por CNPJ →
             </Link>
             <Link href="/rede-credenciada" className="rounded-lg border border-white/40 px-7 py-3 font-semibold text-white transition hover:bg-white/10">
-              Ver rede credenciada
+              Ver se meu hospital aceita Amil
             </Link>
           </div>
+          <p className="mx-auto mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-blue-100">
+            <span>Amil no Reclame Aqui: <strong className="text-white">7,7</strong> (BOA)</span>
+            <span aria-hidden="true">·</span>
+            <span>Corretagem <strong className="text-white">sem custo</strong> para a empresa</span>
+            <span aria-hidden="true">·</span>
+            <span>Atendimento por corretor autorizado</span>
+          </p>
         </div>
       </section>
 
