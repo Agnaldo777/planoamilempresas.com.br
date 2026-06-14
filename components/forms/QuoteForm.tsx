@@ -93,7 +93,7 @@ export function QuoteForm() {
       {/* Step 1: Tipo */}
       {step === 0 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Quem é você?</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Quem é você?</h2>
           <div className="grid grid-cols-2 gap-3">
             {tipoOptions.map((opt) => {
               const Icon = opt.icon;
@@ -127,7 +127,7 @@ export function QuoteForm() {
       {/* Step 2: Vidas */}
       {step === 1 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Quantas pessoas?</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Quantas pessoas?</h2>
           <div className="space-y-3">
             {vidasOptions.map((opt) => (
               <button
@@ -153,7 +153,7 @@ export function QuoteForm() {
       {/* Step 3: Região */}
       {step === 2 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Qual sua região?</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Qual sua região?</h2>
           <input
             {...register('cidade')}
             aria-label="Cidade"
@@ -176,7 +176,7 @@ export function QuoteForm() {
       {/* Step 4: Dados */}
       {step === 3 && (
         <div>
-          <h3 className="mb-4 text-center text-lg font-semibold">Seus dados</h3>
+          <h2 className="mb-4 text-center text-lg font-semibold">Seus dados</h2>
           <div className="space-y-3">
             <div>
               <input
