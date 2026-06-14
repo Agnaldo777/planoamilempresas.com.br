@@ -3,6 +3,8 @@ import { authors } from '@/data/authors';
 import { BLOG_CATEGORIES } from '@/data/blog/categories';
 import { getMockPosts } from '@/data/blog/mock-posts';
 import redeDataset from '@/data/rede-credenciada/rede-credenciada.json';
+import { SEGMENTO_SLUGS } from '@/content/segmentos-empresarial';
+import { getTopMunicipios } from '@/lib/operadoras/amil/rede-credenciada-loader';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://planoamilempresas.com.br';
 
@@ -33,6 +35,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/portal-empresa`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/contato-empresas`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/cotacao-online`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/calculadora-economia`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/reduzir-reajuste-amil`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/perguntas-frequentes`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     // Story 3.20 (FR39) — Calculadora de Carências
     { url: `${BASE_URL}/carencias`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -87,11 +91,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
+  // Matriz empresarial por porte (Onda 1) — /empresarial/[segmento]
+  const segmentoPages: MetadataRoute.Sitemap = SEGMENTO_SLUGS.map((slug) => ({
+    url: `${BASE_URL}/empresarial/${slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  // Cidades densas (Nível 2) — top 30 por nº de prestadores
+  const cidadeDensaPages: MetadataRoute.Sitemap = getTopMunicipios(30).map((c) => ({
+    url: `${BASE_URL}/plano-de-saude-empresarial/${c.ufSlug}/${c.cidadeSlug}`,
+    lastModified: redeLastMod,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
   // TODO: Add dynamic pages from Sanity (cidades, FAQs, comparativos)
 
   return [
     ...staticPages,
     ...planoPages,
+    ...segmentoPages,
+    ...cidadeDensaPages,
     ...authorPages,
     ...blogCategoryPages,
     ...blogPostPages,
