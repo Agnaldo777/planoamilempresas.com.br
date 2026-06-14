@@ -9,6 +9,7 @@ const footerSections = [
       { href: '/planos/amil-s750', label: 'Amil S750' },
       { href: '/planos/amil-one-s2500', label: 'Amil One' },
       { href: '/amil-dental', label: 'Amil Dental' },
+      { href: '/comparativos', label: 'Comparativos' },
     ],
   },
   {
