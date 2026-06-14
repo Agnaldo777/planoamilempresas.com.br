@@ -15,6 +15,7 @@ import {
   DISCLAIMER_AMIL_REDE,
   ORGANIZATION_JSONLD_DEFAULTS,
 } from '@/content/disclaimers/amil-rede';
+import { CorretorLocalCard } from '@/components/ui/CorretorLocalCard';
 
 export const revalidate = 2592000; // 30 dias
 
@@ -324,6 +325,9 @@ export default async function RedeMunicipioPage({
               ))}
             </dl>
           </section>
+
+          {/* Corretor local — E-E-A-T + NAP (Nível 1 da estratégia geo-corretor) */}
+          <CorretorLocalCard cidade={cidade} uf={ufLower.toUpperCase()} />
 
           {/* CTA final + internal linking */}
           <div className="mt-12 rounded-lg bg-blue-600 p-8 text-center">
