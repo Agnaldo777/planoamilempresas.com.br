@@ -79,7 +79,7 @@ jobs:
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
-          runs: 1
+          runs: 3
 
       - name: Install jsdom (schema validation runtime)
         run: npm install --no-save jsdom@24
