@@ -47,6 +47,10 @@ const REDE_PARA_PRODUTO: Record<string, ProdutoAcesso> = {
 /**
  * Retorna o plano de ENTRADA (mais barato) que credencia o prestador,
  * ou null se nenhuma rede do prestador está mapeada.
+ *
+ * ⚠️ Considera TODAS as redes (inclui adesão). Para este site EMPRESARIAL,
+ * prefira `getSkuMinimoEmpresarial` — a adesão é PF e não deve ser ofertada
+ * como "plano de entrada" num contexto B2B (ver `isApenasAdesao`).
  */
 export function getSkuMinimo(prestador: PrestadorAmil): ProdutoAcesso | null {
   const mapeadas = prestador.redes
@@ -54,6 +58,35 @@ export function getSkuMinimo(prestador: PrestadorAmil): ProdutoAcesso | null {
     .filter((x): x is ProdutoAcesso => Boolean(x));
   if (mapeadas.length === 0) return null;
   return mapeadas.reduce((min, cur) => (cur.ordem < min.ordem ? cur : min));
+}
+
+/**
+ * Plano EMPRESARIAL de entrada (mais barato) que credencia o prestador —
+ * ignora redes de adesão (nivel 'adesao'). Retorna null se o prestador NÃO
+ * é acessível por nenhum plano empresarial Amil (caso só-adesão).
+ *
+ * É o valor correto para um site B2B: não promete acesso empresarial onde
+ * só existe adesão (pessoa física via entidade de classe).
+ */
+export function getSkuMinimoEmpresarial(prestador: PrestadorAmil): ProdutoAcesso | null {
+  const empresariais = prestador.redes
+    .map((r) => REDE_PARA_PRODUTO[r])
+    .filter((x): x is ProdutoAcesso => x !== undefined && x.nivel !== 'adesao');
+  if (empresariais.length === 0) return null;
+  return empresariais.reduce((min, cur) => (cur.ordem < min.ordem ? cur : min));
+}
+
+/** O prestador tem ao menos uma rede de ADESÃO mapeada? */
+export function temAcessoAdesao(prestador: PrestadorAmil): boolean {
+  return prestador.redes.some((r) => REDE_PARA_PRODUTO[r]?.nivel === 'adesao');
+}
+
+/**
+ * O prestador atende Amil APENAS por adesão (PF) — não há plano empresarial
+ * que o credencie. Gatilho do bloco honesto + ponte para o site de adesão.
+ */
+export function isApenasAdesao(prestador: PrestadorAmil): boolean {
+  return temAcessoAdesao(prestador) && getSkuMinimoEmpresarial(prestador) === null;
 }
 
 /**

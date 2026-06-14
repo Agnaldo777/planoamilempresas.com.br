@@ -42,7 +42,11 @@ import { ORGANIZATION_NAME } from '@/lib/schema/organization'
 import { getCurrentYear } from '@/lib/seo/title'
 import { tituloLocal } from '@/lib/uf'
 import { DISCLAIMER_AMIL_REDE } from '@/content/disclaimers/amil-rede'
-import { getSkuMinimo } from '@/lib/operadoras/amil/sku-minimo'
+import {
+  getSkuMinimoEmpresarial,
+  isApenasAdesao,
+} from '@/lib/operadoras/amil/sku-minimo'
+import { ADESAO_SITE } from '@/content/cross-sell-adesao'
 
 export const revalidate = 2592000 // 30 dias (ISR — pipeline mensal Story 7.10)
 export const dynamic = 'force-static'
@@ -256,7 +260,8 @@ export default async function PrestadorPage({
   const cidadeExib = tituloLocal(prestador.municipio)
   const bairroExib = prestador.bairro ? tituloLocal(prestador.bairro) : ''
   const redesLista = prestador.redes.join(', ')
-  const skuMinimo = getSkuMinimo(prestador)
+  const skuEmpresarial = getSkuMinimoEmpresarial(prestador)
+  const apenasAdesao = isApenasAdesao(prestador)
   const cotacaoHref = `/cotacao-online?uf=${uf.toLowerCase()}&cidade=${municipio.toLowerCase()}`
 
   const faqs = isHospital
@@ -364,7 +369,21 @@ export default async function PrestadorPage({
           </header>
 
           {/* Resposta direta (hospital) — otimizada para featured snippet */}
-          {isHospital && (
+          {isHospital && apenasAdesao && (
+            <section className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-5">
+              <p className="text-lg font-semibold text-amber-900">
+                O {nomeExib} atende Amil <strong>apenas por plano de adesão</strong>, não por
+                plano empresarial.
+              </p>
+              <p className="mt-2 text-sm text-amber-900">
+                Na rede Amil, o {nomeExib} é credenciado pelas linhas de adesão ({redesLista}) —
+                contratadas por pessoa física vinculada a uma entidade de classe, e não por CNPJ.
+                Para uma empresa, não há plano empresarial Amil que dê acesso a este prestador.
+              </p>
+            </section>
+          )}
+
+          {isHospital && !apenasAdesao && (
             <section className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-5">
               <p className="text-lg font-semibold text-blue-900">
                 {prestador.redes.length > 0
@@ -386,33 +405,67 @@ export default async function PrestadorPage({
             </section>
           )}
 
-          {/* SKU-mínimo de acesso — plano de entrada que credencia o prestador */}
-          {skuMinimo && (
+          {/* SKU-mínimo EMPRESARIAL — plano PME de entrada que credencia o prestador */}
+          {skuEmpresarial && (
             <section className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">
-                Plano de entrada para atender aqui
+                Plano empresarial de entrada para atender aqui
               </p>
               <p className="mt-1 text-lg font-bold text-emerald-900">
-                {skuMinimo.nivel === 'adesao'
-                  ? `Acesso a partir de planos de adesão (${skuMinimo.produto})`
-                  : `A partir do ${skuMinimo.produto}`}
-                {skuMinimo.desde !== 'sob consulta' && (
-                  <span className="font-semibold"> — {skuMinimo.desde}/vida*</span>
+                A partir do {skuEmpresarial.produto}
+                {skuEmpresarial.desde !== 'sob consulta' && (
+                  <span className="font-semibold"> — {skuEmpresarial.desde}/vida*</span>
                 )}
               </p>
               <p className="mt-2 text-sm text-emerald-900">
-                {skuMinimo.nivel === 'premium'
-                  ? `${nomeExib} é um prestador de rede premium — o acesso começa nas linhas top da Amil.`
-                  : `Este é o plano Amil mais acessível que credencia o ${nomeExib}. Linhas superiores ampliam a rede em outros hospitais.`}
+                {skuEmpresarial.nivel === 'premium'
+                  ? `${nomeExib} é um prestador de rede premium — o acesso empresarial começa nas linhas top da Amil.`
+                  : `Este é o plano Amil empresarial mais acessível que credencia o ${nomeExib}. Linhas superiores ampliam a rede em outros hospitais.`}
               </p>
-              {skuMinimo.planoSlug && (
+              {skuEmpresarial.planoSlug && (
                 <Link
-                  href={`/planos/${skuMinimo.planoSlug}`}
+                  href={`/planos/${skuEmpresarial.planoSlug}`}
                   className="mt-3 inline-block text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline"
                 >
-                  Ver detalhes do {skuMinimo.produto} →
+                  Ver detalhes do {skuEmpresarial.produto} →
                 </Link>
               )}
+            </section>
+          )}
+
+          {/* Ponte honesta — prestador só atende Amil por adesão (PF) */}
+          {apenasAdesao && (
+            <section className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-amber-700">
+                Atendimento só por plano de adesão
+              </p>
+              <p className="mt-1 text-base font-semibold text-amber-900">
+                Para acessar o {nomeExib} pela Amil, o caminho é um plano por adesão (pessoa
+                física), não um plano empresarial.
+              </p>
+              <p className="mt-2 text-sm text-amber-900">
+                A adesão é contratada por quem tem vínculo com uma entidade de classe ou profissão.
+                Se a sua empresa precisa de cobertura, um corretor pode indicar hospitais
+                equivalentes com acesso empresarial na região.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {ADESAO_SITE.DISPONIVEL && (
+                  <a
+                    href={ADESAO_SITE.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block rounded-lg bg-amber-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-700"
+                  >
+                    Ver plano por adesão →
+                  </a>
+                )}
+                <Link
+                  href={cotacaoHref}
+                  className="inline-block rounded-lg border border-amber-400 px-5 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-100"
+                >
+                  Falar com corretor sobre alternativas →
+                </Link>
+              </div>
             </section>
           )}
 
