@@ -95,10 +95,10 @@ export function buildTitle(opts: BuildTitleOpts): string {
  * Uso em layout.tsx:
  *   metadata.title = { default: DEFAULT_TITLE, template: getSiteTitleTemplate() }
  *
- * Resultado: "[page title] — Plano Amil 2026 | BeneficioRH"
+ * Resultado: "[page title] | BeneficioRH"
  */
 export function getSiteTitleTemplate(): string {
-  return `%s — Plano Amil ${getCurrentYear()} | BeneficioRH`;
+  return `%s | BeneficioRH`;
 }
 
 /**

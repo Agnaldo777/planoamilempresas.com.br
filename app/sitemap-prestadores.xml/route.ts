@@ -6,14 +6,16 @@
  *
  * Nota: o build full dos 9.325 prestadores (flags BUILD_FULL_PROVIDERS /
  * PHASE_2_ENABLED) e o Lighthouse CI permanecem como etapa de deploy (7.4b);
- * este shard já expõe todas as URLs do dataset para indexação.
+ * este shard expoe apenas URLs indexaveis para evitar sitemap/noindex mismatch.
  */
 
 import {
   getAllPrestadores,
   getDatasetMetadata,
+  getPrestadoresPorMunicipio,
+  slugify,
 } from '@/lib/operadoras/amil/rede-credenciada-loader';
-import { slugify } from '@/lib/operadoras/amil/rede-credenciada-loader';
+import { MIN_PRESTADORES_MUNICIPIO_PARA_PRESTADOR_INDIVIDUAL } from '@/lib/operadoras/amil/chunked-static-params';
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://planoamilempresas.com.br';
@@ -25,6 +27,10 @@ export function GET(): Response {
   const lastmod = new Date(geradoEm).toISOString();
 
   const urls = getAllPrestadores()
+    .filter((p) =>
+      getPrestadoresPorMunicipio(p.uf.toLowerCase(), slugify(p.municipio)).length >=
+      MIN_PRESTADORES_MUNICIPIO_PARA_PRESTADOR_INDIVIDUAL
+    )
     .map((p) => {
       const loc = `${BASE_URL}/rede/${p.uf.toLowerCase()}/${slugify(p.municipio)}/${p.slug}`;
       return (
