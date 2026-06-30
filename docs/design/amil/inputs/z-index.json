@@ -1,0 +1,57 @@
+{
+  "all": [
+    {
+      "value": 0,
+      "count": 2
+    },
+    {
+      "value": 1,
+      "count": 6
+    },
+    {
+      "value": 2,
+      "count": 8
+    },
+    {
+      "value": 3,
+      "count": 5
+    },
+    {
+      "value": 4,
+      "count": 1
+    },
+    {
+      "value": 5,
+      "count": 4
+    },
+    {
+      "value": 30,
+      "count": 1
+    },
+    {
+      "value": 50,
+      "count": 1
+    },
+    {
+      "value": 1020,
+      "count": 12
+    },
+    {
+      "value": 1030,
+      "count": 4
+    },
+    {
+      "value": 1040,
+      "count": 1
+    },
+    {
+      "value": 99999,
+      "count": 1
+    }
+  ],
+  "base": 0,
+  "dropdown": 4,
+  "modal": 1020,
+  "toast": 1040,
+  "tooltip": 99999
+}

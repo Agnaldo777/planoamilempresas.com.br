@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Bootstrap",
+    "kind": "css-framework",
+    "evidence": "bootstrap markers",
+    "confidence": "medium"
+  },
+  {
+    "name": "Google Analytics / GTM",
+    "kind": "analytics",
+    "evidence": "gtag or googletagmanager",
+    "confidence": "high"
+  }
+]

@@ -1,0 +1,2372 @@
+[
+  {
+    "name": "--bs-border-width",
+    "declarations": 1,
+    "references": 65
+  },
+  {
+    "name": "--bs-link-underline-opacity",
+    "declarations": 21,
+    "references": 54
+  },
+  {
+    "name": "--bs-border-radius",
+    "declarations": 1,
+    "references": 45
+  },
+  {
+    "name": "--bs-emphasis-color",
+    "declarations": 2,
+    "references": 25
+  },
+  {
+    "name": "--bs-offcanvas-border-width",
+    "declarations": 6,
+    "references": 24
+  },
+  {
+    "name": "--bs-offcanvas-border-color",
+    "declarations": 1,
+    "references": 24
+  },
+  {
+    "name": "--bs-border-color",
+    "declarations": 2,
+    "references": 23
+  },
+  {
+    "name": "--bs-list-group-border-width",
+    "declarations": 1,
+    "references": 22
+  },
+  {
+    "name": "--bs-body-bg",
+    "declarations": 3,
+    "references": 21
+  },
+  {
+    "name": "--bs-link-opacity",
+    "declarations": 10,
+    "references": 21
+  },
+  {
+    "name": "--bs-bg-opacity",
+    "declarations": 19,
+    "references": 21
+  },
+  {
+    "name": "--bs-body-color",
+    "declarations": 3,
+    "references": 20
+  },
+  {
+    "name": "--bs-border-radius-lg",
+    "declarations": 1,
+    "references": 20
+  },
+  {
+    "name": "--bs-secondary-color",
+    "declarations": 2,
+    "references": 18
+  },
+  {
+    "name": "--bs-offcanvas-transition",
+    "declarations": 1,
+    "references": 18
+  },
+  {
+    "name": "--bs-success-rgb",
+    "declarations": 1,
+    "references": 16
+  },
+  {
+    "name": "--bs-danger-rgb",
+    "declarations": 1,
+    "references": 16
+  },
+  {
+    "name": "--bs-emphasis-color-rgb",
+    "declarations": 2,
+    "references": 16
+  },
+  {
+    "name": "--bs-border-radius-sm",
+    "declarations": 1,
+    "references": 14
+  },
+  {
+    "name": "--bs-secondary-bg",
+    "declarations": 2,
+    "references": 13
+  },
+  {
+    "name": "--bs-card-inner-border-radius",
+    "declarations": 1,
+    "references": 13
+  },
+  {
+    "name": "--bs-list-group-border-radius",
+    "declarations": 1,
+    "references": 13
+  },
+  {
+    "name": "--bs-gutter-x",
+    "declarations": 40,
+    "references": 12
+  },
+  {
+    "name": "--bs-navbar-nav-link-padding-x",
+    "declarations": 1,
+    "references": 12
+  },
+  {
+    "name": "--bs-offcanvas-width",
+    "declarations": 1,
+    "references": 12
+  },
+  {
+    "name": "--bs-offcanvas-height",
+    "declarations": 6,
+    "references": 12
+  },
+  {
+    "name": "--bs-tooltip-arrow-height",
+    "declarations": 1,
+    "references": 11
+  },
+  {
+    "name": "--bs-popover-border-width",
+    "declarations": 1,
+    "references": 11
+  },
+  {
+    "name": "--bs-popover-arrow-width",
+    "declarations": 1,
+    "references": 11
+  },
+  {
+    "name": "--bs-popover-arrow-height",
+    "declarations": 1,
+    "references": 11
+  },
+  {
+    "name": "--bs-text-opacity",
+    "declarations": 22,
+    "references": 11
+  },
+  {
+    "name": "--bs-primary-rgb",
+    "declarations": 2,
+    "references": 10
+  },
+  {
+    "name": "--bs-secondary-rgb",
+    "declarations": 2,
+    "references": 10
+  },
+  {
+    "name": "--bs-info-rgb",
+    "declarations": 1,
+    "references": 10
+  },
+  {
+    "name": "--bs-warning-rgb",
+    "declarations": 1,
+    "references": 10
+  },
+  {
+    "name": "--bs-light-rgb",
+    "declarations": 1,
+    "references": 10
+  },
+  {
+    "name": "--bs-dark-rgb",
+    "declarations": 1,
+    "references": 10
+  },
+  {
+    "name": "--bs-border-color-translucent",
+    "declarations": 2,
+    "references": 10
+  },
+  {
+    "name": "--bs-border-radius-xxl",
+    "declarations": 1,
+    "references": 10
+  },
+  {
+    "name": "--bs-accordion-btn-icon-width",
+    "declarations": 1,
+    "references": 10
+  },
+  {
+    "name": "--bs-border-opacity",
+    "declarations": 15,
+    "references": 10
+  },
+  {
+    "name": "--bs-border-radius-xl",
+    "declarations": 1,
+    "references": 9
+  },
+  {
+    "name": "--bs-border-radius-pill",
+    "declarations": 1,
+    "references": 9
+  },
+  {
+    "name": "--bs-table-color",
+    "declarations": 9,
+    "references": 9
+  },
+  {
+    "name": "--bs-table-border-color",
+    "declarations": 9,
+    "references": 9
+  },
+  {
+    "name": "--bs-accordion-btn-icon-transition",
+    "declarations": 1,
+    "references": 9
+  },
+  {
+    "name": "--bs-tooltip-arrow-width",
+    "declarations": 1,
+    "references": 9
+  },
+  {
+    "name": "--bs-focus-ring-opacity",
+    "declarations": 1,
+    "references": 8
+  },
+  {
+    "name": "--bs-btn-focus-box-shadow",
+    "declarations": 1,
+    "references": 8
+  },
+  {
+    "name": "--bs-primary-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-secondary-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-success-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-info-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-warning-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-danger-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-light-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-dark-text-emphasis",
+    "declarations": 2,
+    "references": 6
+  },
+  {
+    "name": "--bs-box-shadow",
+    "declarations": 1,
+    "references": 6
+  },
+  {
+    "name": "--bs-card-cap-padding-x",
+    "declarations": 1,
+    "references": 6
+  },
+  {
+    "name": "--bs-accordion-border-radius",
+    "declarations": 1,
+    "references": 6
+  },
+  {
+    "name": "--bs-offcanvas-zindex",
+    "declarations": 1,
+    "references": 6
+  },
+  {
+    "name": "--bs-offcanvas-padding-y",
+    "declarations": 1,
+    "references": 6
+  },
+  {
+    "name": "--bs-offcanvas-color",
+    "declarations": 1,
+    "references": 6
+  },
+  {
+    "name": "--bs-offcanvas-bg",
+    "declarations": 1,
+    "references": 6
+  },
+  {
+    "name": "--bs-primary-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-secondary-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-success-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-info-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-warning-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-danger-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-light-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-dark-border-subtle",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-tertiary-bg",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-link-color-rgb",
+    "declarations": 3,
+    "references": 5
+  },
+  {
+    "name": "--bs-link-hover-color",
+    "declarations": 3,
+    "references": 5
+  },
+  {
+    "name": "--bs-border-style",
+    "declarations": 1,
+    "references": 5
+  },
+  {
+    "name": "--bs-form-valid-border-color",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-form-invalid-border-color",
+    "declarations": 2,
+    "references": 5
+  },
+  {
+    "name": "--bs-gutter-y",
+    "declarations": 40,
+    "references": 5
+  },
+  {
+    "name": "--bs-accordion-border-color",
+    "declarations": 1,
+    "references": 5
+  },
+  {
+    "name": "--bs-accordion-border-width",
+    "declarations": 1,
+    "references": 5
+  },
+  {
+    "name": "--bs-progress-height",
+    "declarations": 1,
+    "references": 5
+  },
+  {
+    "name": "--bs-tooltip-bg",
+    "declarations": 1,
+    "references": 5
+  },
+  {
+    "name": "--bs-popover-bg",
+    "declarations": 1,
+    "references": 5
+  },
+  {
+    "name": "--bs-offcanvas-padding-x",
+    "declarations": 1,
+    "references": 5
+  },
+  {
+    "name": "--bs-primary-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-secondary-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-success-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-info-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-warning-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-danger-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-light-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-dark-bg-subtle",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-body-color-rgb",
+    "declarations": 2,
+    "references": 4
+  },
+  {
+    "name": "--bs-link-color",
+    "declarations": 3,
+    "references": 4
+  },
+  {
+    "name": "--bs-box-shadow-sm",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-dropdown-spacer",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-nav-tabs-border-width",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-accordion-inner-border-radius",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-pagination-border-radius",
+    "declarations": 3,
+    "references": 4
+  },
+  {
+    "name": "--bs-btn-close-white-filter",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-toast-padding-x",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-toast-border-width",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-modal-inner-border-radius",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-popover-arrow-border",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--bs-white-rgb",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-black-rgb",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-font-sans-serif",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-body-bg-rgb",
+    "declarations": 2,
+    "references": 3
+  },
+  {
+    "name": "--bs-form-valid-color",
+    "declarations": 2,
+    "references": 3
+  },
+  {
+    "name": "--bs-form-invalid-color",
+    "declarations": 2,
+    "references": 3
+  },
+  {
+    "name": "--bs-btn-color",
+    "declarations": 18,
+    "references": 3
+  },
+  {
+    "name": "--bs-btn-hover-border-color",
+    "declarations": 18,
+    "references": 3
+  },
+  {
+    "name": "--bs-btn-hover-color",
+    "declarations": 18,
+    "references": 3
+  },
+  {
+    "name": "--bs-navbar-color",
+    "declarations": 2,
+    "references": 3
+  },
+  {
+    "name": "--bs-navbar-toggler-transition",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-card-border-width",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-card-border-color",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-card-cap-padding-y",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-card-bg",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-accordion-transition",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-accordion-btn-icon-transform",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-progress-bar-transition",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-toast-border-radius",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-modal-margin",
+    "declarations": 2,
+    "references": 3
+  },
+  {
+    "name": "--bs-modal-header-padding-y",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-popover-border-color",
+    "declarations": 1,
+    "references": 3
+  },
+  {
+    "name": "--bs-spinner-animation-speed",
+    "declarations": 3,
+    "references": 3
+  },
+  {
+    "name": "--bs-spinner-animation-name",
+    "declarations": 2,
+    "references": 3
+  },
+  {
+    "name": "--sp3",
+    "declarations": 0,
+    "references": 3
+  },
+  {
+    "name": "--grid-col-width",
+    "declarations": 0,
+    "references": 3
+  },
+  {
+    "name": "--bs-font-monospace",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-tertiary-color",
+    "declarations": 2,
+    "references": 2
+  },
+  {
+    "name": "--bs-box-shadow-lg",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-focus-ring-width",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-focus-ring-color",
+    "declarations": 9,
+    "references": 2
+  },
+  {
+    "name": "--bs-table-bg-type",
+    "declarations": 3,
+    "references": 2
+  },
+  {
+    "name": "--bs-table-bg-state",
+    "declarations": 3,
+    "references": 2
+  },
+  {
+    "name": "--bs-table-accent-bg",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-table-striped-color",
+    "declarations": 9,
+    "references": 2
+  },
+  {
+    "name": "--bs-table-striped-bg",
+    "declarations": 9,
+    "references": 2
+  },
+  {
+    "name": "--bs-btn-bg",
+    "declarations": 10,
+    "references": 2
+  },
+  {
+    "name": "--bs-btn-border-color",
+    "declarations": 34,
+    "references": 2
+  },
+  {
+    "name": "--bs-btn-hover-bg",
+    "declarations": 16,
+    "references": 2
+  },
+  {
+    "name": "--bs-dropdown-link-color",
+    "declarations": 2,
+    "references": 2
+  },
+  {
+    "name": "--bs-dropdown-item-padding-x",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-dropdown-item-padding-y",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-nav-tabs-border-radius",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-navbar-active-color",
+    "declarations": 2,
+    "references": 2
+  },
+  {
+    "name": "--bs-navbar-brand-padding-y",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-navbar-toggler-focus-width",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-card-spacer-x",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-card-title-spacer-y",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-card-cap-bg",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-accordion-btn-bg",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-accordion-btn-focus-box-shadow",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-breadcrumb-item-padding-x",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-pagination-focus-box-shadow",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-btn-close-color",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-btn-close-focus-shadow",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-toast-box-shadow",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-modal-padding",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-modal-header-padding-x",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-modal-footer-gap",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-popover-inner-border-radius",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-popover-header-bg",
+    "declarations": 1,
+    "references": 2
+  },
+  {
+    "name": "--bs-focus-ring-x",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--bs-focus-ring-y",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--bs-focus-ring-blur",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--bs-icon-link-transform",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--bs-card-cap-color",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--sp",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--sp2",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--sp3-5",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--sp1",
+    "declarations": 0,
+    "references": 2
+  },
+  {
+    "name": "--bs-success",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-danger",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-gradient",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-body-font-family",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-body-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-body-font-weight",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-body-line-height",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-secondary-bg-rgb",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-tertiary-bg-rgb",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-heading-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-link-hover-color-rgb",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-code-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-highlight-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-highlight-bg",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-box-shadow-inset",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-aspect-ratio",
+    "declarations": 4,
+    "references": 1
+  },
+  {
+    "name": "--bs-table-color-type",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-table-color-state",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-table-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-table-active-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-table-active-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-table-hover-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-table-hover-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-form-select-bg-img",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-form-check-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-form-check-bg-image",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-form-switch-bg",
+    "declarations": 4,
+    "references": 1
+  },
+  {
+    "name": "--bs-form-select-bg-icon",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-padding-x",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-padding-y",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-font-size",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-font-weight",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-line-height",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-border-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-border-radius",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-disabled-opacity",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-focus-shadow-rgb",
+    "declarations": 17,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-active-color",
+    "declarations": 17,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-active-bg",
+    "declarations": 16,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-active-border-color",
+    "declarations": 17,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-disabled-color",
+    "declarations": 17,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-disabled-bg",
+    "declarations": 16,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-disabled-border-color",
+    "declarations": 17,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-zindex",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-min-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-bg",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-border-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-border-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-divider-bg",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-divider-margin-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-link-hover-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-link-hover-bg",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-link-active-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-link-active-bg",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-link-disabled-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-header-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-header-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-header-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-link-padding-x",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-link-padding-y",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-link-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-link-hover-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-link-disabled-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-tabs-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-tabs-link-hover-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-tabs-link-active-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-tabs-link-active-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-tabs-link-active-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-pills-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-pills-link-active-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-pills-link-active-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-underline-gap",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-underline-border-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-underline-link-active-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-hover-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-disabled-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-brand-margin-end",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-brand-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-brand-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-brand-hover-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-toggler-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-toggler-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-toggler-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-toggler-icon-bg",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-toggler-border-color",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-navbar-toggler-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-spacer-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-img-overlay-padding",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-group-margin",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-btn-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-btn-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-btn-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-btn-icon",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-btn-active-icon",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-body-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-body-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-active-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-accordion-active-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-margin-bottom",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-divider-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-item-active-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-padding-x",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-padding-y",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-font-size",
+    "declarations": 3,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-border-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-hover-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-hover-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-hover-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-focus-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-focus-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-active-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-active-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-active-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-disabled-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-disabled-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-pagination-disabled-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-badge-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-badge-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-badge-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-badge-font-weight",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-badge-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-badge-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-margin-bottom",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-border-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-border",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-alert-link-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-progress-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-progress-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-progress-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-progress-bar-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-progress-bar-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-border-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-item-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-item-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-action-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-action-hover-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-action-hover-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-action-active-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-action-active-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-disabled-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-disabled-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-active-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-active-bg",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-list-group-active-border-color",
+    "declarations": 9,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-close-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-close-opacity",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-close-hover-opacity",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-close-focus-opacity",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-close-disabled-opacity",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-zindex",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-spacing",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-max-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-header-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-header-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-header-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-zindex",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-width",
+    "declarations": 4,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-border-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-header-padding",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-header-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-header-border-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-title-line-height",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-footer-border-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-footer-border-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-backdrop-zindex",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-backdrop-bg",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-backdrop-opacity",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-zindex",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-max-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-opacity",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-zindex",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-max-width",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-border-radius",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-header-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-header-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-header-font-size",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-header-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-body-padding-x",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-body-padding-y",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-popover-body-color",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-spinner-width",
+    "declarations": 4,
+    "references": 1
+  },
+  {
+    "name": "--bs-spinner-height",
+    "declarations": 4,
+    "references": 1
+  },
+  {
+    "name": "--bs-spinner-vertical-align",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-spinner-border-width",
+    "declarations": 2,
+    "references": 1
+  },
+  {
+    "name": "--bs-offcanvas-title-line-height",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--bs-body-text-align",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-btn-font-family",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-dropdown-item-border-radius",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-link-font-size",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-nav-link-font-weight",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-scroll-height",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-height",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-color",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-title-color",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-card-subtitle-color",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-font-size",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-bg",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-border-radius",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-breadcrumb-divider",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-toast-color",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-color",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-modal-footer-bg",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-tooltip-margin",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--sp1-5",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--color--gray-95",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--grid-gap",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--sp4-5",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--color-text-neutral-loud",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--line-height-base",
+    "declarations": 0,
+    "references": 1
+  },
+  {
+    "name": "--bs-blue",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-indigo",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-purple",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-pink",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-red",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-orange",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-yellow",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-green",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-teal",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-cyan",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-black",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-white",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-dark",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-100",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-200",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-300",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-400",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-500",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-600",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-700",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-800",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-gray-900",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-primary",
+    "declarations": 2,
+    "references": 0
+  },
+  {
+    "name": "--bs-secondary",
+    "declarations": 2,
+    "references": 0
+  },
+  {
+    "name": "--bs-info",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-warning",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-light",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-dark",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-secondary-color-rgb",
+    "declarations": 2,
+    "references": 0
+  },
+  {
+    "name": "--bs-tertiary-color-rgb",
+    "declarations": 2,
+    "references": 0
+  },
+  {
+    "name": "--bs-link-decoration",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-border-radius-2xl",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-breakpoint-xs",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-breakpoint-sm",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-breakpoint-md",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-breakpoint-lg",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-breakpoint-xl",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-breakpoint-xxl",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-btn-box-shadow",
+    "declarations": 2,
+    "references": 0
+  },
+  {
+    "name": "--bs-btn-active-shadow",
+    "declarations": 16,
+    "references": 0
+  },
+  {
+    "name": "--bs-dropdown-inner-border-radius",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-dropdown-box-shadow",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-position",
+    "declarations": 12,
+    "references": 0
+  },
+  {
+    "name": "--bs-progress-box-shadow",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-modal-box-shadow",
+    "declarations": 2,
+    "references": 0
+  },
+  {
+    "name": "--bs-popover-box-shadow",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-offcanvas-box-shadow",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bs-btn-focus-color",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bb-primary-dark",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bb-primary-light",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bb-secondary-dark",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bb-h1-color",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bb-h2-color",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--bb-h3-color",
+    "declarations": 1,
+    "references": 0
+  }
+]

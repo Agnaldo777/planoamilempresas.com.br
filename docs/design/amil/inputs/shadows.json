@@ -1,0 +1,66 @@
+[
+  {
+    "value": "0 0 0 0.25rem rgba(70,27,255,0.25)",
+    "count": 10
+  },
+  {
+    "value": "0 0 0 0.15rem #0f0d59",
+    "count": 10
+  },
+  {
+    "value": "var(--bs-btn-focus-box-shadow)",
+    "count": 8
+  },
+  {
+    "value": "0 0 0 0.25rem rgba(var(--bs-success-rgb),0.25)",
+    "count": 6
+  },
+  {
+    "value": "0 0 0 0.25rem rgba(var(--bs-danger-rgb),0.25)",
+    "count": 6
+  },
+  {
+    "value": "var(--bs-box-shadow)",
+    "count": 4
+  },
+  {
+    "value": "inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color)",
+    "count": 4
+  },
+  {
+    "value": "0 0 0 1px #fff,0 0 0 0.25rem rgba(70,27,255,0.25)",
+    "count": 3
+  },
+  {
+    "value": "5px 6px 17px -9px rgba(0,0,0,0.56)",
+    "count": 3
+  },
+  {
+    "value": "var(--bs-focus-ring-x,0) var(--bs-focus-ring-y,0) var(--bs-focus-ring-blur,0) var(--bs-focus-ring-width) var(--bs-focus-ring-color)",
+    "count": 2
+  },
+  {
+    "value": "inset 0 0 0 9999px var(--bs-table-bg-state,var(--bs-table-bg-type,var(--bs-table-accent-bg)))",
+    "count": 2
+  },
+  {
+    "value": "0 0 0 var(--bs-navbar-toggler-focus-width)",
+    "count": 2
+  },
+  {
+    "value": "var(--bs-accordion-btn-focus-box-shadow)",
+    "count": 2
+  },
+  {
+    "value": "var(--bs-pagination-focus-box-shadow)",
+    "count": 2
+  },
+  {
+    "value": "var(--bs-btn-close-focus-shadow)",
+    "count": 2
+  },
+  {
+    "value": "var(--bs-toast-box-shadow)",
+    "count": 2
+  }
+]

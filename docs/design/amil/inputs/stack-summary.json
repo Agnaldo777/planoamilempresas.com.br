@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Google Analytics / GTM",
+    "kind": "analytics",
+    "confidence": "high"
+  },
+  {
+    "name": "Bootstrap",
+    "kind": "css-framework",
+    "confidence": "medium"
+  }
+]

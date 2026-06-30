@@ -1,0 +1,45 @@
+{
+  "durations": [
+    {
+      "value": "0.15s",
+      "count": 141
+    },
+    {
+      "value": "0.3s",
+      "count": 38
+    },
+    {
+      "value": "300ms",
+      "count": 15
+    },
+    {
+      "value": "0.6s",
+      "count": 14
+    },
+    {
+      "value": "0.1s",
+      "count": 12
+    },
+    {
+      "value": "0.35s",
+      "count": 6
+    },
+    {
+      "value": "0.2s",
+      "count": 4
+    },
+    {
+      "value": "0s",
+      "count": 3
+    }
+  ],
+  "easings": [],
+  "keyframes": [
+    "progress-bar-stripes",
+    "spinner-border",
+    "spinner-grow",
+    "placeholder-glow",
+    "placeholder-wave",
+    "fa-spin"
+  ]
+}

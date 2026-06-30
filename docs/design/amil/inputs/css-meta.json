@@ -1,0 +1,13 @@
+{
+  "external": [
+    "https://www.amil.com.br/sites/institucional/files/css/css_aGyIrz9PHMNyYWSGj8e-cjjkTaD2FazLTO8mzqMqnpA.css?delta=0&language=pt-br&theme=amil_bootstrap&include=eJyNkFtqxTAMRDfkxEsycqz4CvQwkk2b3TdQaKHpx_3UnDMwCIS4VLMZ02HkzlaBt5gXk_ZUcU70gp_DAls5ie8zckdFB04_vVLBnSyfphM-MEzwP-jyTEmgYzl5UXtCwYgbR-kO1xOrNUyHOebDZJiiztj_WtsmqOtNrRzGSzTe1QVIk2AjyN_P2Q8Yk0zTAId79XhFbr4G8P6b7EvHqkzxwpbiiomSKwR-ASW4nXQ",
+    "https://www.amil.com.br/sites/institucional/files/css/css_le5O-0_ArS6UJkMBAZcbVrV3kNnfoOAbYYsaF7lkJXQ.css?delta=1&language=pt-br&theme=amil_bootstrap&include=eJyNkFtqxTAMRDfkxEsycqz4CvQwkk2b3TdQaKHpx_3UnDMwCIS4VLMZ02HkzlaBt5gXk_ZUcU70gp_DAls5ie8zckdFB04_vVLBnSyfphM-MEzwP-jyTEmgYzl5UXtCwYgbR-kO1xOrNUyHOebDZJiiztj_WtsmqOtNrRzGSzTe1QVIk2AjyN_P2Q8Yk0zTAId79XhFbr4G8P6b7EvHqkzxwpbiiomSKwR-ASW4nXQ",
+    "https://use.fontawesome.com/releases/v5.13.0/css/all.css",
+    "https://www.amil.com.br/sites/institucional/files/css/css_cCXsdVdkBhJAE2OysB2Q6v8dqrt7ueFdjBMxUZN6qG4.css?delta=3&language=pt-br&theme=amil_bootstrap&include=eJyNkFtqxTAMRDfkxEsycqz4CvQwkk2b3TdQaKHpx_3UnDMwCIS4VLMZ02HkzlaBt5gXk_ZUcU70gp_DAls5ie8zckdFB04_vVLBnSyfphM-MEzwP-jyTEmgYzl5UXtCwYgbR-kO1xOrNUyHOebDZJiiztj_WtsmqOtNrRzGSzTe1QVIk2AjyN_P2Q8Yk0zTAId79XhFbr4G8P6b7EvHqkzxwpbiiomSKwR-ASW4nXQ"
+  ],
+  "preload": [],
+  "inline_style_blocks": 1,
+  "inline_style_attrs": 23,
+  "imports_resolved": 0,
+  "failed": []
+}

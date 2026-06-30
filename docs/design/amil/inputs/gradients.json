@@ -1,0 +1,23 @@
+{
+  "primary": "linear-gradient(45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent)",
+  "secondary": "linear-gradient(180deg,rgba(255,255,255,0.15),rgba(255,255,255,0))",
+  "total_unique": 4,
+  "top": [
+    {
+      "value": "linear-gradient(45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent)",
+      "count": 3
+    },
+    {
+      "value": "linear-gradient(180deg,rgba(255,255,255,0.15),rgba(255,255,255,0))",
+      "count": 1
+    },
+    {
+      "value": "linear-gradient(320deg,#000 55%,rgba(0,0,0,0.8) 75%,#000 95%)",
+      "count": 1
+    },
+    {
+      "value": "linear-gradient(130deg,#000 55%,rgba(0,0,0,0.8) 75%,#000 95%)",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "crashed_at": "2026-06-09T13:25:46.355Z",
+  "last_phase": "phase_6_llm",
+  "completed_phases": {
+    "phase_1_fetch": 445,
+    "phase_2_collect": 696,
+    "phase_3_detect": 106,
+    "phase_4_markdown": 68,
+    "phase_5_prompt": 3
+  },
+  "error": {
+    "message": "LLM invocation failed (provider=claude-cli, exit=1)",
+    "name": "PipelineError",
+    "stack": "PipelineError: LLM invocation failed (provider=claude-cli, exit=1)\n    at invokeWithHttpRetry (C:\\Users\\benef\\.claude\\skills\\design-md\\run.cjs:190:11)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async main (C:\\Users\\benef\\.claude\\skills\\design-md\\run.cjs:598:59)",
+    "code": null,
+    "exit_code": 7,
+    "details": {
+      "provider": "claude-cli",
+      "exit": 1,
+      "body": "{\"type\":\"result\",\"subtype\":\"success\",\"is_error\":true,\"api_error_status\":401,\"duration_ms\":608,\"duration_api_ms\":0,\"num_turns\":1,\"result\":\"Invalid API key · Fix external API key\",\"stop_reason\":\"stop_sequence\",\"session_id\":\"dffb2c78-d1e6-4552-af7d-6a2c625e791c\",\"total_cost_usd\":0,\"usage\":{\"input_tokens\":0,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"output_tokens\":0,\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":0,\"ephemeral_5m_input_tokens\":0},\"inference_geo\":\"\",\"iterations\":[],\"speed\":\"standard\"},\"modelUsage\":{},\"permission_denials\":[],\"terminal_reason\":\"completed\",\"fast_mode_state\":\"off\",\"uuid\":\"344481b2-9166-4fa4-b6fd-9f779188d09b\"}\n"
+    }
+  },
+  "inputs": {
+    "url": "https://www.amil.com.br",
+    "out_dir": "C:/Users/benef/planoamilempresas/docs/design/amil",
+    "inputs_dir": "C:\\Users\\benef\\planoamilempresas\\docs\\design\\amil\\inputs"
+  },
+  "partial_outputs": [
+    "inputs",
+    "style-fingerprint.json"
+  ],
+  "debug_hint": "LLM phase failed. Check ~/.claude/logs/ or claude-cli output. Often retryable."
+}
